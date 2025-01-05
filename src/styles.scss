@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'murecho';
+@use 'tailwind';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Murecho', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+
+  --mdc-filled-button-container-shape: 6px;
+}
+
+html {
+  @include mat.theme(
+    (
+      typography: 'Murecho',
+      density: 0
+    )
+  );
+}
