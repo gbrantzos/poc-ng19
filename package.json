@@ -12,7 +12,7 @@
     "test": "npm run lint && ng test --no-watch --browsers ChromeHeadless",
     "test:watch": "ng test",
     "lint": "ng lint",
-    "build-info": "ts-node --compilerOptions '{\"module\": \"commonjs\"}' scripts/prepare.build-info.ts",
+    "build-info": "ts-node --project tsconfig.ts-node.json scripts/prepare.build-info.ts",
     "prettier:all": "npx prettier --write .",
     "html-beautify:all": "npx js-beautify --type html -r ./**/*.html",
     "bump-version": "npx bump --commit \"Release v%s\" --tag \"v%s\"",

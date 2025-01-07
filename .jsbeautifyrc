@@ -4,6 +4,7 @@
   "end_with_newline": true,
   "max_preserve_newlines": "2",
   "preserve_newlines": true,
+  "eol": "\n",
   "wrap_line_length": "120",
   "wrap_attributes": "force-aligned"
 }

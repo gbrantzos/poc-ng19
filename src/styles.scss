@@ -6,14 +6,12 @@
 html,
 body {
   height: 100%;
-}
-
-body {
   margin: 0;
   font-family: 'Murecho', 'Helvetica Neue', sans-serif;
   font-size: 14px;
 
   --mdc-filled-button-container-shape: 6px;
+  background-color: #e1e1e1;
 }
 
 html {
@@ -23,4 +21,48 @@ html {
       density: 0
     )
   );
+}
+
+/* Give common styles to siblings of router-outlet */
+router-outlet#main + * {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Scrollbars */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Background color for autocomplete */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Hide show password 'eye' (MS Edge) */
+input::-ms-reveal {
+  display: none;
 }
