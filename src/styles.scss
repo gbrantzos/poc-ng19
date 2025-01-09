@@ -3,14 +3,27 @@
 @use 'murecho';
 @use 'tailwind';
 
+:root {
+  @include mat.theme(
+    (
+      typography: 'Murecho',
+      density: 0
+    )
+  );
+
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 4px
+    )
+  );
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
   font-family: 'Murecho', 'Helvetica Neue', sans-serif;
   font-size: 14px;
-
-  --mdc-filled-button-container-shape: 6px;
   background-color: #e1e1e1;
 }
 
