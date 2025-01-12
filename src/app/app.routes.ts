@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from '@poc/core/layout/default-layout/default-layout.component';
 import { FooterOnlyComponent } from '@poc/core/layout/footer-only/footer-only.component';
+import { provideCustomerServices } from '@poc/features/customers/customers.providers';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,11 @@ export const routes: Routes = [
         data: {
           title: 'Αρχική'
         }
+      },
+      {
+        path: 'customers',
+        loadChildren: () => import('@poc/features/customers/customers.routes').then(r => r.CUSTOMER_ROUTES),
+        providers: [provideCustomerServices()]
       }
     ]
     // canMatch: [isAuthenticated]
