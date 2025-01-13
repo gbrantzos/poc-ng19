@@ -38,9 +38,7 @@ html {
 
 /* Give common styles to siblings of router-outlet */
 router-outlet#main + * {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+  @apply p-3 flex flex-col h-full overflow-y-auto;
 }
 
 /* Scrollbars */

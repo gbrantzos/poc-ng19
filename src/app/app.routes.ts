@@ -11,14 +11,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadComponent: () => import('@poc/features/home/home.component').then(c => c.HomeComponent),
+        loadComponent: async () => (await import('@poc/features/home/home.component')).HomeComponent,
         data: {
           title: 'Αρχική'
         }
       },
       {
         path: 'customers',
-        loadChildren: () => import('@poc/features/customers/customers.routes').then(r => r.CUSTOMER_ROUTES),
+        loadChildren: async () => (await import('@poc/features/customers/customers.routes')).CUSTOMER_ROUTES,
         providers: [provideCustomerServices()]
       }
     ]
@@ -32,7 +32,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('@poc/core/components/not-found/not-found.component').then(c => c.NotFoundComponent)
+        loadComponent: async () =>
+          (await import('@poc/core/components/not-found/not-found.component')).NotFoundComponent
       }
     ]
   }
