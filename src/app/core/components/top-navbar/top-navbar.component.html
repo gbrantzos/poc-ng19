@@ -22,13 +22,13 @@
       @for (item of items; track item.name) {
       <a id="link_{{item.name}}"
          class="link inline-flex items-center
-            px-4 h-10 cursor-pointer
+            px-4 py-2 h-10 cursor-pointer
             text-slate-300 text-y
             hover:text-slate-50 hover:bg-gray-500
             rounded-lg"
          [routerLink]="item.route"
          routerLinkActive="bg-gray-600">
-        <i class="fa-fw opacity-70"
+        <i class="pt-1 opacity-70"
            [ngClass]="item.icon"></i>&nbsp;
         {{ item.label }}
       </a>

@@ -23,13 +23,13 @@ export class TopNavbarComponent {
       name: 'home',
       label: 'Home',
       route: '/home',
-      icon: ['fa-solid', 'fa-house-chimney']
+      icon: ['ph', 'ph-house-line']
     },
     {
       name: 'customers',
       label: 'Customers',
       route: '/customers',
-      icon: ['fa-solid', 'fa-person']
+      icon: ['ph', 'ph-users-three']
     }
   ]);
 }
