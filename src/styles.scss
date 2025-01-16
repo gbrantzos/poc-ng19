@@ -14,7 +14,9 @@
 
   @include mat.button-overrides(
     (
-      filled-container-shape: 4px
+      filled-container-shape: 4px,
+      protected-container-shape: 4px,
+      outlined-container-shape: 4px
     )
   );
 }

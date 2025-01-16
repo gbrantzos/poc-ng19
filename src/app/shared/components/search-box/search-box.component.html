@@ -1,0 +1,32 @@
+<div class="flex flex-row items-center w-full justify-end h-8">
+
+  <div class="relative w-full">
+    <input type="text"
+           class="focus:outline-none py-1 pr-8 w-full pl-10 rounded-l-lg bg-gray-100 focus:bg-gray-200"
+           placeholder=""
+           [(ngModel)]="searchTerm">
+    <button class="text-lg ml-2 mt-0.5 w-6 absolute inset-x-0">
+      <i class="ph-bold ph-faders text-gray-500 hover:text-gray-700"></i>
+    </button>
+    <button id="clearButton"
+            (click)="onClear()"
+            [hidden]="!searchTerm()">
+      <i class="ph-light ph-eraser absolute right-2 top-2"></i>
+    </button>
+  </div>
+
+  <button id="filterButton"
+          (click)="filter.emit()"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-600 px-3 py-1
+                border-r border-gray-200 outline-none font-normal">
+    <i class="ph ph-funnel"></i>
+  </button>
+  <button id="searchButton"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-600 px-3 py-1
+                rounded-r-lg outline-none font-normal inline-flex flex-row items-center justify-center gap-2"
+          (click)="onSearch()">
+    <i class="ph-bold ph-magnifying-glass"></i>
+    <span class="pb-[1px] -mt-[1px]">Search</span>
+  </button>
+
+</div>

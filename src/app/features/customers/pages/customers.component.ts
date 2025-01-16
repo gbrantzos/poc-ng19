@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import { JsonPipe } from '@angular/common';
+import { TitleComponent } from '@poc/shared/components/title/title.component';
+import { ToolbarComponent } from '@poc/shared/components/toolbar/toolbar.component';
 
 @Component({
   selector: 'poc-customers',
-  imports: [JsonPipe],
+  imports: [JsonPipe, TitleComponent, ToolbarComponent],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
