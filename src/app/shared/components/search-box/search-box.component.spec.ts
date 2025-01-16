@@ -54,6 +54,22 @@ describe('SearchBoxComponent', () => {
     expect(component.changed.emit).toHaveBeenCalledWith('search input');
   });
 
+  it('should emit search (search enter)', async () => {
+    const { component, fixture, debugElement } = await setup();
+    const searchInput = debugElement.query(By.css('input[type="text"]'));
+
+    spyOn(component.search, 'emit');
+    fixture.detectChanges();
+
+    searchInput.nativeElement.value = 'search enter';
+    searchInput.nativeElement.dispatchEvent(new Event('input'));
+    searchInput.nativeElement.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(component.search.emit).toHaveBeenCalledWith('search enter');
+  });
+
   it('should emit filter', async () => {
     const { component, fixture, debugElement } = await setup();
     const filterButton = debugElement.query(By.css('#filterButton'));

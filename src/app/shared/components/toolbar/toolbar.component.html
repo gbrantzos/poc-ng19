@@ -7,16 +7,17 @@
 
     @let actions = toolbarActions;
     @for (action of actions; track action.name; let isFirst = $first; let isLast = $last) {
-    <button class="px-3 py-1 border text-gray-600 hover:bg-gray-400 min-w-20 "
+
+    <button class="text-gray-600 hover:bg-gray-400 px-3 py-1 border min-w-20 inline-flex flex-row items-center justify-center gap-1"
             [ngClass]="action.isPrimary ? 'bg-lime-300' : 'bg-gray-200'"
             [class.rounded-l-lg]="isFirst"
             [class.rounded-r-lg]="isLast">
       @if (action.icon) {
-      <i [ngClass]="action.icon"
-         class="mr-1"></i>
+      <i [ngClass]="action.icon"></i>
       }
       <span class="pb-[1px] -mt-[1px]">{{ action.label }}</span>
     </button>
+
     }
 
   </div>
