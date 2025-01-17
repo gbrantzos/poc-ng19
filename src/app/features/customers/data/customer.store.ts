@@ -23,6 +23,7 @@ export const CustomerStore = signalStore(
     async find(): Promise<void> {
       try {
         store.setLoading();
+        patchState(store, { listItems: [] });
         const response = await store.apiClient.find();
         if (response.result == ApiResponseResult.SUCCESS) {
           patchState(store, { listItems: response.data.map(c => customerDtoToModel(c)) });

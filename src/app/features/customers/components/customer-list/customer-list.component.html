@@ -1,0 +1,9 @@
+<poc-title class="flex"
+           [title]="'Customers List'" />
+<poc-toolbar class="flex"
+             [toolbarActions]="toolbarActions()"
+             (toolbarClicked)="toolbarClicked.emit($event)" />
+<poc-dynamic-table class="flex flex-auto h-full overflow-auto"
+                   [loading]="loading()"
+                   [tableDefinition]="tableDefinition()"
+                   [data]="items()" />

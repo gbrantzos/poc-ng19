@@ -1,10 +1,6 @@
-<poc-title [title]="'Customers List'"
-           class="flex" />
-<poc-toolbar class="flex" />
-<div class="flex lex-1 h-full overflow-auto border-t-2 mt-2">
-  @if (loading()) {
-  <p>Loading ...</p>
-  }
-
-  <pre class="text-sm">{{ items() | json }}</pre>
-</div>
+<poc-customer-list class="flex flex-col h-full overflow-y-auto"
+                   (toolbarClicked)="onAction($event)"
+                   [tableDefinition]="tableDefinition"
+                   [toolbarActions]="toolbarActions"
+                   [loading]="loading()"
+                   [items]="items()" />

@@ -1,36 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { SearchBoxComponent } from '@poc/shared/components/search-box/search-box.component';
 import { NgClass } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
 
-interface Action {
+export interface Action {
   name: string;
-  label: string;
+  label?: string;
+  tooltip?: string;
   icon?: string | string[];
   isPrimary?: boolean;
 }
 
 @Component({
   selector: 'poc-toolbar',
-  imports: [SearchBoxComponent, NgClass],
+  imports: [SearchBoxComponent, NgClass, MatTooltip],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent {
-  protected toolbarActions: Action[] = [
-    {
-      name: 'new',
-      label: 'New Customer',
-      isPrimary: true,
-      icon: ['ph', 'ph-plus']
-    },
-    {
-      name: 'import',
-      label: 'Import to ERP'
-    },
-    {
-      name: 'download',
-      label: 'Download'
-    }
-  ];
+  toolbarActions = input<Action[]>();
+  toolbarClicked = output<string>();
 }

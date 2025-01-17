@@ -1,0 +1,52 @@
+<table mat-table
+       [dataSource]="data()"
+       class="border-separate">
+
+  @for (columnDef of tableDefinition().columns; track columnDef.name) {
+  <ng-container matColumnDef="{{columnDef.name}}">
+    <th mat-header-cell
+        *matHeaderCellDef> {{ columnDef.label }}
+    </th>
+    <td mat-cell
+        *matCellDef="let element; let row"
+        (click)="onClick(row, columnDef)">
+      {{ element[columnDef.name] }}
+    </td>
+  </ng-container>
+  }
+
+  <tr mat-header-row
+      *matHeaderRowDef="displayedColumns(); sticky: true"></tr>
+  <tr mat-row
+      *matRowDef="let row; let isOdd = odd; let index = index; let column = column; columns: displayedColumns();"
+      class="bg-gray-100 hover:bg-gray-500 hover:text-white"
+      (click)="currentRowNum = index"
+      [class.bg-gray-200]="isOdd"
+      [class.bg-gray-400]="index === currentRowNum"
+      [class.text-gray-50]="index === currentRowNum">
+  </tr>
+
+  <tr class="mat-row"
+      *matNoDataRow>
+    @if (loading()) {
+    <td class="mat-cell"
+        [attr.colspan]="3">
+      <div id="loading"
+           class="flex flex-col items-center text-2xl">
+        <i class="ph-bold ph-cloud-arrow-down text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>
+        <p> Waiting for data ... </p>
+      </div>
+    </td>
+    } @else {
+    <td class="mat-cell"
+        [attr.colspan]="displayedColumns().length">
+      <div id="no-rows"
+           class="flex flex-col items-center text-2xl">
+        <i class="ph-bold ph-funnel text-7xl pb-10 text-red-800 opacity-80"></i>
+        <p> No data to display </p>
+      </div>
+    </td>
+    }
+  </tr>
+
+</table>

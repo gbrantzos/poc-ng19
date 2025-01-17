@@ -5,19 +5,28 @@
 
   <div class="flex flex-row w-2/3">
 
-    @let actions = toolbarActions;
+    @let actions = toolbarActions();
     @for (action of actions; track action.name; let isFirst = $first; let isLast = $last) {
-
-    <button class="text-gray-600 hover:bg-gray-400 px-3 py-1 border min-w-20 inline-flex flex-row items-center justify-center gap-1"
-            [ngClass]="action.isPrimary ? 'bg-lime-300' : 'bg-gray-200'"
+    <button class="text-gray-600 hover:bg-gray-300 px-3 py-1 border inline-flex flex-row items-center justify-center gap-1"
+            [ngClass]="{
+                'min-w-12': action.icon,
+                'min-w-20': !action.label,
+                'bg-lime-300': action.isPrimary,
+                'bg-gray-200': !action.isPrimary
+              }"
+            [matTooltip]="action.tooltip"
+            [matTooltipShowDelay]="200"
+            [matTooltipPosition]="'above'"
             [class.rounded-l-lg]="isFirst"
-            [class.rounded-r-lg]="isLast">
+            [class.rounded-r-lg]="isLast"
+            (click)="toolbarClicked.emit(action.name)">
       @if (action.icon) {
       <i [ngClass]="action.icon"></i>
       }
+      @if (action.label) {
       <span class="pb-[1px] -mt-[1px]">{{ action.label }}</span>
+      }
     </button>
-
     }
 
   </div>

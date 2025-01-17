@@ -2,7 +2,7 @@
 
   <div class="relative w-full">
     <input type="text"
-           class="focus:outline-none py-1 pr-8 w-full pl-10 rounded-l-lg bg-gray-100 focus:bg-gray-200"
+           class="focus:outline-none py-1 pr-8 h-8 w-full pl-10 rounded-l-lg bg-gray-50 focus:bg-gray-100 border"
            placeholder=""
            (keyup.enter)="onSearch()"
            [(ngModel)]="searchTerm">
@@ -18,12 +18,12 @@
 
   <button id="filterButton"
           (click)="filter.emit()"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-600 px-3 py-1
+          class="bg-gray-200 hover:bg-gray-300 text-gray-600 px-3 py-1
                 border-r border-gray-200 outline-none font-normal">
     <i class="ph ph-funnel"></i>
   </button>
   <button id="searchButton"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-600 px-3 py-1
+          class="bg-gray-200 hover:bg-gray-300 text-gray-600 px-3 py-1
                 rounded-r-lg outline-none font-normal inline-flex flex-row items-center justify-center gap-2"
           (click)="onSearch()">
     <i class="ph-bold ph-magnifying-glass"></i>
