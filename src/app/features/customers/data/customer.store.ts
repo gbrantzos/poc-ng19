@@ -44,5 +44,8 @@ export const customerDtoToModel = (dto: CustomerDTO): Customer => ({
   id: dto.custID,
   code: dto.code,
   fullName: dto.fullName,
-  tin: dto.tin
+  tin: dto.tin,
+  dueAt: dto.dueAt ?? new Date(),
+  balance: dto.balance ?? 0,
+  overdue: dto.overdue ?? false
 });

@@ -5,12 +5,34 @@
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
   <ng-container matColumnDef="{{columnDef.name}}">
     <th mat-header-cell
+        [class.text-right]="columnDef.type === 'number'"
+        [class.text-center]="columnDef.type === 'boolean'"
         *matHeaderCellDef> {{ columnDef.label }}
     </th>
     <td mat-cell
+        [class.text-right]="columnDef.type === 'number'"
+        [class.text-center]="columnDef.type === 'boolean'"
+        [class.link]="columnDef.isLink"
+        [style]="columnDef.style"
+        [class]="columnDef.class"
         *matCellDef="let element; let row"
         (click)="onClick(row, columnDef)">
-      {{ element[columnDef.name] }}
+      <ng-container [ngSwitch]="columnDef.type">
+        <ng-container *ngSwitchCase="'number'">
+          {{ element[columnDef.name] | number:columnDef.format }}
+        </ng-container>
+        <ng-container *ngSwitchCase="'date'">
+          {{ element[columnDef.name] | date:columnDef.format }}
+        </ng-container>
+        <ng-container *ngSwitchCase="'boolean'">
+          <i class="ph"
+             [class.ph-square]="!element[columnDef.name]"
+             [class.ph-check-square]="element[columnDef.name]"></i>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          {{ element[columnDef.name] }}
+        </ng-container>
+      </ng-container>
     </td>
   </ng-container>
   }
@@ -30,7 +52,7 @@
       *matNoDataRow>
     @if (loading()) {
     <td class="mat-cell"
-        [attr.colspan]="3">
+        [attr.colspan]="displayedColumns().length">
       <div id="loading"
            class="flex flex-col items-center text-2xl">
         <i class="ph-bold ph-cloud-arrow-down text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>

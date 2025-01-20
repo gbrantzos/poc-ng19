@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { DatePipe, DecimalPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 
 export interface TableDefinition {
   columns: ColumnDefinition[];
@@ -8,18 +9,20 @@ export interface TableDefinition {
 export interface ColumnDefinition {
   name: string;
   label: string;
+  type: 'string' | 'number' | 'date' | 'boolean';
+  format?: string;
   hidden?: boolean;
-  // Type
-  // format (date or number)
-  // emit click (yes/no)
-  // classes - label classes
+  style?: string;
+  class?: string | string[];
+  isLink?: boolean;
   // template ref
   // is sortable
+  // actions for row
 }
 
 @Component({
   selector: 'poc-dynamic-table',
-  imports: [MatTableModule],
+  imports: [MatTableModule, NgSwitch, NgSwitchCase, DecimalPipe, DatePipe, NgSwitchDefault],
   templateUrl: './dynamic-table.component.html',
   styleUrl: './dynamic-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -37,7 +40,5 @@ export class DynamicTableComponent {
   });
   protected currentRowNum = 0;
 
-  onClick(row: unknown, columnDef: ColumnDefinition) {
-    this.cellClicked.emit({ row, columnDef });
-  }
+  onClick = (row: unknown, columnDef: ColumnDefinition) => this.cellClicked.emit({ row, columnDef });
 }

@@ -13,7 +13,7 @@ describe('Customers API Client', () => {
 
     const httpTestingController = TestBed.inject(HttpTestingController);
     const apiClient = TestBed.inject(CustomersApiClient);
-    const url = 'http://localhost:3200/api/customers';
+    const url = 'http://localhost:3200/api/customers-full';
 
     return { httpTestingController, apiClient, url };
   }

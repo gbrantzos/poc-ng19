@@ -5,4 +5,7 @@ export interface Customer {
   code: string;
   fullName: string;
   tin: string;
+  dueAt?: Date;
+  balance: number;
+  overdue: boolean;
 }

@@ -9,11 +9,14 @@ export interface CustomerDTO {
   code: string;
   fullName: string;
   tin: string;
+  dueAt?: Date;
+  balance?: number;
+  overdue?: boolean;
 }
 
 @Injectable()
 export class CustomersApiClient {
-  #url = 'http://localhost:3200/api/customers';
+  #url = 'http://localhost:3200/api/customers-full';
   #http = inject(HttpClient);
 
   find(): Promise<ApiResponse<CustomerDTO[]>> {

@@ -29,19 +29,41 @@ export class CustomersComponent implements OnInit {
       {
         name: 'id',
         label: 'Customer ID',
+        type: 'string',
         hidden: true
       },
       {
         name: 'code',
-        label: 'Code'
+        label: 'Code',
+        type: 'string'
       },
       {
         name: 'fullName',
-        label: 'Full Name'
+        label: 'Full Name',
+        type: 'string',
+        isLink: false
       },
       {
         name: 'tin',
-        label: 'TAX Number'
+        label: 'TAX Number',
+        type: 'string'
+      },
+      {
+        name: 'dueAt',
+        label: 'Due At',
+        type: 'date',
+        format: 'dd/MM/yyyy'
+      },
+      {
+        name: 'balance',
+        type: 'number',
+        label: 'Balance',
+        format: '0.2-2'
+      },
+      {
+        name: 'overdue',
+        type: 'boolean',
+        label: 'Overdue'
       }
     ]
   };
