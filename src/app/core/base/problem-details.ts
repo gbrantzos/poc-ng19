@@ -1,11 +1,11 @@
-export interface ProblemDetails {
+export type ProblemDetails = {
   type: string;
   title: string;
   status: number;
   detail: string;
   instance?: string;
   extraDetails: Record<string, string>;
-}
+};
 
 export function isProblemDetails(data: unknown): data is ProblemDetails {
   return (

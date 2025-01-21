@@ -3,13 +3,13 @@ import { SearchBoxComponent } from '@poc/shared/components/search-box/search-box
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 
-export interface Action {
+export type Action = {
   name: string;
   label?: string;
   tooltip?: string;
   icon?: string | string[];
   isPrimary?: boolean;
-}
+};
 
 @Component({
   selector: 'poc-toolbar',

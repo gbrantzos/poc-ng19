@@ -3,12 +3,12 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClass } from '@angular/common';
 
-interface NavbarItem {
+type NavbarItem = {
   name: string;
   label: string;
   route: string;
   icon: string[];
-}
+};
 
 @Component({
   selector: 'poc-top-navbar',

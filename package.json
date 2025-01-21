@@ -13,6 +13,7 @@
     "test": "npm run lint && ng test --no-watch",
     "test:watch": "ng test --browsers Chrome",
     "lint": "ng lint",
+    "lint-fix": "ng lint --fix",
     "build-info": "ts-node --project tsconfig.ts-node.json scripts/prepare.build-info.ts",
     "prettier:all": "npx prettier --write .",
     "html-beautify:all": "npx js-beautify --type html -r ./**/*.html",

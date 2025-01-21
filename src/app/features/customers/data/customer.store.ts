@@ -5,9 +5,9 @@ import { inject } from '@angular/core';
 import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
 import { ApiResponseResult } from '@poc/core/base/api-repsonse';
 
-export interface CustomerState {
+export type CustomerState = {
   listItems: readonly Customer[];
-}
+};
 
 const initialState = (): CustomerState => {
   return { listItems: [] };

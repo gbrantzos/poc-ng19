@@ -3,11 +3,11 @@ import { MatTableModule } from '@angular/material/table';
 import { DatePipe, DecimalPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 
-export interface TableDefinition {
+export type TableDefinition = {
   columns: ColumnDefinition[];
-}
+};
 
-export interface ColumnDefinition {
+export type ColumnDefinition = {
   name: string;
   label: string;
   type: 'string' | 'number' | 'date' | 'boolean';
@@ -19,7 +19,7 @@ export interface ColumnDefinition {
   isSortable?: boolean;
   // template ref
   // actions for row
-}
+};
 
 @Component({
   selector: 'poc-dynamic-table',

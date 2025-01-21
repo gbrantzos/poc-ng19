@@ -4,7 +4,7 @@ import { ApiResponse, ApiResponseResult, ApiSuccess } from '@poc/core/base/api-r
 import { catchError, firstValueFrom, map, of } from 'rxjs';
 import { handleHttpError } from '@poc/core/base/handle-errors';
 
-export interface CustomerDTO {
+export type CustomerDTO = {
   custID: string;
   code: string;
   fullName: string;
@@ -12,7 +12,7 @@ export interface CustomerDTO {
   dueAt?: Date;
   balance?: number;
   overdue?: boolean;
-}
+};
 
 @Injectable()
 export class CustomersApiClient {

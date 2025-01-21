@@ -1,11 +1,11 @@
 export type CustomerID = string;
 
-export interface Customer {
+export type Customer = {
   id: CustomerID;
   code: string;
   fullName: string;
   tin: string;
-  dueAt?: Date;
+  dueAt: Date;
   balance: number;
   overdue: boolean;
-}
+};

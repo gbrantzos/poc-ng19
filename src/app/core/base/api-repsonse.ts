@@ -3,15 +3,15 @@ export enum ApiResponseResult {
   ERROR
 }
 
-export interface ApiSuccess<T> {
+export type ApiSuccess<T> = {
   result: ApiResponseResult.SUCCESS;
   data: T;
-}
+};
 
-export interface ApiError {
+export type ApiError = {
   result: ApiResponseResult.ERROR;
   error: string;
   details?: string;
-}
+};
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiError;

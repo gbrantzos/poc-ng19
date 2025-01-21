@@ -58,7 +58,8 @@ module.exports = tseslint.config(
         {
           allow: ['debug', 'warn', 'error']
         }
-      ]
+      ],
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type']
     }
   },
   {

@@ -4,6 +4,12 @@
        [dataSource]="data()"
        class="border-separate">
 
+  <!-- mat-sort-header
+        [disabled]="!(columnDef.isSortable ?? false)"
+        [arrowPosition]="'before'"
+
+        -->
+
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
   <ng-container matColumnDef="{{columnDef.name}}">
     <th mat-header-cell
@@ -11,8 +17,6 @@
         [class.text-center]="columnDef.type === 'boolean'"
         [style]="columnDef.style"
         [class]="columnDef.class"
-        mat-sort-header
-        [disabled]="!(columnDef.isSortable ?? false)"
         *matHeaderCellDef> {{ columnDef.label }}
     </th>
     <td mat-cell
