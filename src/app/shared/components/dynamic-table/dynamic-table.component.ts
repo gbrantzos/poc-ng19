@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { DatePipe, DecimalPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
 
 export interface TableDefinition {
   columns: ColumnDefinition[];
@@ -15,14 +16,14 @@ export interface ColumnDefinition {
   style?: string;
   class?: string | string[];
   isLink?: boolean;
+  isSortable?: boolean;
   // template ref
-  // is sortable
   // actions for row
 }
 
 @Component({
   selector: 'poc-dynamic-table',
-  imports: [MatTableModule, NgSwitch, NgSwitchCase, DecimalPipe, DatePipe, NgSwitchDefault],
+  imports: [MatTableModule, NgSwitch, NgSwitchCase, DecimalPipe, DatePipe, NgSwitchDefault, MatSortHeader, MatSort],
   templateUrl: './dynamic-table.component.html',
   styleUrl: './dynamic-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -37,6 +38,10 @@ export class DynamicTableComponent {
     const columns = this.tableDefinition().columns;
 
     return columns.filter(c => !c.hidden).map(c => c.name);
+  });
+  protected _ = effect(() => {
+    const _ = this.data();
+    this.currentRowNum = 0;
   });
   protected currentRowNum = 0;
 

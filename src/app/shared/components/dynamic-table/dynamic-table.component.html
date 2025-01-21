@@ -1,4 +1,6 @@
 <table mat-table
+       matSort
+       matSortDisableClear
        [dataSource]="data()"
        class="border-separate">
 
@@ -7,6 +9,10 @@
     <th mat-header-cell
         [class.text-right]="columnDef.type === 'number'"
         [class.text-center]="columnDef.type === 'boolean'"
+        [style]="columnDef.style"
+        [class]="columnDef.class"
+        mat-sort-header
+        [disabled]="!(columnDef.isSortable ?? false)"
         *matHeaderCellDef> {{ columnDef.label }}
     </th>
     <td mat-cell
@@ -25,7 +31,7 @@
           {{ element[columnDef.name] | date:columnDef.format }}
         </ng-container>
         <ng-container *ngSwitchCase="'boolean'">
-          <i class="ph"
+          <i class="ph-bold"
              [class.ph-square]="!element[columnDef.name]"
              [class.ph-check-square]="element[columnDef.name]"></i>
         </ng-container>

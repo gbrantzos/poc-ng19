@@ -35,35 +35,41 @@ export class CustomersComponent implements OnInit {
       {
         name: 'code',
         label: 'Code',
-        type: 'string'
+        type: 'string',
+        isSortable: true
       },
       {
         name: 'fullName',
         label: 'Full Name',
         type: 'string',
-        isLink: false
+        isLink: false,
+        isSortable: true
       },
       {
         name: 'tin',
         label: 'TAX Number',
-        type: 'string'
+        type: 'string',
+        isSortable: true
       },
       {
         name: 'dueAt',
         label: 'Due At',
         type: 'date',
-        format: 'dd/MM/yyyy'
+        format: 'dd/MM/yyyy',
+        style: 'width:120px'
       },
       {
         name: 'balance',
         type: 'number',
         label: 'Balance',
-        format: '0.2-2'
+        format: '0.2-2',
+        style: 'width:120px'
       },
       {
         name: 'overdue',
         type: 'boolean',
-        label: 'Overdue'
+        label: 'Overdue',
+        style: 'width:120px'
       }
     ]
   };
