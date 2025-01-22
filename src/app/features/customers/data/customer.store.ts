@@ -1,9 +1,10 @@
-import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
-import { Customer } from '@poc/features/customers/domain/customer';
-import { withRequestState } from '@poc/core/base/request-state';
 import { inject } from '@angular/core';
-import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
+import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
 import { ApiResponseResult } from '@poc/core/base/api-repsonse';
+import { withRequestState } from '@poc/core/base/request-state';
+import { SearchCriteria, withSearchCriteria } from '@poc/core/base/search-criteria';
+import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
+import { Customer } from '@poc/features/customers/domain/customer';
 
 export type CustomerState = {
   listItems: readonly Customer[];
@@ -18,9 +19,12 @@ export const CustomerStore = signalStore(
     apiClient: inject(CustomersApiClient)
   })),
   withState<CustomerState>(initialState()),
+  withSearchCriteria(),
   withRequestState(),
   withMethods(store => ({
-    async find(): Promise<void> {
+    async find(criteria: Partial<SearchCriteria> = {}): Promise<void> {
+      store.updateCriteria(criteria);
+
       try {
         store.setLoading();
         patchState(store, { listItems: [] });

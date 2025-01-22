@@ -1,18 +1,16 @@
 <table mat-table
        matSort
        matSortDisableClear
+       (matSortChange)="sortChanged.emit($event)"
        [dataSource]="data()"
        class="border-separate">
-
-  <!-- mat-sort-header
-        [disabled]="!(columnDef.isSortable ?? false)"
-        [arrowPosition]="'before'"
-
-        -->
 
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
   <ng-container matColumnDef="{{columnDef.name}}">
     <th mat-header-cell
+        mat-sort-header
+        [disabled]="!(columnDef.isSortable ?? false)"
+        [arrowPosition]="columnDef.type === 'number' ? 'before' : 'after'"
         [class.text-right]="columnDef.type === 'number'"
         [class.text-center]="columnDef.type === 'boolean'"
         [style]="columnDef.style"

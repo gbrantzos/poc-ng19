@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { Action, ToolbarComponent } from '@poc/shared/components/toolbar/toolbar.component';
-import { TitleComponent } from '@poc/shared/components/title/title.component';
+import { Sort } from '@angular/material/sort';
 import { Customer } from '@poc/features/customers/domain/customer';
 import { DynamicTableComponent, TableDefinition } from '@poc/shared/components/dynamic-table/dynamic-table.component';
+import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
+import { TitleComponent } from '@poc/shared/components/title/title.component';
+import { Action, ToolbarComponent } from '@poc/shared/components/toolbar/toolbar.component';
 
 @Component({
   selector: 'poc-customer-list',
@@ -14,7 +16,9 @@ import { DynamicTableComponent, TableDefinition } from '@poc/shared/components/d
 export class CustomerListComponent {
   tableDefinition = input.required<TableDefinition>();
   toolbarActions = input<Action[]>();
-  toolbarClicked = output<string>();
+  toolbarClick = output<string>();
+  toolbarSearch = output<SearchEvent>();
+  tableSortChanged = output<Sort>();
 
   loading = input<boolean>(false);
   items = input<readonly Customer[]>([]);

@@ -1,8 +1,19 @@
 import { ChangeDetectionStrategy, Component, model, OnInit, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 import { isNotNullOrUndefined } from '@poc/core/base/is-notnull-or-undefined';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
+
+type QuickSearch = {
+  term: string;
+  fields: readonly string[];
+};
+type Filter = {
+  field: string;
+  operator: string;
+  value: string[];
+};
+export type SearchEvent = QuickSearch | 'CLEARED' | Filter[];
 
 @Component({
   selector: 'poc-search-box',
@@ -13,6 +24,7 @@ import { isNotNullOrUndefined } from '@poc/core/base/is-notnull-or-undefined';
 })
 export class SearchBoxComponent implements OnInit {
   searchTerm = model<string>();
+
   #search$ = toObservable(this.searchTerm).pipe(
     debounceTime(300),
     distinctUntilChanged(),
@@ -20,24 +32,23 @@ export class SearchBoxComponent implements OnInit {
     takeUntilDestroyed()
   );
 
-  search = output<string>();
-  changed = output<string>();
+  search = output<SearchEvent>();
+  changed = output<SearchEvent>();
   filter = output<void>();
-  clear = output<void>();
 
   ngOnInit() {
-    this.#search$.subscribe(value => this.changed.emit(value));
+    this.#search$.subscribe(value => this.changed.emit({ term: value, fields: [] }));
   }
 
   onSearch() {
     const searchTerm = this.searchTerm();
     if (searchTerm !== undefined) {
-      this.search.emit(searchTerm);
+      this.search.emit({ term: searchTerm, fields: [] });
     }
   }
 
   onClear() {
     this.searchTerm.set(undefined);
-    this.clear.emit();
+    this.search.emit('CLEARED');
   }
 }

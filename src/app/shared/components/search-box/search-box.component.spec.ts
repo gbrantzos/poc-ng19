@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { SearchBoxComponent } from './search-box.component';
-import { provideRouter } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { SearchBoxComponent } from './search-box.component';
 
 describe('SearchBoxComponent', () => {
   async function setup() {
@@ -36,7 +36,7 @@ describe('SearchBoxComponent', () => {
     searchButton.nativeElement.click();
     fixture.detectChanges();
 
-    expect(component.search.emit).toHaveBeenCalledWith('search click');
+    expect(component.search.emit).toHaveBeenCalledWith({ term: 'search click', fields: [] });
   });
 
   it('should emit changed (search input)', async () => {
@@ -51,7 +51,7 @@ describe('SearchBoxComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(component.changed.emit).toHaveBeenCalledWith('search input');
+    expect(component.changed.emit).toHaveBeenCalledWith({ term: 'search input', fields: [] });
   });
 
   it('should emit search (search enter)', async () => {
@@ -67,7 +67,7 @@ describe('SearchBoxComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(component.search.emit).toHaveBeenCalledWith('search enter');
+    expect(component.search.emit).toHaveBeenCalledWith({ term: 'search enter', fields: [] });
   });
 
   it('should emit filter', async () => {
@@ -84,12 +84,12 @@ describe('SearchBoxComponent', () => {
     expect(component.filter.emit).toHaveBeenCalled();
   });
 
-  it('should emit clear', async () => {
+  it('should emit search (clear)', async () => {
     const { component, fixture, debugElement } = await setup();
     const searchInput = debugElement.query(By.css('input[type="text"]'));
     const clearButton = debugElement.query(By.css('#clearButton'));
 
-    spyOn(component.clear, 'emit');
+    spyOn(component.search, 'emit');
     fixture.detectChanges();
 
     searchInput.nativeElement.value = 'dummy';
@@ -100,7 +100,7 @@ describe('SearchBoxComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(component.clear.emit).toHaveBeenCalled();
+    expect(component.search.emit).toHaveBeenCalledWith('CLEARED');
     expect(searchInput.nativeElement.value).toBe('');
   });
 });

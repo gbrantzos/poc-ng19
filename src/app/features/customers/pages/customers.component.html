@@ -1,5 +1,7 @@
 <poc-customer-list class="flex flex-col h-full overflow-y-auto"
-                   (toolbarClicked)="onAction($event)"
+                   (toolbarClick)="onAction($event)"
+                   (toolbarSearch)="onSearch($event)"
+                   (tableSortChanged)="onSortChanged($event)"
                    [tableDefinition]="tableDefinition"
                    [toolbarActions]="toolbarActions"
                    [loading]="loading()"

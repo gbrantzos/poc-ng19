@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { SearchBoxComponent } from '@poc/shared/components/search-box/search-box.component';
+import { SearchBoxComponent, SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 
@@ -20,5 +20,6 @@ export type Action = {
 })
 export class ToolbarComponent {
   toolbarActions = input<Action[]>();
-  toolbarClicked = output<string>();
+  toolbarClick = output<string>();
+  toolbarSearch = output<SearchEvent>();
 }

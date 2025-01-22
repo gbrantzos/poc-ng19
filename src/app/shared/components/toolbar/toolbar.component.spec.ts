@@ -19,4 +19,8 @@ describe('ToolbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // Should draw actions
+  // Should emit click (action)
+  // Should emit search
 });

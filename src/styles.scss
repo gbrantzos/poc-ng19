@@ -81,9 +81,18 @@ input::-ms-reveal {
   display: none;
 }
 
-//
-//.mat-sort-header-arrow svg {
-//  width: 16px !important;
-//  height: 16px !important;
-//  margin: -8px 0 0 8px !important;
-//}
+/* Fixes for material table */
+.text-center {
+  .mat-sort-header-container {
+    .mat-sort-header-content {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+  }
+}
+
+.mat-sort-header-arrow svg {
+  width: 16px !important;
+  height: 16px !important;
+  margin: -8px 0 0 -8px !important;
+}

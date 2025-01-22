@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { environment } from '@poc/environments/environment';
 import { BuildInfo } from '@poc/build-info';
+import { environment } from '@poc/environments/environment';
 
 @Component({
   selector: 'poc-footer',

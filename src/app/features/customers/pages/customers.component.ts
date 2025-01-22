@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
-import { CustomerStore } from '@poc/features/customers/data/customer.store';
+import { Sort } from '@angular/material/sort';
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
+import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import { TableDefinition } from '@poc/shared/components/dynamic-table/dynamic-table.component';
+import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 import { Action } from '@poc/shared/components/toolbar/toolbar.component';
 
 @Component({
@@ -100,14 +102,33 @@ export class CustomersComponent implements OnInit {
     this.#store.find();
   }
 
-  onAction(actionName: string) {
+  async onAction(actionName: string) {
     switch (actionName) {
       case 'refresh': {
-        this.#store.find();
+        await this.#store.find();
         break;
       }
       default:
         break;
     }
+  }
+
+  async onSearch(event: SearchEvent) {
+    if (typeof event === 'string') {
+      await this.#store.find({ quickSearch: { term: '', fields: [] } });
+      return;
+    }
+    if (Array.isArray(event)) {
+      // event.map(f => f.field)
+      return;
+    }
+    await this.#store.find({ quickSearch: { term: event.term, fields: event.fields } });
+  }
+
+  async onSortChanged(sort: Sort) {
+    if (sort.direction === '') {
+      return;
+    }
+    await this.#store.find({ sorting: { field: sort.active, direction: sort.direction } });
   }
 }

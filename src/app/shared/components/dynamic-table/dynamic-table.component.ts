@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
 import { DatePipe, DecimalPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
+import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 export type TableDefinition = {
   columns: ColumnDefinition[];
@@ -18,7 +18,6 @@ export type ColumnDefinition = {
   isLink?: boolean;
   isSortable?: boolean;
   // template ref
-  // actions for row
 };
 
 @Component({
@@ -33,6 +32,7 @@ export class DynamicTableComponent {
   data = input<readonly unknown[]>([]);
   loading = input<boolean>(false);
   cellClicked = output<{ row: unknown; columnDef: ColumnDefinition }>();
+  sortChanged = output<Sort>();
 
   protected displayedColumns = computed(() => {
     const columns = this.tableDefinition().columns;
