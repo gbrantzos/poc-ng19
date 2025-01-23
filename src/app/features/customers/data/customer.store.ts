@@ -49,7 +49,7 @@ export const customerDtoToModel = (dto: CustomerDTO): Customer => ({
   code: dto.code,
   fullName: dto.fullName,
   tin: dto.tin,
-  dueAt: dto.dueAt ?? new Date(),
+  dueAt: dto.dueAt ?? new Date(2025, 1, 1, 0, 0),
   balance: dto.balance ?? 0,
   overdue: dto.overdue ?? false
 });

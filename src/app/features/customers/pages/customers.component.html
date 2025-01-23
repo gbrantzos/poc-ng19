@@ -1,8 +1,6 @@
 <poc-customer-list class="flex flex-col h-full overflow-y-auto"
+                   [listDefinition]="listDefinition"
+                   [listData]="listData()"
                    (toolbarClick)="onAction($event)"
                    (toolbarSearch)="onSearch($event)"
-                   (tableSortChanged)="onSortChanged($event)"
-                   [tableDefinition]="tableDefinition"
-                   [toolbarActions]="toolbarActions"
-                   [loading]="loading()"
-                   [items]="items()" />
+                   (tableSortChanged)="onSortChanged($event)" />

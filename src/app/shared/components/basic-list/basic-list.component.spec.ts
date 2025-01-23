@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { ListDefinition } from '@poc/shared/components/basic-list/basic-list.component';
-import { CustomerListComponent } from './customer-list.component';
 
-describe('CustomerListComponent', async () => {
+import { BasicListComponent, ListDefinition } from './basic-list.component';
+
+describe('BasicListComponent', () => {
   async function setup() {
     await TestBed.configureTestingModule({
-      imports: [CustomerListComponent],
+      imports: [BasicListComponent],
       providers: [provideRouter([])]
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(CustomerListComponent);
+    const fixture = TestBed.createComponent(BasicListComponent);
     const component = fixture.componentInstance;
 
     const empty: ListDefinition = {

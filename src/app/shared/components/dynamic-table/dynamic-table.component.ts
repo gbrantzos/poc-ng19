@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, input, output, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
@@ -28,29 +28,27 @@ export type ColumnDefinition = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DynamicTableComponent {
-  sort = viewChild(MatSort);
+  rows = input<readonly unknown[]>([]);
+  loading = input<boolean>(false);
+  sorting = input<Sort>();
 
   tableDefinition = input.required<TableDefinition>();
-  data = input<readonly unknown[]>([]);
-  loading = input<boolean>(false);
+  tableData = computed(() => ({
+    rows: this.rows(),
+    loading: this.loading(),
+    sorting: this.sorting()
+  }));
+
   cellClicked = output<{ row: unknown; columnDef: ColumnDefinition }>();
   sortChanged = output<Sort>();
 
   protected displayedColumns = computed(() => {
     const columns = this.tableDefinition().columns;
-
     return columns.filter(c => !c.hidden).map(c => c.name);
   });
   protected _ = effect(() => {
-    const _ = this.data();
-    // const sort = this.sort();
-    // const definition = this.tableDefinition();
-
+    const _ = this.rows();
     this.currentRowNum = 0;
-
-    // TODO Come up with a better solution on initial sorting
-    // const firstVisible = definition.columns.filter(f => !f.hidden)[0];
-    //sort?.sort({ id: firstVisible.name, start: 'asc', disableClear: false });
   });
   protected currentRowNum = 0;
 

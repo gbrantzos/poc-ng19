@@ -1,0 +1,15 @@
+@let definition = listDefinition();
+@let data = listData();
+
+<poc-title class="flex"
+           [title]="definition.title" />
+<poc-toolbar class="flex"
+             [toolbarActions]="definition.toolbarActions"
+             (toolbarClick)="toolbarClick.emit($event)"
+             (toolbarSearch)="toolbarSearch.emit($event)" />
+<poc-dynamic-table class="flex flex-auto h-full overflow-auto"
+                   (sortChanged)="tableSortChanged.emit($event)"
+                   [tableDefinition]="definition.tableDefinition"
+                   [loading]="data.loading"
+                   [sorting]="sortingToMatSort(data.sorting)"
+                   [rows]="data.rows" />
