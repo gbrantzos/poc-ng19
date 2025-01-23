@@ -5,7 +5,7 @@
 - [ ] Not-found, make it configurable
 - [ ] Toolbar tests
 - [ ] Dynamic table tests
-- [ ] Dynamic table sorting
+- [x] Dynamic table sorting
 - [ ] Dynamic table row actions
 - [ ] Search-box setup
 - [ ] Search-box filters

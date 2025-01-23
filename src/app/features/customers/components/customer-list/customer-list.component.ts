@@ -22,5 +22,4 @@ export class CustomerListComponent {
 
   loading = input<boolean>(false);
   items = input<readonly Customer[]>([]);
-  protected readonly console = console;
 }

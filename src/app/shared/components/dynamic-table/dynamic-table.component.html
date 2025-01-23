@@ -1,6 +1,8 @@
 <table mat-table
        matSort
        matSortDisableClear
+       matSortActive="code"
+       matSortDirection="asc"
        (matSortChange)="sortChanged.emit($event)"
        [dataSource]="data()"
        class="border-separate">
