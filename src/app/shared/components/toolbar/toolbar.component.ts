@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { SearchBoxComponent, SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 import { NgClass } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
+import { SearchBoxComponent, SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
 export type Action = {
   name: string;
@@ -15,8 +15,8 @@ export type Action = {
   selector: 'poc-toolbar',
   imports: [SearchBoxComponent, NgClass, MatTooltip],
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'flex' }
 })
 export class ToolbarComponent {
   toolbarActions = input<Action[]>();

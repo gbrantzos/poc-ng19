@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { Sorting } from '@poc/core/base/search-criteria';
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
-import { ListData, ListDefinition } from '@poc/shared/components/basic-list/basic-list.component';
+import { ListData, ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { SearchEvent } from '@poc/shared/components/search-box/search-box.compon
   imports: [CustomerListComponent],
   templateUrl: './customers.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'p-3' }
+  host: { class: 'py-2 px-3' }
 })
 export class CustomersComponent implements OnInit {
   #store = inject(CustomerStore);
@@ -128,10 +128,7 @@ export class CustomersComponent implements OnInit {
     await this.#store.find({ quickSearch: { term: event.term, fields: event.fields } });
   }
 
-  async onSortChanged(sort: Sort) {
-    if (sort.direction === '') {
-      return;
-    }
-    await this.#store.find({ sorting: { field: sort.active, direction: sort.direction } });
+  async onSortChanged(sort: Sorting) {
+    await this.#store.find({ sorting: { field: sort.field, direction: sort.direction } });
   }
 }

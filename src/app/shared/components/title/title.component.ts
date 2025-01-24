@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   templateUrl: './title.component.html',
   styleUrl: './title.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'pb-1' }
+  host: { class: 'flex pb-1' }
 })
 export class TitleComponent {
   title = input.required<string>();

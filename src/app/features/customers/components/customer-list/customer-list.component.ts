@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { Sorting } from '@poc/core/base/search-criteria';
 import {
-  BasicListComponent,
   EMPTY_LIST,
+  GenericListComponent,
   ListData,
   ListDefinition
-} from '@poc/shared/components/basic-list/basic-list.component';
+} from '@poc/shared/components/generic-list/generic-list.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
 @Component({
   selector: 'poc-customer-list',
-  imports: [BasicListComponent],
+  imports: [GenericListComponent],
   templateUrl: './customer-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -20,5 +20,5 @@ export class CustomerListComponent {
 
   toolbarClick = output<string>();
   toolbarSearch = output<SearchEvent>();
-  tableSortChanged = output<Sort>();
+  tableSortChanged = output<Sorting>();
 }

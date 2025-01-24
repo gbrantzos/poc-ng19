@@ -7,7 +7,7 @@
 
     <!-- Logo -->
     <div class="logo inline-flex mr-2 pr-4 border-r border-r-slate-400 outline-none">
-      <a class="link inline-flex items-center gap-4 outline-none"
+      <a class="inline-flex items-center gap-4 outline-none"
          [routerLink]="'/'">
         <img src="navbar-logo.webp"
              width="28px"
@@ -21,11 +21,11 @@
     <div class="links flex flex-row gap-2 text-xl align-middle">
       @for (item of items; track item.name) {
       <a id="link_{{item.name}}"
-         class="link inline-flex items-center
+         class="inline-flex items-center
             px-4 py-2 h-10 cursor-pointer
             text-slate-300 text-y
             hover:text-slate-50 hover:bg-gray-500
-            rounded-lg"
+            rounded-md"
          [routerLink]="item.route"
          routerLinkActive="bg-gray-600">
         <i class="pt-1 opacity-70"

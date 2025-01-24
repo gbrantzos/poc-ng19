@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { ListDefinition } from '@poc/shared/components/basic-list/basic-list.component';
+import { ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
 import { CustomerListComponent } from './customer-list.component';
 
 describe('CustomerListComponent', async () => {

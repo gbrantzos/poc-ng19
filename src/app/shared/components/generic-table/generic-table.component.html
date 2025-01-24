@@ -3,9 +3,9 @@
 <table mat-table
        matSort
        matSortDisableClear
-       [matSortActive]="data.sorting?.active ?? ''"
+       [matSortActive]="data.sorting?.field ?? ''"
        [matSortDirection]="data.sorting?.direction ?? ''"
-       (matSortChange)="sortChanged.emit($event)"
+       (matSortChange)="onSortChanged($event)"
        [dataSource]="data.rows"
        class="border-separate">
 

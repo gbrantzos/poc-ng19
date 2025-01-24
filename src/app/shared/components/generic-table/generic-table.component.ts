@@ -2,6 +2,7 @@ import { DatePipe, DecimalPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '
 import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { Sorting } from '@poc/core/base/search-criteria';
 
 export type TableDefinition = {
   columns: ColumnDefinition[];
@@ -21,16 +22,17 @@ export type ColumnDefinition = {
 };
 
 @Component({
-  selector: 'poc-dynamic-table',
+  selector: 'poc-generic-table',
   imports: [MatTableModule, NgSwitch, NgSwitchCase, DecimalPipe, DatePipe, NgSwitchDefault, MatSortHeader, MatSort],
-  templateUrl: './dynamic-table.component.html',
-  styleUrl: './dynamic-table.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './generic-table.component.html',
+  styleUrl: './generic-table.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'flex' }
 })
-export class DynamicTableComponent {
+export class GenericTableComponent {
   rows = input<readonly unknown[]>([]);
   loading = input<boolean>(false);
-  sorting = input<Sort>();
+  sorting = input<Sorting>();
 
   tableDefinition = input.required<TableDefinition>();
   tableData = computed(() => ({
@@ -40,7 +42,7 @@ export class DynamicTableComponent {
   }));
 
   cellClicked = output<{ row: unknown; columnDef: ColumnDefinition }>();
-  sortChanged = output<Sort>();
+  sortChanged = output<Sorting>();
 
   protected displayedColumns = computed(() => {
     const columns = this.tableDefinition().columns;
@@ -53,4 +55,21 @@ export class DynamicTableComponent {
   protected currentRowNum = 0;
 
   onClick = (row: unknown, columnDef: ColumnDefinition) => this.cellClicked.emit({ row, columnDef });
+
+  onSortChanged(sort: Sort) {
+    const sorting = GenericTableComponent.matSortToSorting(sort);
+    if (sorting) {
+      this.sortChanged.emit(sorting);
+    }
+  }
+
+  protected static matSortToSorting = (sort: Sort): Sorting | undefined => {
+    if (sort.direction === '') {
+      return undefined;
+    }
+    return {
+      field: sort.active,
+      direction: sort.direction
+    };
+  };
 }

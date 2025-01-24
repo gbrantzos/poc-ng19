@@ -96,3 +96,8 @@ input::-ms-reveal {
   height: 16px !important;
   margin: -8px 0 0 -8px !important;
 }
+
+/* Links */
+.link {
+  @apply text-blue-600 dark:text-blue-500 hover:underline cursor-pointer;
+}

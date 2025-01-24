@@ -1,7 +1,7 @@
+import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgClass } from '@angular/common';
 
 type NavbarItem = {
   name: string;
@@ -14,7 +14,6 @@ type NavbarItem = {
   selector: 'poc-top-navbar',
   imports: [MatToolbar, RouterLink, RouterLinkActive, NgClass],
   templateUrl: './top-navbar.component.html',
-  styleUrl: './top-navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopNavbarComponent {

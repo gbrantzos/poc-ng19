@@ -1,22 +1,26 @@
 import { TestBed } from '@angular/core/testing';
-
-import { DynamicTableComponent, TableDefinition } from './dynamic-table.component';
 import { provideRouter } from '@angular/router';
 
-describe('DynamicTableComponent', () => {
+import { GenericListComponent, ListDefinition } from './generic-list.component';
+
+describe('BasicListComponent', () => {
   async function setup() {
     await TestBed.configureTestingModule({
-      imports: [DynamicTableComponent],
+      imports: [GenericListComponent],
       providers: [provideRouter([])]
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(DynamicTableComponent);
+    const fixture = TestBed.createComponent(GenericListComponent);
     const component = fixture.componentInstance;
 
-    const empty: TableDefinition = {
-      columns: []
+    const empty: ListDefinition = {
+      title: 'A Title',
+      tableDefinition: {
+        columns: []
+      },
+      toolbarActions: []
     };
-    fixture.componentRef.setInput('tableDefinition', empty);
+    fixture.componentRef.setInput('listDefinition', empty);
     fixture.detectChanges();
 
     return { fixture, component };
