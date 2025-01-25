@@ -2,8 +2,9 @@ import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { APP_MENU_ITEMS } from '@poc/definitions/app.menu-items.definition';
 
-type NavbarItem = {
+export type NavbarItem = {
   name: string;
   label: string;
   route: string;
@@ -17,18 +18,5 @@ type NavbarItem = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopNavbarComponent {
-  protected navbarItems = signal<NavbarItem[]>([
-    {
-      name: 'home',
-      label: 'Home',
-      route: '/home',
-      icon: ['ph', 'ph-house-line']
-    },
-    {
-      name: 'customers',
-      label: 'Customers',
-      route: '/customers',
-      icon: ['ph', 'ph-users-three']
-    }
-  ]);
+  protected navbarItems = signal<NavbarItem[]>(APP_MENU_ITEMS);
 }

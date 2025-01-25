@@ -20,7 +20,8 @@
     "paths": {
       "@poc/*": ["./src/app/*"],
       "@poc/environments/*": ["./src/environments/*"],
-      "@poc/mocks/*": ["./src/mocks/*"]
+      "@poc/mocks/*": ["./src/mocks/*"],
+      "@poc/definitions/*": ["./src/definitions/*"]
     }
   },
   "angularCompilerOptions": {

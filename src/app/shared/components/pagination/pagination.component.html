@@ -5,7 +5,19 @@
 <div class="flex-auto"></div>
 
 <!-- Rows per page -->
-<p id="pageSize">{{ pageSize() }} rows per page</p>
+<p id="pageSize">
+  <span class="cursor-pointer pr-0.5"
+        [matMenuTriggerFor]="menu">{{ pageSize() }}</span>
+  rows per page
+  <mat-menu #menu="matMenu"
+            xPosition="before">
+    @for (size of menuSizes(); track size) {
+    <button mat-menu-item
+            (click)="onMenuSize(size)">{{ size }}
+    </button>
+    }
+  </mat-menu>
+</p>
 <!-- Buttons -->
 <div class="pt-1.5 mb-1.5 flex flex-row items-center justify-center gap-1 text-xl">
   <i id="first"

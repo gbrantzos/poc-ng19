@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 
 export type PagingInfo = {
   current: number;
@@ -20,7 +21,7 @@ type Arrow = 'first' | 'prev' | 'next' | 'last';
 
 @Component({
   selector: 'poc-pagination',
-  imports: [],
+  imports: [MatMenu, MatMenuItem, MatMenuTrigger],
   templateUrl: './pagination.component.html',
   styles: `
     i.ph {
@@ -43,6 +44,7 @@ export class PaginationComponent {
   pagingChanged = output<PagingEvent>();
 
   pageSize = computed(() => (this.pagingInfo().pageSize == 0 ? 25 : this.pagingInfo().pageSize));
+  menuSizes = computed(() => [25, 50, 100]);
   summary = computed(() => {
     const pagingInfo = this.pagingInfo();
 
@@ -111,6 +113,17 @@ export class PaginationComponent {
     this.pagingChanged.emit({
       pageNumber: pageNumber,
       pageSize: pagingInfo.pageSize
+    });
+  }
+
+  onMenuSize(size: number) {
+    const pagingInfo = this.pagingInfo();
+    const current =
+      pagingInfo.current * size > pagingInfo.totalRows ? Math.ceil(pagingInfo.totalRows / size) : pagingInfo.current;
+
+    this.pagingChanged.emit({
+      pageNumber: current,
+      pageSize: size
     });
   }
 }
