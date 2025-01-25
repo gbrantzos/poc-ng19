@@ -1,5 +1,7 @@
 <poc-generic-list [listDefinition]="listDefinition()"
                   [listData]="listData()"
+                  [pagingInfo]="pagingInfo()"
                   (toolbarClick)="toolbarClick.emit($event)"
                   (toolbarSearch)="toolbarSearch.emit($event)"
-                  (tableSortChanged)="tableSortChanged.emit($event)" />
+                  (tableSortChanged)="tableSortChanged.emit($event)"
+                  (pagingChanged)="pagingChanged.emit($event)" />

@@ -1,14 +1,20 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ApiResponse, ApiResponseResult } from '@poc/core/base/api-repsonse';
+import { QueryResult } from '@poc/core/base/query-result';
 import { customerDtoToModel, CustomerStore } from '@poc/features/customers/data/customer.store';
 import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
-import { ApiResponse, ApiResponseResult } from '@poc/core/base/api-repsonse';
 import customersResponse from '@poc/mocks/customers.json';
 
 const fakeApiClient = {
   find: () =>
-    Promise.resolve<ApiResponse<CustomerDTO[]>>({
+    Promise.resolve<ApiResponse<QueryResult<CustomerDTO>>>({
       result: ApiResponseResult.SUCCESS,
-      data: [] as CustomerDTO[]
+      data: {
+        rows: [],
+        totalRows: 0,
+        pageNumber: 0,
+        pageSize: 0
+      }
     })
 };
 
@@ -34,11 +40,28 @@ describe('Customer Store', () => {
   it('should read customers from API client', async () => {
     const { store, fakeApiClient: api } = setup();
 
-    const customers = customersResponse.rows as CustomerDTO[];
+    const customersQueryResults: QueryResult<CustomerDTO> = {
+      rows: customersResponse.rows.map(c => ({
+        custID: c.custID,
+        code: c.code,
+        fullName: c.fullName,
+        tin: c.tin,
+        dueAt: new Date(c.dueAt),
+        balance: c.balance,
+        overdue: c.overdue
+      })),
+      totalRows: customersResponse.totalRows,
+      pageSize: customersResponse.pageSize,
+      pageNumber: customersResponse.pageNumber
+    };
+    const customers = customersQueryResults.rows as CustomerDTO[];
     api.find = () => {
-      const response: ApiResponse<CustomerDTO[]> = {
+      const response: ApiResponse<QueryResult<CustomerDTO>> = {
         result: ApiResponseResult.SUCCESS,
-        data: customers
+        data: {
+          rows: customers,
+          totalRows: customers.length
+        }
       };
       return Promise.resolve(response);
     };
@@ -77,9 +100,12 @@ describe('Customer Store', () => {
     const { store, fakeApiClient: api } = setup();
 
     api.find = () => {
-      const response: ApiResponse<CustomerDTO[]> = {
+      const response: ApiResponse<QueryResult<CustomerDTO>> = {
         result: ApiResponseResult.SUCCESS,
-        data: []
+        data: {
+          rows: [],
+          totalRows: 0
+        }
       };
       return new Promise(r => setTimeout(() => r(response), 2000));
     };

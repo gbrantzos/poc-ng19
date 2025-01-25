@@ -4,7 +4,7 @@
                   (search)="toolbarSearch.emit($event)" />
   <div class="flex-1"></div>
 
-  <div class="flex flex-row w-2/3">
+  <div class="flex flex-row h-8 w-2/3">
 
     @let actions = toolbarActions();
     @for (action of actions; track action.name; let isFirst = $first; let isLast = $last) {

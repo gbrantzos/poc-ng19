@@ -1,4 +1,5 @@
-import { patchState, signalStoreFeature, withMethods, withState } from '@ngrx/signals';
+import { computed } from '@angular/core';
+import { patchState, signalStoreFeature, withComputed, withMethods, withState } from '@ngrx/signals';
 
 export type QuickSearch = {
   term: string;
@@ -28,6 +29,13 @@ export function withSearchCriteria() {
       sorting: { field: '', direction: 'asc' },
       paging: { number: 1, size: 25 }
     }),
+    withComputed(store => ({
+      searchCriteria: computed<SearchCriteria>(() => ({
+        quickSearch: store.quickSearch(),
+        sorting: store.sorting(),
+        paging: store.paging()
+      }))
+    })),
     withMethods(store => ({
       updateCriteria: (criteria: Partial<SearchCriteria>) => {
         patchState(store, state => ({

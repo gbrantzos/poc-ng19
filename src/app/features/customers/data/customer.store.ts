@@ -8,10 +8,14 @@ import { Customer } from '@poc/features/customers/domain/customer';
 
 export type CustomerState = {
   listItems: readonly Customer[];
+  totalItems: number;
 };
 
 const initialState = (): CustomerState => {
-  return { listItems: [] };
+  return {
+    listItems: [],
+    totalItems: 0
+  };
 };
 
 export const CustomerStore = signalStore(
@@ -27,10 +31,21 @@ export const CustomerStore = signalStore(
 
       try {
         store.setLoading();
-        patchState(store, { listItems: [] });
-        const response = await store.apiClient.find();
+        patchState(store, { listItems: [], totalItems: 0 });
+
+        const response = await store.apiClient.find(store.searchCriteria());
         if (response.result == ApiResponseResult.SUCCESS) {
-          patchState(store, { listItems: response.data.map(c => customerDtoToModel(c)) });
+          const data = response.data;
+          patchState(store, {
+            listItems: data.rows.map(c => customerDtoToModel(c)),
+            totalItems: data.totalRows
+          });
+          patchState(store, {
+            paging: {
+              number: data.pageNumber ?? 0,
+              size: data.pageSize ?? 0
+            }
+          });
           store.setLoaded();
         }
         if (response.result == ApiResponseResult.ERROR) {

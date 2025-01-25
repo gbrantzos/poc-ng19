@@ -3,6 +3,7 @@ import { Sorting } from '@poc/core/base/search-criteria';
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import { ListData, ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
+import { PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
 @Component({
@@ -20,6 +21,14 @@ export class CustomersComponent implements OnInit {
     loading: this.#store.loading(),
     sorting: this.#store.sorting()
   }));
+  protected pagingInfo = computed<PagingInfo>(() => {
+    const pagingInfo: PagingInfo = {
+      totalRows: this.#store.totalItems(),
+      current: this.#store.paging().number,
+      pageSize: this.#store.paging().size
+    };
+    return pagingInfo;
+  });
   protected listDefinition: ListDefinition = {
     title: 'Customers List',
     tableDefinition: {
@@ -128,7 +137,9 @@ export class CustomersComponent implements OnInit {
     await this.#store.find({ quickSearch: { term: event.term, fields: event.fields } });
   }
 
-  async onSortChanged(sort: Sorting) {
+  onSortChanged = async (sort: Sorting) =>
     await this.#store.find({ sorting: { field: sort.field, direction: sort.direction } });
-  }
+
+  onPagingChanged = async (event: PagingEvent) =>
+    await this.#store.find({ paging: { number: event.pageNumber, size: event.pageSize } });
 }

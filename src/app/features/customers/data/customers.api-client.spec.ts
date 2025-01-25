@@ -1,8 +1,9 @@
-import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
+import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
 import { ApiResponseResult } from '@poc/core/base/api-repsonse';
+import { QueryResult } from '@poc/core/base/query-result';
+import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
 import customersResponse from '@poc/mocks/customers.json';
 
 describe('Customers API Client', () => {
@@ -29,27 +30,40 @@ describe('Customers API Client', () => {
   it('should get customers', async () => {
     const { httpTestingController, apiClient, url } = setup();
 
-    const apiResponse = apiClient.find();
-    const mockReq = httpTestingController.expectOne(url);
+    const apiResponse = apiClient.find({});
+    const mockReq = httpTestingController.expectOne(req => req.url.startsWith(url));
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.responseType).toEqual('json');
 
-    const fakeCustomers = customersResponse;
-    mockReq.flush(fakeCustomers);
+    const customersQueryResults: QueryResult<CustomerDTO> = {
+      rows: customersResponse.rows.map(c => ({
+        custID: c.custID,
+        code: c.code,
+        fullName: c.fullName,
+        tin: c.tin,
+        dueAt: new Date(c.dueAt),
+        balance: c.balance,
+        overdue: c.overdue
+      })),
+      totalRows: customersResponse.totalRows,
+      pageSize: customersResponse.pageSize,
+      pageNumber: customersResponse.pageNumber
+    };
+    mockReq.flush(customersQueryResults);
 
     const response = await apiResponse;
     expect(response.result).toBe(ApiResponseResult.SUCCESS);
     if (response.result === ApiResponseResult.SUCCESS) {
       const data = response.data;
-      expect(data).toEqual(fakeCustomers.rows);
+      expect(data.rows).toEqual(customersQueryResults.rows);
     }
   });
 
   it('should handle server errors (problem details)', async () => {
     const { httpTestingController, apiClient, url } = setup();
 
-    const apiResponse = apiClient.find();
-    const mockReq = httpTestingController.expectOne(url);
+    const apiResponse = apiClient.find({});
+    const mockReq = httpTestingController.expectOne(req => req.url.startsWith(url));
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.responseType).toEqual('json');
 
@@ -72,8 +86,8 @@ describe('Customers API Client', () => {
   it('should handle server errors (generic error)', async () => {
     const { httpTestingController, apiClient, url } = setup();
 
-    const apiResponse = apiClient.find();
-    const mockReq = httpTestingController.expectOne(url);
+    const apiResponse = apiClient.find({});
+    const mockReq = httpTestingController.expectOne(req => req.url.startsWith(url));
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.responseType).toEqual('json');
 
@@ -90,8 +104,8 @@ describe('Customers API Client', () => {
   it('should handle client errors', async () => {
     const { httpTestingController, apiClient, url } = setup();
 
-    const apiResponse = apiClient.find();
-    const mockReq = httpTestingController.expectOne(url);
+    const apiResponse = apiClient.find({});
+    const mockReq = httpTestingController.expectOne(req => req.url.startsWith(url));
     expect(mockReq.cancelled).toBeFalsy();
 
     mockReq.error(new ProgressEvent('error'), { statusText: 'Boom! Custom error!', status: 0 });

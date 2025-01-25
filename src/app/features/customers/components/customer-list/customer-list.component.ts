@@ -6,6 +6,7 @@ import {
   ListData,
   ListDefinition
 } from '@poc/shared/components/generic-list/generic-list.component';
+import { EMPTY_PAGING, PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
 @Component({
@@ -17,8 +18,10 @@ import { SearchEvent } from '@poc/shared/components/search-box/search-box.compon
 export class CustomerListComponent {
   listDefinition = input.required<ListDefinition>();
   listData = input<ListData>(EMPTY_LIST);
+  pagingInfo = input<PagingInfo>(EMPTY_PAGING);
 
   toolbarClick = output<string>();
   toolbarSearch = output<SearchEvent>();
   tableSortChanged = output<Sorting>();
+  pagingChanged = output<PagingEvent>();
 }

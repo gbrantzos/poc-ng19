@@ -1,6 +1,8 @@
 <poc-customer-list class="flex flex-col h-full overflow-y-auto"
                    [listDefinition]="listDefinition"
                    [listData]="listData()"
+                   [pagingInfo]="pagingInfo()"
                    (toolbarClick)="onAction($event)"
                    (toolbarSearch)="onSearch($event)"
-                   (tableSortChanged)="onSortChanged($event)" />
+                   (tableSortChanged)="onSortChanged($event)"
+                   (pagingChanged)="onPagingChanged($event)" />

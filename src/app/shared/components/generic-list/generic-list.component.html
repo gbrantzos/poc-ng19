@@ -11,4 +11,5 @@
                    [loading]="data.loading"
                    [sorting]="data.sorting"
                    [rows]="data.rows" />
-<poc-pagination />
+<poc-pagination [pagingInfo]="pagingInfo()"
+                (pagingChanged)="pagingChanged.emit($event)" />

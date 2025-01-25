@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Sorting } from '@poc/core/base/search-criteria';
 import { GenericTableComponent, TableDefinition } from '@poc/shared/components/generic-table/generic-table.component';
-import { PaginationComponent } from '@poc/shared/components/pagination/pagination.component';
+import {
+  EMPTY_PAGING,
+  PaginationComponent,
+  PagingEvent,
+  PagingInfo
+} from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 import { TitleComponent } from '@poc/shared/components/title/title.component';
 import { Action, ToolbarComponent } from '@poc/shared/components/toolbar/toolbar.component';
@@ -34,8 +39,10 @@ export const EMPTY_LIST: ListData = {
 export class GenericListComponent {
   listDefinition = input.required<ListDefinition>();
   listData = input<ListData>(EMPTY_LIST);
+  pagingInfo = input<PagingInfo>(EMPTY_PAGING);
 
   toolbarClick = output<string>();
   toolbarSearch = output<SearchEvent>();
   tableSortChanged = output<Sorting>();
+  pagingChanged = output<PagingEvent>();
 }

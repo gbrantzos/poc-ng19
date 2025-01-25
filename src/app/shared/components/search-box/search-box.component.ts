@@ -19,7 +19,6 @@ export type SearchEvent = QuickSearch | 'CLEARED' | Filter[];
   selector: 'poc-search-box',
   imports: [FormsModule],
   templateUrl: './search-box.component.html',
-  styleUrl: './search-box.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchBoxComponent implements OnInit {
