@@ -1,4 +1,4 @@
-import { DatePipe, DecimalPipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { DatePipe, DecimalPipe, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -23,11 +23,21 @@ export type ColumnDefinition = {
 
 @Component({
   selector: 'poc-generic-table',
-  imports: [MatTableModule, NgSwitch, NgSwitchCase, DecimalPipe, DatePipe, NgSwitchDefault, MatSortHeader, MatSort],
+  imports: [
+    MatTableModule,
+    NgSwitch,
+    NgSwitchCase,
+    DecimalPipe,
+    DatePipe,
+    NgSwitchDefault,
+    MatSortHeader,
+    MatSort,
+    NgClass
+  ],
   templateUrl: './generic-table.component.html',
   styleUrl: './generic-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'flex' }
+  host: { class: 'flex flex-col' }
 })
 export class GenericTableComponent {
   rows = input<readonly unknown[]>([]);

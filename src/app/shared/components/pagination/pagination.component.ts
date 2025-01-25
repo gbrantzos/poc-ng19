@@ -44,7 +44,7 @@ export class PaginationComponent {
   pagingChanged = output<PagingEvent>();
 
   pageSize = computed(() => (this.pagingInfo().pageSize == 0 ? 25 : this.pagingInfo().pageSize));
-  menuSizes = computed(() => [25, 50, 100]);
+  menuSizes = input<number[]>([10, 25, 50, 100]);
   summary = computed(() => {
     const pagingInfo = this.pagingInfo();
 

@@ -7,6 +7,7 @@
        [matSortDirection]="data.sorting?.direction ?? ''"
        (matSortChange)="onSortChanged($event)"
        [dataSource]="data.rows"
+       [ngClass]="{'min-h-[400px]': !data.rows.length}"
        class="border-separate">
 
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
@@ -60,7 +61,7 @@
       [class.text-gray-50]="index === currentRowNum">
   </tr>
 
-  <tr class="mat-row"
+  <tr class="mat-row min-h-[400px]"
       *matNoDataRow>
     @if (data.loading) {
     <td class="mat-cell"
@@ -84,3 +85,4 @@
   </tr>
 
 </table>
+<div class="flex"></div>
