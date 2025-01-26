@@ -15,6 +15,8 @@ type Filter = {
 };
 export type SearchEvent = QuickSearch | 'CLEARED' | Filter[];
 
+const SEARCH_DEBOUNCE_TIME = 300;
+
 @Component({
   selector: 'poc-search-box',
   imports: [FormsModule],
@@ -25,7 +27,7 @@ export class SearchBoxComponent implements OnInit {
   searchTerm = model<string>();
 
   #search$ = toObservable(this.searchTerm).pipe(
-    debounceTime(300),
+    debounceTime(SEARCH_DEBOUNCE_TIME),
     distinctUntilChanged(),
     filter(isNotNullOrUndefined),
     takeUntilDestroyed()

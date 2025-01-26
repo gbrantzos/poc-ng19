@@ -59,7 +59,16 @@ module.exports = tseslint.config(
           allow: ['debug', 'warn', 'error']
         }
       ],
-      '@typescript-eslint/consistent-type-definitions': ['error', 'type']
+      'no-else-return': 'error',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@angular-eslint/prefer-on-push-component-change-detection': ['warn'],
+      'no-magic-numbers': ['warn', { ignore: [0, 1], ignoreArrayIndexes: true, ignoreClassFieldInitialValues: true }]
+    }
+  },
+  {
+    files: ['**/*spec.ts'],
+    rules: {
+      'no-magic-numbers': 'off'
     }
   },
   {

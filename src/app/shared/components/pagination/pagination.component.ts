@@ -19,6 +19,10 @@ export type PagingEvent = {
 
 type Arrow = 'first' | 'prev' | 'next' | 'last';
 
+// eslint-disable-next-line no-magic-numbers
+const DEFAULT_SIZES = [10, 25, 50, 100];
+const DEFAULT_SIZE = 25;
+
 @Component({
   selector: 'poc-pagination',
   imports: [MatMenu, MatMenuItem, MatMenuTrigger],
@@ -43,8 +47,8 @@ export class PaginationComponent {
   pagingInfo = input.required<PagingInfo>();
   pagingChanged = output<PagingEvent>();
 
-  pageSize = computed(() => (this.pagingInfo().pageSize == 0 ? 25 : this.pagingInfo().pageSize));
-  menuSizes = input<number[]>([10, 25, 50, 100]);
+  pageSize = computed(() => (this.pagingInfo().pageSize == 0 ? DEFAULT_SIZE : this.pagingInfo().pageSize));
+  menuSizes = input<number[]>(DEFAULT_SIZES);
   summary = computed(() => {
     const pagingInfo = this.pagingInfo();
 
@@ -52,7 +56,7 @@ export class PaginationComponent {
       return 'No rows displayed';
     }
 
-    let summary = '';
+    let summary: string;
     const current = pagingInfo.totalRows >= pagingInfo.pageSize ? pagingInfo.current : 1;
     const startRow = pagingInfo.pageSize * (current - 1) + 1;
     const lastRow =

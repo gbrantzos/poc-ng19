@@ -16,6 +16,8 @@ export type CustomerDTO = {
   overdue?: boolean;
 };
 
+const DEFAULT_PAGE_SIZE = 25;
+
 @Injectable()
 export class CustomersApiClient {
   #url = 'http://localhost:3200/api/customers-full';
@@ -24,7 +26,7 @@ export class CustomersApiClient {
   find(criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<CustomerDTO>>> {
     const params: HttpParams = new HttpParams()
       .set('pageNumber', criteria.paging?.number ?? 1)
-      .set('pageSize', criteria.paging?.size ?? 25);
+      .set('pageSize', criteria.paging?.size ?? DEFAULT_PAGE_SIZE);
     const call$ = this.#http.get<QueryResult<CustomerDTO>>(this.#url, { params }).pipe(
       map(res => {
         return {

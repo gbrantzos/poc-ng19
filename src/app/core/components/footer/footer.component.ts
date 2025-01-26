@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BuildInfo } from '@poc/build-info';
 import { environment } from '@poc/environments/environment';
 
@@ -6,7 +6,8 @@ import { environment } from '@poc/environments/environment';
   selector: 'poc-footer',
   imports: [],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
   protected buildInfo = BuildInfo;

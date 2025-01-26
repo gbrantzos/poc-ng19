@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TopNavbarComponent } from '@poc/core/components/top-navbar/top-navbar.component';
 import { RouterOutlet } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'poc-default-layout',
   imports: [TopNavbarComponent, RouterOutlet],
   templateUrl: './default-layout.component.html',
-  styleUrl: './default-layout.component.scss'
+  styleUrl: './default-layout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefaultLayoutComponent {}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FooterComponent } from '@poc/core/components/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'poc-footer-only',
   imports: [FooterComponent, RouterOutlet],
   templateUrl: './footer-only.component.html',
-  styleUrl: './footer-only.component.scss'
+  styleUrl: './footer-only.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterOnlyComponent {}
