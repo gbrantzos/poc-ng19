@@ -30,22 +30,11 @@
         [class]="columnDef.class"
         *matCellDef="let element; let row"
         (click)="onClick(row, columnDef)">
-      <ng-container [ngSwitch]="columnDef.type">
-        <ng-container *ngSwitchCase="'number'">
-          {{ element[columnDef.name] | number:columnDef.format }}
-        </ng-container>
-        <ng-container *ngSwitchCase="'date'">
-          {{ element[columnDef.name] | date:columnDef.format }}
-        </ng-container>
-        <ng-container *ngSwitchCase="'boolean'">
-          <i class="ph-bold"
-             [class.ph-square]="!element[columnDef.name]"
-             [class.ph-check-square]="element[columnDef.name]"></i>
-        </ng-container>
-        <ng-container *ngSwitchDefault>
-          {{ element[columnDef.name] }}
-        </ng-container>
-      </ng-container>
+      <ng-container *ngTemplateOutlet="getColumnTemplate(columnDef.name) ?? defaultColumnTemplate; context: {
+          $implicit: element[columnDef.name],
+          row,
+          columnDef
+        }" />
     </td>
   </ng-container>
   }
@@ -86,3 +75,24 @@
 
 </table>
 <div class="flex"></div>
+
+<ng-template #defaultColumnTemplate
+             let-row="row"
+             let-columnDef="columnDef">
+  <ng-container [ngSwitch]="columnDef.type">
+    <ng-container *ngSwitchCase="'number'">
+      {{ row[columnDef.name] | number:columnDef.format }}
+    </ng-container>
+    <ng-container *ngSwitchCase="'date'">
+      {{ row[columnDef.name] | date:columnDef.format }}
+    </ng-container>
+    <ng-container *ngSwitchCase="'boolean'">
+      <i class="ph-bold"
+         [class.ph-square]="!row[columnDef.name]"
+         [class.ph-check-square]="row[columnDef.name]"></i>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      {{ row[columnDef.name] }}
+    </ng-container>
+  </ng-container>
+</ng-template>

@@ -1,8 +1,17 @@
-import { DatePipe, DecimalPipe, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
+import {
+  DatePipe,
+  DecimalPipe,
+  NgClass,
+  NgSwitch,
+  NgSwitchCase,
+  NgSwitchDefault,
+  NgTemplateOutlet
+} from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output, TemplateRef } from '@angular/core';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { Sorting } from '@poc/core/base/search-criteria';
+import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
 
 export type TableDefinition = {
   columns: ColumnDefinition[];
@@ -18,7 +27,6 @@ export type ColumnDefinition = {
   class?: string | string[];
   isLink?: boolean;
   isSortable?: boolean;
-  // template ref
 };
 
 @Component({
@@ -32,7 +40,8 @@ export type ColumnDefinition = {
     NgSwitchDefault,
     MatSortHeader,
     MatSort,
-    NgClass
+    NgClass,
+    NgTemplateOutlet
   ],
   templateUrl: './generic-table.component.html',
   styleUrl: './generic-table.component.scss',
@@ -50,6 +59,7 @@ export class GenericTableComponent {
     loading: this.loading(),
     sorting: this.sorting()
   }));
+  templates = input<readonly TemplateNameDirective[]>([]);
 
   cellClicked = output<{ row: unknown; columnDef: ColumnDefinition }>();
   sortChanged = output<Sorting>();
@@ -71,6 +81,11 @@ export class GenericTableComponent {
     if (sorting) {
       this.sortChanged.emit(sorting);
     }
+  }
+
+  protected getColumnTemplate(name?: string): TemplateRef<unknown> | undefined {
+    const templates = this.templates();
+    return templates.find(t => t.name() === name)?.template;
   }
 
   protected static matSortToSorting = (sort: Sort): Sorting | undefined => {

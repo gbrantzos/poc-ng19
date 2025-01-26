@@ -102,7 +102,7 @@ describe('PaginationComponent', () => {
       fixture.componentRef.setInput('pagingInfo', pagingInfo);
       fixture.detectChanges();
       expect(summary.nativeElement.innerHTML).toEqual(summaryText);
-      expect(pageSize.nativeElement.innerHTML).toEqual(rowsPerPageText);
+      expect(pageSize.nativeElement.innerHTML + ' rows per page').toEqual(rowsPerPageText);
       expect(arrowFirst.nativeElement.classList.contains('disabled')).toBe(arrowsState.first);
       expect(arrowPrev.nativeElement.classList.contains('disabled')).toBe(arrowsState.prev);
       expect(arrowNext.nativeElement.classList.contains('disabled')).toBe(arrowsState.next);

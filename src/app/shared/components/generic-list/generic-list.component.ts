@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, contentChildren, input, output } from '@angular/core';
 import { Sorting } from '@poc/core/base/search-criteria';
 import { GenericTableComponent, TableDefinition } from '@poc/shared/components/generic-table/generic-table.component';
+import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
 import {
   EMPTY_PAGING,
   PaginationComponent,
@@ -40,6 +41,7 @@ export class GenericListComponent {
   listDefinition = input.required<ListDefinition>();
   listData = input<ListData>(EMPTY_LIST);
   pagingInfo = input<PagingInfo>(EMPTY_PAGING);
+  templates = contentChildren(TemplateNameDirective);
 
   toolbarClick = output<string>();
   toolbarSearch = output<SearchEvent>();

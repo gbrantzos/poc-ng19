@@ -6,12 +6,13 @@ import {
   ListData,
   ListDefinition
 } from '@poc/shared/components/generic-list/generic-list.component';
+import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
 import { EMPTY_PAGING, PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
 @Component({
   selector: 'poc-customer-list',
-  imports: [GenericListComponent],
+  imports: [GenericListComponent, TemplateNameDirective],
   templateUrl: './customer-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
