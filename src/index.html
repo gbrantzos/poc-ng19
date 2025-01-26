@@ -20,10 +20,64 @@
         type="image/png"
         href="favicon-32x32.png" />
 
+  <style>
+    .sbl-rect-spin-fill {
+      color: #5a5a5a;
+      height: 82px;
+      width: 82px;
+      position: relative;
+      border: 4px solid;
+      display: inline-block;
+      animation: rect-rotate 2s linear infinite;
+    }
+
+    .sbl-rect-spin-fill::after {
+      content: '';
+      height: 0;
+      width: 74px;
+      display: block;
+      background: #BEF264;
+      opacity: 0.7;
+      animation: fill-rect 2s linear infinite;
+    }
+
+    @keyframes rect-rotate {
+      0% {
+        transform: rotate(0);
+      }
+
+      50%,
+      100% {
+        transform: rotate(180deg);
+      }
+    }
+
+    @keyframes fill-rect {
+
+      0%,
+      50% {
+        height: 0;
+      }
+
+      100% {
+        height: 78px;
+      }
+    }
+
+  </style>
 </head>
 
 <body class="mat-typography">
-  <poc-root></poc-root>
+  <poc-root>
+
+    <div class="flex flex-col items-center justify-center h-screen bg-gray-200">
+      <div class="flex mb-12 text-xl font-[Tahoma]">
+        <p>Preparing application...</p>
+      </div>
+      <div class="sbl-rect-spin-fill"></div>
+    </div>
+
+  </poc-root>
 </body>
 
 </html>
