@@ -4,7 +4,7 @@ import { TemplateNameDirective } from './template-name.directive';
 
 @Component({
   imports: [TemplateNameDirective],
-  template: '<ng-template #test columnName="column"></ng-template>',
+  template: '<ng-template columnName="column"></ng-template>',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestComponent {

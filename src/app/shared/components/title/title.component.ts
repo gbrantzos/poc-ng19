@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'poc-title',
   imports: [],
   templateUrl: './title.component.html',
-  styleUrl: './title.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex pb-1' }
 })

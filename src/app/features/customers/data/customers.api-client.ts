@@ -24,9 +24,7 @@ export class CustomersApiClient {
   #http = inject(HttpClient);
 
   find(criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<CustomerDTO>>> {
-    const params: HttpParams = new HttpParams()
-      .set('pageNumber', criteria.paging?.number ?? 1)
-      .set('pageSize', criteria.paging?.size ?? DEFAULT_PAGE_SIZE);
+    const params = this.prepareParams(criteria);
     const call$ = this.#http.get<QueryResult<CustomerDTO>>(this.#url, { params }).pipe(
       map(res => {
         return {
@@ -38,5 +36,26 @@ export class CustomersApiClient {
     );
 
     return firstValueFrom(call$);
+  }
+
+  private prepareParams(criteria: Partial<SearchCriteria>): HttpParams {
+    let params: HttpParams = new HttpParams();
+
+    if (criteria.paging) {
+      params = params
+        .append('pageNumber', criteria.paging?.number ?? 1)
+        .append('pageSize', criteria.paging?.size ?? DEFAULT_PAGE_SIZE);
+    }
+
+    if (criteria.sorting) {
+      const term = criteria.sorting.direction == 'desc' ? `-${criteria.sorting.field}` : criteria.sorting.field;
+      params = params.append('sortBy', term);
+    }
+
+    if (criteria.quickSearch) {
+      params = params.append('q', `*:${criteria.quickSearch.term}`);
+    }
+
+    return params;
   }
 }
