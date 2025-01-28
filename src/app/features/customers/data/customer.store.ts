@@ -9,12 +9,14 @@ import { Customer } from '@poc/features/customers/domain/customer';
 export type CustomerState = {
   listItems: readonly Customer[];
   totalItems: number;
+  selected: Customer | null;
 };
 
 const initialState = (): CustomerState => {
   return {
     listItems: [],
-    totalItems: 0
+    totalItems: 0,
+    selected: null
   };
 };
 
@@ -55,6 +57,19 @@ export const CustomerStore = signalStore(
         console.error('Error calling Customer API', e);
         store.setError((e as Error).message);
       }
+    },
+    load() {
+      patchState(store, {
+        selected: {
+          id: '',
+          code: '',
+          fullName: '',
+          tin: ''
+        } as Customer
+      });
+    },
+    clear() {
+      patchState(store, { selected: null });
     }
   }))
 );

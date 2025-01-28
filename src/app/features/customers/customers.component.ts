@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit } from '@angular/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { Sorting } from '@poc/core/base/search-criteria';
 import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
+import { CustomerEditorComponent } from '@poc/features/customers/components/customer-editor/customer-editor.component';
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import { ListData, ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
@@ -9,10 +11,9 @@ import { SearchEvent } from '@poc/shared/components/search-box/search-box.compon
 
 @Component({
   selector: 'poc-customers',
-  imports: [CustomerListComponent],
+  imports: [CustomerListComponent, CustomerEditorComponent, MatSidenavModule],
   templateUrl: './customers.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'py-2 px-3' }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomersComponent implements OnInit {
   #store = inject(CustomerStore);
@@ -22,6 +23,7 @@ export class CustomersComponent implements OnInit {
     loading: this.#store.loading(),
     sorting: this.#store.sorting()
   }));
+
   protected pagingInfo = computed<PagingInfo>(() => {
     const pagingInfo: PagingInfo = {
       totalRows: this.#store.totalItems(),
@@ -30,27 +32,45 @@ export class CustomersComponent implements OnInit {
     };
     return pagingInfo;
   });
-  protected listDefinition: ListDefinition = CUSTOMERS_LIST;
 
-  protected _uiRefresh = effect(() => {
-    const error = this.#store.error();
-    if (error) {
-      alert(error);
-    }
-  });
+  protected listDefinition: ListDefinition = CUSTOMERS_LIST;
+  protected selectedCustomer = this.#store.selected;
+  protected drawerOpen = computed(() => this.selectedCustomer() !== null);
+
+  constructor() {
+    effect(() => {
+      const error = this.#store.error();
+      if (error) {
+        alert(error);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.#store.find({ sorting: { field: 'fullName', direction: 'asc' } });
   }
 
-  async onAction(actionName: string) {
+  async onToolbarAction(actionName: string) {
     switch (actionName) {
       case 'refresh': {
         await this.#store.find();
         break;
       }
+      case 'new': {
+        this.#store.load();
+        break;
+      }
       default:
         break;
+    }
+  }
+
+  onEditorAction(type: string) {
+    switch (type) {
+      case 'cancel': {
+        this.#store.clear();
+        break;
+      }
     }
   }
 

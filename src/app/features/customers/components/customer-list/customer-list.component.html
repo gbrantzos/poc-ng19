@@ -1,19 +1,21 @@
-<poc-generic-list [listDefinition]="listDefinition()"
+<poc-generic-list class="py-2 px-3"
+                  [listDefinition]="listDefinition()"
                   [listData]="listData()"
                   [pagingInfo]="pagingInfo()"
                   (toolbarClick)="toolbarClick.emit($event)"
                   (toolbarSearch)="toolbarSearch.emit($event)"
                   (tableSortChanged)="tableSortChanged.emit($event)"
                   (pagingChanged)="pagingChanged.emit($event)">
+
+  <ng-template columnName="tin"
+               let-element>
+    {{ element }} is a TIN
+  </ng-template>
+
+  <ng-template columnName="fullName"
+               let-row="row"
+               let-columnDef="columnDef">
+    {{ row[columnDef.name] }}
+  </ng-template>
+
 </poc-generic-list>
-
-<ng-template columnName="tin"
-             let-element>
-  {{ element }}
-</ng-template>
-
-<ng-template columnName="fullName"
-             let-row="row"
-             let-columnDef="columnDef">
-  {{ row[columnDef.name] }}
-</ng-template>

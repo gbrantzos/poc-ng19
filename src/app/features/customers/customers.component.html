@@ -1,8 +1,21 @@
-<poc-customer-list class="flex flex-col h-full overflow-y-auto"
-                   [listDefinition]="listDefinition"
-                   [listData]="listData()"
-                   [pagingInfo]="pagingInfo()"
-                   (toolbarClick)="onAction($event)"
-                   (toolbarSearch)="onSearch($event)"
-                   (tableSortChanged)="onSortChanged($event)"
-                   (pagingChanged)="onPagingChanged($event)" />
+<mat-drawer-container class="flex flex-col h-full p-0 m-0">
+
+  <mat-drawer [opened]="drawerOpen()"
+              position="end"
+              disableClose="true"
+              class="min-w-[450px] w-2/5">
+    <poc-customer-editor (editorClick)="onEditorAction($event)" />
+  </mat-drawer>
+
+  <mat-drawer-container class="flex flex-col h-full overflow-y-auto">
+    <poc-customer-list [listDefinition]="listDefinition"
+                       [listData]="listData()"
+                       [pagingInfo]="pagingInfo()"
+                       [selectedCustomer]="selectedCustomer()"
+                       (toolbarClick)="onToolbarAction($event)"
+                       (toolbarSearch)="onSearch($event)"
+                       (tableSortChanged)="onSortChanged($event)"
+                       (pagingChanged)="onPagingChanged($event)" />
+  </mat-drawer-container>
+
+</mat-drawer-container>

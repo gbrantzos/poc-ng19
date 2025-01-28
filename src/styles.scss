@@ -19,6 +19,12 @@
       outlined-container-shape: 4px
     )
   );
+
+  @include mat.sidenav-overrides(
+    (
+      container-shape: 2px
+    )
+  );
 }
 
 html,
@@ -41,7 +47,7 @@ html {
 
 /* Give common styles to siblings of router-outlet */
 router-outlet#main + * {
-  @apply p-3 flex flex-col h-full overflow-y-auto;
+  @apply flex flex-col h-full overflow-y-auto;
 }
 
 /* Scrollbars */

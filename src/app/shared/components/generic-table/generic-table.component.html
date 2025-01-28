@@ -28,10 +28,10 @@
         [class.link]="columnDef.isLink"
         [style]="columnDef.style"
         [class]="columnDef.class"
-        *matCellDef="let element; let row"
+        *matCellDef="let row"
         (click)="onClick(row, columnDef)">
       <ng-container *ngTemplateOutlet="getColumnTemplate(columnDef.name) ?? defaultColumnTemplate; context: {
-          $implicit: element[columnDef.name],
+          $implicit: row[columnDef.name],
           row,
           columnDef
         }" />

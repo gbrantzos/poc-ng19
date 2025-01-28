@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { GenericTableComponent, TableDefinition } from './generic-table.component';
 
-describe('DynamicTableComponent', () => {
+describe('GenericTableComponent', () => {
   async function setup() {
     await TestBed.configureTestingModule({
       imports: [GenericTableComponent],
