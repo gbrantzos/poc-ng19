@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'poc-title',
@@ -10,5 +10,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class TitleComponent {
   title = input.required<string>();
+  showClose = input<boolean>(false);
   icon = input<string[]>(['ph', 'ph-file-text']);
+
+  close = output<void>();
 }

@@ -1,13 +1,14 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
 import { ApiResponseResult } from '@poc/core/base/api-repsonse';
+import { ListItem } from '@poc/core/base/list-client';
 import { withRequestState } from '@poc/core/base/request-state';
-import { SearchCriteria, withSearchCriteria } from '@poc/core/base/search-criteria';
-import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
+import { DEFAULT_PAGE_SIZE, SearchCriteria, withSearchCriteria } from '@poc/core/base/search-criteria';
+import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
 import { Customer } from '@poc/features/customers/domain/customer';
 
 export type CustomerState = {
-  listItems: readonly Customer[];
+  listItems: readonly ListItem[];
   totalItems: number;
   selected: Customer | null;
 };
@@ -39,13 +40,13 @@ export const CustomerStore = signalStore(
         if (response.result == ApiResponseResult.SUCCESS) {
           const data = response.data;
           patchState(store, {
-            listItems: data.rows.map(c => customerDtoToModel(c)),
+            listItems: data.rows,
             totalItems: data.totalRows
           });
           patchState(store, {
             paging: {
-              number: data.pageNumber ?? 0,
-              size: data.pageSize ?? 0
+              number: data.pageNumber ?? 1,
+              size: data.pageSize ?? DEFAULT_PAGE_SIZE
             }
           });
           store.setLoaded();
@@ -73,13 +74,3 @@ export const CustomerStore = signalStore(
     }
   }))
 );
-
-export const customerDtoToModel = (dto: CustomerDTO): Customer => ({
-  id: dto.custID,
-  code: dto.code,
-  fullName: dto.fullName,
-  tin: dto.tin,
-  dueAt: dto.dueAt ?? new Date(new Date().getFullYear(), 1, 1, 0, 0),
-  balance: dto.balance ?? 0,
-  overdue: dto.overdue ?? false
-});

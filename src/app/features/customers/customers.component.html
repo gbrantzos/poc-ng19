@@ -1,4 +1,4 @@
-<mat-drawer-container class="flex flex-col h-full p-0 m-0">
+<mat-drawer-container class="h-full p-0 m-0">
 
   <mat-drawer [opened]="drawerOpen()"
               position="end"
@@ -7,7 +7,7 @@
     <poc-customer-editor (editorClick)="onEditorAction($event)" />
   </mat-drawer>
 
-  <mat-drawer-container class="flex flex-col h-full overflow-y-auto">
+  <mat-drawer-container class="h-full overflow-y-auto">
     <poc-customer-list [listDefinition]="listDefinition"
                        [listData]="listData()"
                        [pagingInfo]="pagingInfo()"

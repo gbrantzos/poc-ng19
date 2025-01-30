@@ -76,14 +76,14 @@ export class CustomersComponent implements OnInit {
 
   async onSearch(event: SearchEvent) {
     if (typeof event === 'string') {
-      await this.#store.find({ quickSearch: { term: '', fields: [] } });
+      await this.#store.find({ quickSearch: { term: '' } });
       return;
     }
     if (Array.isArray(event)) {
       // event.map(f => f.field)
       return;
     }
-    await this.#store.find({ quickSearch: { term: event.term, fields: event.fields } });
+    await this.#store.find({ quickSearch: { term: event.term } });
   }
 
   onSortChanged = async (sort: Sorting) =>

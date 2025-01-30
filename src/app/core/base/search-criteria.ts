@@ -3,7 +3,6 @@ import { patchState, signalStoreFeature, withComputed, withMethods, withState } 
 
 export type QuickSearch = {
   term: string;
-  fields: readonly string[];
 };
 
 export type Paging = {
@@ -22,12 +21,14 @@ export type SearchCriteria = {
   paging: Paging;
 };
 
+export const DEFAULT_PAGE_SIZE = 25;
+
 export function withSearchCriteria() {
   return signalStoreFeature(
     withState<SearchCriteria>({
-      quickSearch: { term: '', fields: [] },
+      quickSearch: { term: '' },
       sorting: { field: '', direction: 'asc' },
-      paging: { number: 1, size: 25 }
+      paging: { number: 1, size: DEFAULT_PAGE_SIZE }
     }),
     withComputed(store => ({
       searchCriteria: computed<SearchCriteria>(() => ({

@@ -1,13 +1,14 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ApiResponse, ApiResponseResult } from '@poc/core/base/api-repsonse';
+import { ListItem } from '@poc/core/base/list-client';
 import { QueryResult } from '@poc/core/base/query-result';
-import { customerDtoToModel, CustomerStore } from '@poc/features/customers/data/customer.store';
-import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
-import customersResponse from '@poc/mocks/customers.json';
+import { CustomerStore } from '@poc/features/customers/data/customer.store';
+import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
+import CUSTOMERS_RESPONSE from '@poc/mocks/customers.json';
 
 const fakeApiClient = {
   find: () =>
-    Promise.resolve<ApiResponse<QueryResult<CustomerDTO>>>({
+    Promise.resolve<ApiResponse<QueryResult<ListItem>>>({
       result: ApiResponseResult.SUCCESS,
       data: {
         rows: [],
@@ -40,26 +41,18 @@ describe('Customer Store', () => {
   it('should read customers from API client', async () => {
     const { store, fakeApiClient: api } = setup();
 
-    const customersQueryResults: QueryResult<CustomerDTO> = {
-      rows: customersResponse.rows.map(c => ({
-        custID: c.custID,
-        code: c.code,
-        fullName: c.fullName,
-        tin: c.tin,
-        dueAt: new Date(c.dueAt),
-        balance: c.balance,
-        overdue: c.overdue
-      })),
-      totalRows: customersResponse.totalRows,
-      pageSize: customersResponse.pageSize,
-      pageNumber: customersResponse.pageNumber
+    const customersQueryResults: QueryResult<ListItem> = {
+      rows: CUSTOMERS_RESPONSE.rows,
+      totalRows: CUSTOMERS_RESPONSE.totalRows,
+      pageSize: CUSTOMERS_RESPONSE.pageSize,
+      pageNumber: CUSTOMERS_RESPONSE.pageNumber
     };
-    const customers = customersQueryResults.rows as CustomerDTO[];
+    const customers = customersQueryResults.rows;
     api.find = () => {
-      const response: ApiResponse<QueryResult<CustomerDTO>> = {
+      const response: ApiResponse<QueryResult<ListItem>> = {
         result: ApiResponseResult.SUCCESS,
         data: {
-          rows: customers,
+          rows: customersQueryResults.rows,
           totalRows: customers.length
         }
       };
@@ -69,14 +62,14 @@ describe('Customer Store', () => {
 
     expect(store.requestState()).toEqual('LOADED');
     expect(store.listItems().length).toEqual(customers.length);
-    expect(store.listItems()).toEqual(customers.map(c => customerDtoToModel(c)));
+    expect(store.listItems()).toEqual(customers);
   });
 
   it('should read error from API client', async () => {
     const { store, fakeApiClient: api } = setup();
 
     api.find = () => {
-      const response: ApiResponse<CustomerDTO[]> = {
+      const response: ApiResponse<ListItem[]> = {
         result: ApiResponseResult.ERROR,
         error: 'Could not read from DB'
       };
@@ -100,7 +93,7 @@ describe('Customer Store', () => {
     const { store, fakeApiClient: api } = setup();
 
     api.find = () => {
-      const response: ApiResponse<QueryResult<CustomerDTO>> = {
+      const response: ApiResponse<QueryResult<ListItem>> = {
         result: ApiResponseResult.SUCCESS,
         data: {
           rows: [],

@@ -4,4 +4,13 @@
   </i>
   <h1 id="title"
       class="text-xl">{{ title() }}</h1>
+  <div class="flex-1"></div>
+  @if (showClose()) {
+  <i class="ph ph-x text-2xl pt-1 cursor-pointer"
+     (click)="close.emit()"
+     (keydown)="close.emit()"
+     role="button"
+     tabindex="0">
+  </i>
+  }
 </div>

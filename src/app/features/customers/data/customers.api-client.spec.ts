@@ -2,9 +2,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ApiResponseResult } from '@poc/core/base/api-repsonse';
+import { ListItem } from '@poc/core/base/list-client';
 import { QueryResult } from '@poc/core/base/query-result';
-import { CustomerDTO, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
-import customersResponse from '@poc/mocks/customers.json';
+import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
+import CUSTOMERS_RESPONSE from '@poc/mocks/customers.json';
 
 describe('Customers API Client', () => {
   function setup() {
@@ -35,9 +36,9 @@ describe('Customers API Client', () => {
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.responseType).toEqual('json');
 
-    const customersQueryResults: QueryResult<CustomerDTO> = {
-      rows: customersResponse.rows.map(c => ({
-        custID: c.custID,
+    const customersQueryResults: QueryResult<ListItem> = {
+      rows: CUSTOMERS_RESPONSE.rows.map(c => ({
+        id: c.custID,
         code: c.code,
         fullName: c.fullName,
         tin: c.tin,
@@ -45,9 +46,9 @@ describe('Customers API Client', () => {
         balance: c.balance,
         overdue: c.overdue
       })),
-      totalRows: customersResponse.totalRows,
-      pageSize: customersResponse.pageSize,
-      pageNumber: customersResponse.pageNumber
+      totalRows: CUSTOMERS_RESPONSE.totalRows,
+      pageSize: CUSTOMERS_RESPONSE.pageSize,
+      pageNumber: CUSTOMERS_RESPONSE.pageNumber
     };
     mockReq.flush(customersQueryResults);
 

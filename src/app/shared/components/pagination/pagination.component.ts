@@ -37,7 +37,7 @@ const DEFAULT_SIZE = 25;
     }
 
     .disabled {
-      @apply opacity-25 cursor-not-allowed #{!important};
+      @apply opacity-25 cursor-default #{!important};
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

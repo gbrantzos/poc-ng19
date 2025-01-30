@@ -6,7 +6,6 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 
 type QuickSearch = {
   term: string;
-  fields: readonly string[];
 };
 type Filter = {
   field: string;
@@ -35,16 +34,16 @@ export class SearchBoxComponent implements OnInit {
 
   search = output<SearchEvent>();
   changed = output<SearchEvent>();
-  filter = output<void>();
+  advancedSearch = output<void>();
 
   ngOnInit() {
-    this.#search$.subscribe(value => this.changed.emit({ term: value, fields: [] }));
+    this.#search$.subscribe(value => this.changed.emit({ term: value }));
   }
 
   onSearch() {
     const searchTerm = this.searchTerm();
     if (searchTerm !== undefined) {
-      this.search.emit({ term: searchTerm, fields: [] });
+      this.search.emit({ term: searchTerm });
     }
   }
 

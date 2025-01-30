@@ -21,24 +21,6 @@ describe('SearchBoxComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit search (button click)', async () => {
-    const { component, fixture, debugElement } = await setup();
-    const searchInput = debugElement.query(By.css('input[type="text"]'));
-    const searchButton = debugElement.query(By.css('#searchButton'));
-
-    spyOn(component.search, 'emit');
-    fixture.detectChanges();
-
-    searchInput.nativeElement.value = 'search click';
-    searchInput.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    searchButton.nativeElement.click();
-    fixture.detectChanges();
-
-    expect(component.search.emit).toHaveBeenCalledWith({ term: 'search click', fields: [] });
-  });
-
   it('should emit changed (search input)', async () => {
     const { component, fixture, debugElement } = await setup();
     const searchInput = debugElement.query(By.css('input[type="text"]'));
@@ -51,7 +33,7 @@ describe('SearchBoxComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(component.changed.emit).toHaveBeenCalledWith({ term: 'search input', fields: [] });
+    expect(component.changed.emit).toHaveBeenCalledWith({ term: 'search input' });
   });
 
   it('should emit search (search enter)', async () => {
@@ -67,21 +49,21 @@ describe('SearchBoxComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(component.search.emit).toHaveBeenCalledWith({ term: 'search enter', fields: [] });
+    expect(component.search.emit).toHaveBeenCalledWith({ term: 'search enter' });
   });
 
-  it('should emit filter', async () => {
+  it('should emit advanced search', async () => {
     const { component, fixture, debugElement } = await setup();
-    const filterButton = debugElement.query(By.css('#filterButton'));
+    const filterButton = debugElement.query(By.css('#advancedSearch'));
 
-    spyOn(component.filter, 'emit');
+    spyOn(component.advancedSearch, 'emit');
     fixture.detectChanges();
 
     filterButton.nativeElement.click();
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(component.filter.emit).toHaveBeenCalled();
+    expect(component.advancedSearch.emit).toHaveBeenCalled();
   });
 
   it('should emit search (clear)', async () => {
