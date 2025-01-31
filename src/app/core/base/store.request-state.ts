@@ -1,11 +1,11 @@
 import { computed } from '@angular/core';
 import { patchState, signalStoreFeature, withComputed, withMethods, withState } from '@ngrx/signals';
 
-export type RequestState = 'INIT' | 'LOADING' | 'LOADED' | { message: string };
+export type StoreRequestState = 'INIT' | 'LOADING' | 'LOADED' | { message: string };
 
 export function withRequestState() {
   return signalStoreFeature(
-    withState<{ requestState: RequestState }>({ requestState: 'INIT' }),
+    withState<{ requestState: StoreRequestState }>({ requestState: 'INIT' }),
     withComputed(({ requestState }) => ({
       loading: computed(() => requestState() === 'LOADING'),
       loaded: computed(() => requestState() === 'LOADED'),

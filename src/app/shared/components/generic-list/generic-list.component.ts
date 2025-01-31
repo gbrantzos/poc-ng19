@@ -16,6 +16,7 @@ export type ListDefinition = {
   title: string;
   tableDefinition: TableDefinition;
   toolbarActions: Action[];
+  defaultSort: Sorting;
 };
 
 export type ListData = {

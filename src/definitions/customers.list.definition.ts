@@ -71,5 +71,6 @@ export const CUSTOMERS_LIST: ListDefinition = {
       icon: ['ph', 'ph-arrows-clockwise'],
       tooltip: 'Refresh List'
     }
-  ]
+  ],
+  defaultSort: { field: 'fullName', direction: 'asc' }
 };

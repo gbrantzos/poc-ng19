@@ -5,11 +5,6 @@
 - [ ] Dynamic table tests
 - [ ] Dynamic table row actions
 
-Customer store - API Client
-- Investigate usage of base API client (reuse)
-- Investigate usage of feature for Find/SearchCriteria with API Client as parameter
-- Add reset method (search criteria)
-
 HTTP interceptor for loading indicator
 - Global usage
 - Debounce time

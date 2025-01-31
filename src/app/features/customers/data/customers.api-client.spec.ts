@@ -37,15 +37,7 @@ describe('Customers API Client', () => {
     expect(mockReq.request.responseType).toEqual('json');
 
     const customersQueryResults: QueryResult<ListItem> = {
-      rows: CUSTOMERS_RESPONSE.rows.map(c => ({
-        id: c.custID,
-        code: c.code,
-        fullName: c.fullName,
-        tin: c.tin,
-        dueAt: new Date(c.dueAt),
-        balance: c.balance,
-        overdue: c.overdue
-      })),
+      rows: CUSTOMERS_RESPONSE.rows,
       totalRows: CUSTOMERS_RESPONSE.totalRows,
       pageSize: CUSTOMERS_RESPONSE.pageSize,
       pageNumber: CUSTOMERS_RESPONSE.pageNumber
