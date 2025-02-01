@@ -1,8 +1,8 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApiResponseResult } from '@poc/core/base/api-repsonse';
-import { ListItem } from '@poc/core/base/list-client';
+import { ListItem } from '@poc/core/base/api.list-client';
+import { ApiResponseResult } from '@poc/core/base/api.response';
 import { QueryResult } from '@poc/core/base/query-result';
 import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
 import CUSTOMERS_RESPONSE from '@poc/mocks/customers.json';

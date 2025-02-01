@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Sorting } from '@poc/core/base/search-criteria';
-import { initialSearchCriteria } from '@poc/core/base/store.data-table-state';
+import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
 import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
 import { CustomerEditorComponent } from '@poc/features/customers/components/customer-editor/customer-editor.component';
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
@@ -48,7 +48,7 @@ export class CustomersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.#store.find({ sorting: this.listDefinition.defaultSort });
+    this.#store.find({ sorting: this.listDefinition.defaultSort }).then();
   }
 
   async onToolbarAction(actionName: string) {
@@ -77,7 +77,7 @@ export class CustomersComponent implements OnInit {
 
   async onSearch(event: SearchEvent) {
     if (typeof event === 'string' && event === 'CLEARED') {
-      await this.#store.find({ ...initialSearchCriteria, sorting: this.listDefinition.defaultSort });
+      await this.#store.find({ ...INITIAL_SEARCH_CRITERIA, sorting: this.listDefinition.defaultSort });
       return;
     }
     if (Array.isArray(event)) {

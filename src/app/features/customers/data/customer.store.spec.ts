@@ -1,6 +1,6 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ApiResponse, ApiResponseResult } from '@poc/core/base/api-repsonse';
-import { ListItem } from '@poc/core/base/list-client';
+import { ListItem } from '@poc/core/base/api.list-client';
+import { ApiResponse, ApiResponseResult } from '@poc/core/base/api.response';
 import { QueryResult } from '@poc/core/base/query-result';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';

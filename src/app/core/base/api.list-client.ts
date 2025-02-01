@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { ApiResponse, ApiResponseResult, ApiSuccess } from '@poc/core/base/api-repsonse';
+import { ApiResponse, ApiResponseResult, ApiSuccess } from '@poc/core/base/api.response';
 import { handleHttpError } from '@poc/core/base/handle-errors';
 import { QueryResult } from '@poc/core/base/query-result';
 import { DEFAULT_PAGE_SIZE, SearchCriteria } from '@poc/core/base/search-criteria';

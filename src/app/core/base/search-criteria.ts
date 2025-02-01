@@ -1,3 +1,5 @@
+export const DEFAULT_PAGE_SIZE = 25;
+
 export type QuickSearch = {
   term: string;
 };
@@ -17,5 +19,3 @@ export type SearchCriteria = {
   sorting: Sorting;
   paging: Paging;
 };
-
-export const DEFAULT_PAGE_SIZE = 25;

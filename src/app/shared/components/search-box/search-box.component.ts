@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, model, OnInit, output } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { isNotNullOrUndefined } from '@poc/core/base/is-notnull-or-undefined';
+import { isNotNullOrUndefined } from '@poc/core/base/guard.is-notnull-or-undefined';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 
 type QuickSearch = {

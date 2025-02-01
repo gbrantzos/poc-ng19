@@ -1,14 +1,16 @@
 <div class="flex flex-row-reverse items-center w-full pt-0.5 pb-1 gap-2">
 
   <poc-search-box class="flex w-1/3"
-                  (search)="toolbarSearch.emit($event)" />
+                  (search)="toolbarSearch.emit($event)"
+                  (advancedSearch)="toolbarAdvancedSearch.emit()" />
   <div class="flex-1"></div>
 
   <div class="flex flex-row h-8 w-2/3">
 
-    @let actions = toolbarActions();
+    @let actions = toolbarActions() ?? [];
     @for (action of actions; track action.name; let isFirst = $first; let isLast = $last) {
     <button class="text-gray-600 hover:bg-gray-300 px-3 py-1 border inline-flex flex-row items-center justify-center gap-1"
+            [attr.data-test-id]="'toolbar-button-' + action.name"
             [ngClass]="{
                 'min-w-12': action.icon,
                 'min-w-20': !action.label,

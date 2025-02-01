@@ -1,7 +1,5 @@
 ### TODOs
 
-
-- [ ] Toolbar tests
 - [ ] Dynamic table tests
 - [ ] Dynamic table row actions
 

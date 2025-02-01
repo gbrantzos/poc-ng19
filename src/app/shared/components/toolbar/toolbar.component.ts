@@ -20,6 +20,8 @@ export type Action = {
 })
 export class ToolbarComponent {
   toolbarActions = input<Action[]>();
+
   toolbarClick = output<string>();
   toolbarSearch = output<SearchEvent>();
+  toolbarAdvancedSearch = output<void>();
 }

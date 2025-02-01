@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApiError, ApiResponseResult } from '@poc/core/base/api-repsonse';
-import { isProblemDetails } from '@poc/core/base/problem-details';
+import { isProblemDetails } from '@poc/core/base/api.problem-details';
+import { ApiError, ApiResponseResult } from '@poc/core/base/api.response';
 
 export function handleHttpError(httpError: HttpErrorResponse): ApiError {
   let error;
