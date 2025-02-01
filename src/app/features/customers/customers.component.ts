@@ -7,6 +7,7 @@ import { CustomerEditorComponent } from '@poc/features/customers/components/cust
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import { ListData, ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
+import { TableActionEvent, TableCellClickedEvent } from '@poc/shared/components/generic-table/generic-table.component';
 import { PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
@@ -53,11 +54,11 @@ export class CustomersComponent implements OnInit {
 
   async onToolbarAction(actionName: string) {
     switch (actionName) {
-      case 'refresh': {
+      case 'toolbar.refresh': {
         await this.#store.find();
         break;
       }
-      case 'new': {
+      case 'toolbar.new': {
         this.#store.load();
         break;
       }
@@ -92,4 +93,13 @@ export class CustomersComponent implements OnInit {
 
   onPagingChanged = async (event: PagingEvent) =>
     await this.#store.find({ paging: { number: event.pageNumber, size: event.pageSize } });
+
+  onTableDoubleClick(_event: TableCellClickedEvent) {
+    // console.log(event.row);
+    this.#store.load();
+  }
+
+  onTableRowAction(_event: TableActionEvent) {
+    // console.log(event.action, event.row);
+  }
 }

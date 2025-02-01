@@ -14,7 +14,8 @@
             xPosition="before">
     @for (size of menuSizes(); track size) {
     <button mat-menu-item
-            (click)="onMenuSize(size)">{{ size }}
+            (click)="onMenuSize(size)">
+      <span>{{ size }}</span>
     </button>
     }
   </mat-menu>

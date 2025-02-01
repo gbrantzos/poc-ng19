@@ -49,25 +49,37 @@ export const CUSTOMERS_LIST: ListDefinition = {
         label: 'Overdue',
         style: 'width:120px'
       }
+    ],
+    rowActions: [
+      {
+        name: 'row.edit',
+        label: 'Edit',
+        icon: ['ph', 'ph-pencil-simple-line']
+      },
+      {
+        name: 'row.delete',
+        label: 'Delete',
+        icon: ['ph', 'ph-trash']
+      }
     ]
   },
   toolbarActions: [
     {
-      name: 'new',
+      name: 'toolbar.new',
       label: 'New Customer',
       isPrimary: true,
       icon: ['ph', 'ph-plus']
     },
     {
-      name: 'import',
+      name: 'toolbar.import',
       label: 'Import to ERP'
     },
     {
-      name: 'download',
+      name: 'toolbar.download',
       label: 'Download'
     },
     {
-      name: 'refresh',
+      name: 'toolbar.refresh',
       icon: ['ph', 'ph-arrows-clockwise'],
       tooltip: 'Refresh List'
     }

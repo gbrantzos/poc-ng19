@@ -5,6 +5,9 @@
                   (toolbarClick)="toolbarClick.emit($event)"
                   (toolbarSearch)="toolbarSearch.emit($event)"
                   (tableSortChanged)="tableSortChanged.emit($event)"
+                  (tableCellClicked)="tableCellClicked.emit($event)"
+                  (tableCellDoubleClicked)="tableCellDoubleClicked.emit($event)"
+                  (tableRowAction)="tableRowAction.emit($event)"
                   (pagingChanged)="pagingChanged.emit($event)">
 
   <ng-template columnName="tin"

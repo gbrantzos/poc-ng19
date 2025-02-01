@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, contentChildren, input, output } from '@angular/core';
 import { Sorting } from '@poc/core/base/search-criteria';
-import { GenericTableComponent, TableDefinition } from '@poc/shared/components/generic-table/generic-table.component';
+import {
+  GenericTableComponent,
+  TableActionEvent,
+  TableCellClickedEvent,
+  TableDefinition
+} from '@poc/shared/components/generic-table/generic-table.component';
 import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
 import {
   EMPTY_PAGING,
@@ -46,6 +51,11 @@ export class GenericListComponent {
 
   toolbarClick = output<string>();
   toolbarSearch = output<SearchEvent>();
+
   tableSortChanged = output<Sorting>();
+  tableCellClicked = output<TableCellClickedEvent>();
+  tableCellDoubleClicked = output<TableCellClickedEvent>();
+  tableRowAction = output<TableActionEvent>();
+
   pagingChanged = output<PagingEvent>();
 }

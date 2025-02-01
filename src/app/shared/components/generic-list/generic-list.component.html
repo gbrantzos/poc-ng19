@@ -7,6 +7,9 @@
              (toolbarSearch)="toolbarSearch.emit($event)" />
 <poc-generic-table class="flex-auto h-full overflow-auto bg-[#FAF9FD]"
                    (sortChanged)="tableSortChanged.emit($event)"
+                   (cellClicked)="tableCellClicked.emit($event)"
+                   (cellDoubleClicked)="tableCellDoubleClicked.emit($event)"
+                   (rowAction)="tableRowAction.emit($event)"
                    [templates]="templates()"
                    [tableDefinition]="definition.tableDefinition"
                    [loading]="data.loading"

@@ -1,4 +1,4 @@
-.mat-mdc-table-sticky {
+th.mat-mdc-table-sticky {
   @apply bg-slate-300 border-b border-b-gray-700 #{!important};
   opacity: 1;
 }
@@ -18,3 +18,11 @@ tr {
   margin: 0;
   padding: 0 6px;
 }
+
+//
+//td:first-child, th:first-child {
+//  position:sticky;
+//  left:0;
+//  z-index:1;
+//  background-color:grey;
+//}

@@ -7,6 +7,7 @@ import {
   ListData,
   ListDefinition
 } from '@poc/shared/components/generic-list/generic-list.component';
+import { TableActionEvent, TableCellClickedEvent } from '@poc/shared/components/generic-table/generic-table.component';
 import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
 import { EMPTY_PAGING, PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
@@ -26,6 +27,11 @@ export class CustomerListComponent {
 
   toolbarClick = output<string>();
   toolbarSearch = output<SearchEvent>();
+
   tableSortChanged = output<Sorting>();
+  tableCellClicked = output<TableCellClickedEvent>();
+  tableCellDoubleClicked = output<TableCellClickedEvent>();
+  tableRowAction = output<TableActionEvent>();
+
   pagingChanged = output<PagingEvent>();
 }

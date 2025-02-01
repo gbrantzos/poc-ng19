@@ -11,7 +11,6 @@ HTTP interceptor for loading indicator
 
 Data table
 - Checkbox (sticky column)
-- Actions (sticky column)
 - Multiple row templates - expandable
 
 Custom buttons
