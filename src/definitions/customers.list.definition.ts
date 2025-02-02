@@ -61,7 +61,8 @@ export const CUSTOMERS_LIST: ListDefinition = {
         label: 'Delete',
         icon: ['ph', 'ph-trash']
       }
-    ]
+    ],
+    enableSelection: true
   },
   toolbarActions: [
     {
@@ -75,7 +76,7 @@ export const CUSTOMERS_LIST: ListDefinition = {
       label: 'Import to ERP'
     },
     {
-      name: 'toolbar.download',
+      name: 'table.download',
       label: 'Download'
     },
     {

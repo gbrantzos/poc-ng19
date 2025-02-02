@@ -2,6 +2,20 @@
 
 <!-- Total row -->
 <p id="summary">{{ summary() }}</p>
+@if (selectionSummary()) {
+<p class="text-blue-700">
+  {{ selectionSummary() }}
+  <i class="ph ph-x text-[0.8em] pl-1 cursor-pointer"
+     (click)="clearSelection.emit()"
+     (keydown)="clearSelection.emit()"
+     role="button"
+     tabindex="0">
+  </i>
+
+  <i class="ph ph-dots-three-outline pl-3 cursor-pointer text-black text-[0.9em] scale-150"></i>
+</p>
+
+}
 <div class="flex-auto"></div>
 
 <!-- Rows per page -->

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, contentChildren, input, output } from '@angular/core';
+import { SelectionChange } from '@angular/cdk/collections';
+import { ChangeDetectionStrategy, Component, contentChildren, input, output, signal } from '@angular/core';
 import { Sorting } from '@poc/core/base/search-criteria';
 import {
   GenericTableComponent,
@@ -58,4 +59,10 @@ export class GenericListComponent {
   tableRowAction = output<TableActionEvent>();
 
   pagingChanged = output<PagingEvent>();
+
+  tableSelection = signal<readonly unknown[]>([]);
+
+  onSelectionChanged(event: SelectionChange<unknown>) {
+    this.tableSelection.set(event.source.selected);
+  }
 }

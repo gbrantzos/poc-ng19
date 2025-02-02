@@ -45,7 +45,10 @@ const DEFAULT_SIZE = 25;
 })
 export class PaginationComponent {
   pagingInfo = input.required<PagingInfo>();
+  tableSelection = input<readonly unknown[]>([]);
+
   pagingChanged = output<PagingEvent>();
+  clearSelection = output();
 
   pageSize = computed(() => (this.pagingInfo().pageSize == 0 ? DEFAULT_SIZE : this.pagingInfo().pageSize));
   menuSizes = input<number[]>(DEFAULT_SIZES);
@@ -80,6 +83,11 @@ export class PaginationComponent {
       next: multiPages && pagingInfo.current < lastPage,
       last: multiPages && pagingInfo.current < lastPage
     };
+  });
+  selectionSummary = computed(() => {
+    const selection = this.tableSelection();
+    const rowTerm = selection.length === 1 ? 'row' : 'rows';
+    return selection.length > 0 ? `${selection.length} ${rowTerm} selected` : '';
   });
 
   onArrowClick(arrow: Arrow) {

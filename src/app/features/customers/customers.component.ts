@@ -100,6 +100,6 @@ export class CustomersComponent implements OnInit {
   }
 
   onTableRowAction(_event: TableActionEvent) {
-    // console.log(event.action, event.row);
+    // console.log(event?.action, event?.row);
   }
 }

@@ -5,15 +5,19 @@
 <poc-toolbar [toolbarActions]="definition.toolbarActions"
              (toolbarClick)="toolbarClick.emit($event)"
              (toolbarSearch)="toolbarSearch.emit($event)" />
-<poc-generic-table class="flex-auto h-full overflow-auto bg-[#FAF9FD]"
+<poc-generic-table #table
+                   class="flex-auto h-full overflow-auto bg-[#FAF9FD]"
                    (sortChanged)="tableSortChanged.emit($event)"
                    (cellClicked)="tableCellClicked.emit($event)"
                    (cellDoubleClicked)="tableCellDoubleClicked.emit($event)"
                    (rowAction)="tableRowAction.emit($event)"
+                   (selectionChanged)="onSelectionChanged($event)"
                    [templates]="templates()"
                    [tableDefinition]="definition.tableDefinition"
                    [loading]="data.loading"
                    [sorting]="data.sorting"
                    [rows]="data.rows" />
 <poc-pagination [pagingInfo]="pagingInfo()"
+                [tableSelection]="tableSelection()"
+                (clearSelection)="table.clearSelection()"
                 (pagingChanged)="pagingChanged.emit($event)" />

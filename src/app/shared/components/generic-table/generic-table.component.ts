@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import {
   DatePipe,
   DecimalPipe,
@@ -7,8 +8,19 @@ import {
   NgSwitchDefault,
   NgTemplateOutlet
 } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, input, output, TemplateRef } from '@angular/core';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  output,
+  signal,
+  TemplateRef
+} from '@angular/core';
+import { outputFromObservable } from '@angular/core/rxjs-interop';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { Sorting } from '@poc/core/base/search-criteria';
@@ -18,6 +30,7 @@ import { Action } from '@poc/shared/components/toolbar/toolbar.component';
 export type TableDefinition = {
   columns: ColumnDefinition[];
   rowActions?: Action[];
+  enableSelection?: boolean;
 };
 
 export type ColumnDefinition = {
@@ -38,11 +51,12 @@ export type TableCellClickedEvent = {
 };
 
 export type TableActionEvent = {
-  row: unknown;
+  row: unknown | unknown[];
   action: string;
 };
 
-const ACTIONS_COLUMN = 'actions';
+const ACTIONS_COLUMN = '__actions';
+const SELECT_COLUMN = '__select';
 
 @Component({
   selector: 'poc-generic-table',
@@ -57,14 +71,13 @@ const ACTIONS_COLUMN = 'actions';
     MatSort,
     NgClass,
     NgTemplateOutlet,
-    MatMenu,
-    MatMenuItem,
-    MatMenuTrigger
+    MatMenuModule,
+    MatCheckbox
   ],
   templateUrl: './generic-table.component.html',
   styleUrl: './generic-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'flex flex-col' }
+  host: { class: 'flex flex-col h-full overflow-auto' }
 })
 export class GenericTableComponent {
   rows = input<readonly unknown[]>([]);
@@ -79,10 +92,15 @@ export class GenericTableComponent {
   }));
   templates = input<readonly TemplateNameDirective[]>([]);
 
+  protected selection = new SelectionModel<unknown>(true, []);
+
   cellClicked = output<TableCellClickedEvent>();
   cellDoubleClicked = output<TableCellClickedEvent>();
-  sortChanged = output<Sorting>();
   rowAction = output<TableActionEvent>();
+  sortChanged = output<Sorting>();
+  selectionChanged = outputFromObservable(this.selection.changed);
+
+  protected selectionSummary = signal<string>('');
 
   protected displayedColumns = computed(() => {
     const columns = this.tableDefinition().columns;
@@ -91,16 +109,24 @@ export class GenericTableComponent {
     if (this.tableDefinition().rowActions) {
       toDisplay.push(ACTIONS_COLUMN);
     }
+    if (this.tableDefinition().enableSelection) {
+      toDisplay.unshift(SELECT_COLUMN);
+    }
     return toDisplay;
   });
 
-  protected _ = effect(() => {
-    const _ = this.rows();
-    this.currentRowNum = 0;
-  });
   protected currentRowNum = 0;
 
-  onSortChanged(sort: Sort) {
+  constructor() {
+    effect(() => {
+      const _ = this.rows();
+      this.currentRowNum = 0;
+      this.selection.clear();
+    });
+    this.selection.changed.subscribe(_ => this.selectionSummary.set(`${this.selection.selected.length} rows selected`));
+  }
+
+  protected onSortChanged(sort: Sort) {
     const sorting = GenericTableComponent.matSortToSorting(sort);
     if (sorting) {
       this.sortChanged.emit(sorting);
@@ -121,4 +147,20 @@ export class GenericTableComponent {
       direction: sort.direction
     };
   };
+
+  protected isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.rows().length;
+    return numSelected === numRows;
+  }
+
+  protected toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.rows());
+  }
+
+  public clearSelection = () => this.selection.clear();
 }

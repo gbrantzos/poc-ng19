@@ -10,7 +10,6 @@ HTTP interceptor for loading indicator
 - Support canceling of a call ???
 
 Data table
-- Checkbox (sticky column)
 - Multiple row templates - expandable
 
 Custom buttons
