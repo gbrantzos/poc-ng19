@@ -54,12 +54,12 @@ export const CUSTOMERS_LIST: ListDefinition = {
       {
         name: 'row.edit',
         label: 'Edit',
-        icon: ['ph', 'ph-pencil-simple-line']
+        icon: ['fa-solid', 'fa-pencil']
       },
       {
         name: 'row.delete',
         label: 'Delete',
-        icon: ['ph', 'ph-trash']
+        icon: ['fa-regular', 'fa-trash-can']
       }
     ],
     enableSelection: true
@@ -69,7 +69,7 @@ export const CUSTOMERS_LIST: ListDefinition = {
       name: 'toolbar.new',
       label: 'New Customer',
       isPrimary: true,
-      icon: ['ph', 'ph-plus']
+      icon: ['fa-solid', 'fa-plus']
     },
     {
       name: 'toolbar.import',
@@ -81,7 +81,7 @@ export const CUSTOMERS_LIST: ListDefinition = {
     },
     {
       name: 'toolbar.refresh',
-      icon: ['ph', 'ph-arrows-clockwise'],
+      icon: ['fa-solid', 'fa-rotate'],
       tooltip: 'Refresh List'
     }
   ],

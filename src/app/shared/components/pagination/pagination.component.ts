@@ -28,12 +28,11 @@ const DEFAULT_SIZE = 25;
   imports: [MatMenu, MatMenuItem, MatMenuTrigger],
   templateUrl: './pagination.component.html',
   styles: `
-    i.ph {
+    i.fa-solid {
       display: inline-block;
-      height: 8px !important;
-      line-height: 8px !important;
-      margin-top: 1px;
       cursor: pointer;
+      transform: scale(0.8);
+      padding-top: 2px;
     }
 
     .disabled {

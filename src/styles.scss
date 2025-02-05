@@ -2,7 +2,6 @@
 @use '@angular/material' as mat;
 @use 'murecho';
 @use 'tailwind';
-@use 'phosphor';
 
 :root {
   @include mat.theme(

@@ -1,12 +1,12 @@
 <div class="flex flex-column items-center border-b-2 w-full pb-1.5 gap-2">
-  <i class="text-2xl pt-1"
+  <i class="text-xl pt-1 px-1"
      [ngClass]="icon()">
   </i>
   <h1 id="title"
       class="text-xl">{{ title() }}</h1>
   <div class="flex-1"></div>
   @if (showClose()) {
-  <i class="ph ph-x text-2xl pt-1 cursor-pointer"
+  <i class="fa-solid fa-xmark text-xl pt-1 cursor-pointer"
      (click)="close.emit()"
      (keydown)="close.emit()"
      role="button"

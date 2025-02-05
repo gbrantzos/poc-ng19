@@ -5,12 +5,12 @@ export const APP_MENU_ITEMS: NavbarItem[] = [
     name: 'home',
     label: 'Home',
     route: '/home',
-    icon: ['ph', 'ph-house-line']
+    icon: ['fa-solid', 'fa-house']
   },
   {
     name: 'customers',
     label: 'Customers',
     route: '/customers',
-    icon: ['ph', 'ph-users-three']
+    icon: ['fa-solid', 'fa-users']
   }
 ];

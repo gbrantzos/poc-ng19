@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 export class TitleComponent {
   title = input.required<string>();
   showClose = input<boolean>(false);
-  icon = input<string[]>(['ph', 'ph-file-text']);
+  icon = input<string[]>(['fa-regular', 'fa-file']);
 
   close = output<void>();
 }

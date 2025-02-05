@@ -52,7 +52,7 @@
         class="text-center text-lg cursor-pointer"
         [matMenuTriggerFor]="actionsMenu"
         [matMenuTriggerData]="{row: row}">
-      <i class="ph-bold ph-dots-three font-bold"></i>
+      <i class="fa-solid fa-ellipsis font-bold"></i>
 
     </td>
   </ng-container>
@@ -116,7 +116,7 @@
         [attr.colspan]="displayedColumns().length">
       <div id="loading"
            class="flex flex-col items-center text-2xl">
-        <i class="ph-bold ph-cloud-arrow-down text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>
+        <i class="fa-regular fa-hourglass text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>
         <p> Waiting for data ... </p>
       </div>
     </td>
@@ -125,7 +125,7 @@
         [attr.colspan]="displayedColumns().length">
       <div id="no-rows"
            class="flex flex-col items-center text-2xl">
-        <i class="ph-bold ph-funnel text-7xl pb-10 text-red-800 opacity-80"></i>
+        <i class="fa-solid fa-ban text-7xl pb-10 text-red-800 opacity-80"></i>
         <p> No data to display </p>
       </div>
     </td>
@@ -146,9 +146,9 @@
       {{ row[columnDef.name] | date:columnDef.format }}
     </ng-container>
     <ng-container *ngSwitchCase="'boolean'">
-      <i class="ph-bold"
-         [class.ph-square]="!row[columnDef.name]"
-         [class.ph-check-square]="row[columnDef.name]"></i>
+      <i class="fa-regular"
+         [class.fa-square]="!row[columnDef.name]"
+         [class.fa-square-check]="row[columnDef.name]"></i>
     </ng-container>
     <ng-container *ngSwitchDefault>
       {{ row[columnDef.name] }}

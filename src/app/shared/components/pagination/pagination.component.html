@@ -5,14 +5,14 @@
 @if (selectionSummary()) {
 <p class="text-blue-700">
   {{ selectionSummary() }}
-  <i class="ph ph-x text-[0.8em] pl-1 cursor-pointer"
+  <i class="fa-solid fa-xmark text-[0.8em] pl-1 cursor-pointer"
      (click)="clearSelection.emit()"
      (keydown)="clearSelection.emit()"
      role="button"
      tabindex="0">
   </i>
 
-  <i class="ph ph-dots-three-outline pl-3 cursor-pointer text-black text-[0.9em] scale-150"></i>
+  <i class="fa-solid fa-ellipsis pl-3 cursor-pointer text-black text-[0.9em] scale-150"></i>
 </p>
 
 }
@@ -36,33 +36,33 @@
 </p>
 
 <!-- Buttons -->
-<div class="pt-1.5 mb-1.5 flex flex-row items-center justify-center gap-1 text-xl">
+<div class="flex flex-row items-center justify-center gap-1 text-xl">
   <i id="first"
      [class.disabled]="!arrows.first"
      (click)="onArrowClick('first')"
      (keydown)="onArrowClick('first')"
-     class="ph ph-caret-circle-double-left"
+     class="fa-solid fa-backward-fast fa-fw"
      role="button"
      tabindex="0"></i>
   <i id="prev"
      [class.disabled]="!arrows.prev"
      (click)="onArrowClick('prev')"
      (keydown)="onArrowClick('prev')"
-     class="ph ph-caret-circle-left"
+     class="fa-solid fa-backward fa-fw"
      role="button"
      tabindex="0"></i>
   <i id="next"
      [class.disabled]="!arrows.next"
      (click)="onArrowClick('next')"
      (keydown)="onArrowClick('next')"
-     class="ph ph-caret-circle-right ml-1"
+     class="fa-solid fa-forward fa-fw ml-1"
      role="button"
      tabindex="0"></i>
   <i id="last"
      [class.disabled]="!arrows.last"
      (click)="onArrowClick('last')"
      (keydown)="onArrowClick('last')"
-     class="ph ph-caret-circle-double-right"
+     class="fa-solid fa-forward-fast fa-fw"
      role="button"
      tabindex="0"></i>
 </div>
