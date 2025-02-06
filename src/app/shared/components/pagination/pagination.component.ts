@@ -32,7 +32,6 @@ const DEFAULT_SIZE = 25;
       display: inline-block;
       cursor: pointer;
       transform: scale(0.8);
-      padding-top: 2px;
     }
 
     .disabled {
@@ -40,7 +39,7 @@ const DEFAULT_SIZE = 25;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'mt-1 pt-1 pl-1 border-t-2 flex text-sm gap-6 text-center' }
+  host: { class: 'mt-1 pt-1 pl-1 border-t-2 flex items-center text-sm gap-6 text-center' }
 })
 export class PaginationComponent {
   pagingInfo = input.required<PagingInfo>();

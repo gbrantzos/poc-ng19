@@ -16,7 +16,7 @@ export type Action = {
   imports: [SearchBoxComponent, NgClass, MatTooltip],
   templateUrl: './toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'flex' }
+  host: { class: 'flex flex-row-reverse items-center w-full pt-0.5 pb-1 gap-2' }
 })
 export class ToolbarComponent {
   toolbarActions = input<Action[]>();
