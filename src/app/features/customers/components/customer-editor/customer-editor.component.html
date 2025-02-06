@@ -6,13 +6,23 @@
   <p cdkFocusInitial>customer-editor works!</p>
   <div class="flex-auto"></div>
   <div class="buttons pt-2 border-t-2 flex flex-row justify-end gap-2">
-    <button mat-raised-button
-            class="w-36 text-red-500"
-            (click)="editorClick.emit('cancel')">Cancel
+    <button type="button"
+            class="core danger w-30"
+            (click)="editorClick.emit('delete')">
+      <i class="fa-regular fa-trash-can"></i>
+      Delete
     </button>
-    <button mat-flat-button
-            class="w-72"
-            (click)="editorClick.emit('save')">Save
+    <div class="flex-auto"></div>
+    <button type="button"
+            class="core  w-40"
+            (click)="editorClick.emit('cancel')">
+      Cancel
+    </button>
+    <button type="button"
+            class="core primary w-40"
+            (click)="editorClick.emit('save')">
+      <i class="fa-regular fa-floppy-disk"></i>
+      Save
     </button>
   </div>
 </div>

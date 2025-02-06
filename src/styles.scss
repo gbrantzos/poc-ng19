@@ -49,6 +49,24 @@ router-outlet#main + * {
   @apply flex flex-col h-full overflow-y-auto;
 }
 
+/* Buttons */
+button.core {
+  @apply px-4 py-2 min-w-28 rounded-md inline-flex justify-center items-center gap-3 text-gray-800 font-medium bg-gray-200 hover:bg-gray-300 active:bg-gray-400;
+  i {
+    line-height: 20px !important;
+    height: 20px !important;
+    vertical-align: middle !important;
+  }
+}
+
+button.primary {
+  @apply bg-lime-300 hover:bg-lime-400 active:bg-lime-500 #{!important};
+}
+
+button.danger {
+  @apply bg-rose-200 hover:bg-rose-400 active:bg-rose-500 #{!important};
+}
+
 /* Scrollbars */
 /* width */
 ::-webkit-scrollbar {

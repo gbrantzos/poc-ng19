@@ -10,10 +10,9 @@ HTTP interceptor for loading indicator
 - Support canceling of a call ???
 
 Data table
+- Revisit Loading/NoData indicators
+- Calculate size
 - Multiple row templates - expandable
-
-Custom buttons
-- Three variations primary/regular/danger
 
 Forms
 - Three concepts

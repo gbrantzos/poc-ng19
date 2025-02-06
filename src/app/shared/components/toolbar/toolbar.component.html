@@ -13,6 +13,8 @@
                 'min-w-12': action.icon,
                 'min-w-20': !action.label,
                 'bg-lime-300': action.isPrimary,
+                'hover:bg-lime-400': action.isPrimary,
+                'active:bg-lime-500': action.isPrimary,
                 'bg-gray-200': !action.isPrimary
               }"
           [matTooltip]="action.tooltip"
