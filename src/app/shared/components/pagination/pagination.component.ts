@@ -1,7 +1,7 @@
+import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { Action } from '@poc/shared/components/toolbar/toolbar.component';
-import { NgClass } from '@angular/common';
 
 export type PagingInfo = {
   current: number;
@@ -34,10 +34,21 @@ const DEFAULT_SIZE = 25;
       display: inline-block;
       cursor: pointer;
       transform: scale(0.8);
+      line-height: 14px !important;
+      height: 14px !important;
+      vertical-align: center !important;
+      padding-top: 1px;
     }
 
     .disabled {
       @apply opacity-25 cursor-default #{!important};
+    }
+
+    .summary-icon {
+      line-height: 14px !important;
+      height: 14px !important;
+      vertical-align: center !important;
+      padding-top: 1px;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

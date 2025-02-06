@@ -5,14 +5,14 @@
 @if (selectionSummary()) {
 <p class="text-blue-700 flex items-center gap-4">
   {{ selectionSummary() }}
-  <i class="fa-regular fa-circle-xmark text-[1.15em] cursor-pointer"
+  <i class="summary-icon fa-regular fa-circle-xmark text-[1.15em] cursor-pointer"
      (click)="clearSelection.emit()"
      (keydown)="clearSelection.emit()"
      role="button"
      tabindex="0">
   </i>
 
-  <i class="fa-solid fa-ellipsis cursor-pointer text-black text-[0.9em] scale-150"
+  <i class="summary-icon fa-solid fa-ellipsis cursor-pointer text-black text-[0.9em] scale-150"
      [matMenuTriggerFor]="actionMenu">
   </i>
 </p>

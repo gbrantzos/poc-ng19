@@ -95,7 +95,7 @@ export class GenericTableComponent {
   templates = input<readonly TemplateNameDirective[]>([]);
 
   // TODO Add width calculation
-  tableWidth = computed(() => '100%');
+  tableWidth = computed(() => '300px');
 
   selection = new SelectionModel<unknown>(true, []);
 

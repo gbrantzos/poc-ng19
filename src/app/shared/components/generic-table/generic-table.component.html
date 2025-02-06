@@ -4,11 +4,10 @@
        matSort
        matSortDisableClear
        multiTemplateDataRows
+       [dataSource]="data.rows"
        [matSortActive]="data.sorting?.field ?? ''"
        [matSortDirection]="data.sorting?.direction ?? ''"
        (matSortChange)="onSortChanged($event)"
-       [dataSource]="data.rows"
-       [ngClass]="{'min-h-[400px]': !data.rows.length}"
        [style.width]="tableWidth()"
        class="border-separate">
 
@@ -115,31 +114,25 @@
       [class.text-gray-50]="index === currentRowNum">
   </tr>
 
-  <tr class="mat-row min-h-[400px]"
-      *matNoDataRow>
-    @if (data.loading) {
-    <td class="mat-cell"
-        [attr.colspan]="displayedColumns().length">
-      <div id="loading"
-           class="flex flex-col items-center text-2xl">
-        <i class="fa-regular fa-hourglass text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>
-        <p> Waiting for data ... </p>
-      </div>
-    </td>
-    } @else {
-    <td class="mat-cell"
-        [attr.colspan]="displayedColumns().length">
-      <div id="no-rows"
-           class="flex flex-col items-center text-2xl">
-        <i class="fa-solid fa-ban text-7xl pb-10 text-red-800 opacity-80"></i>
-        <p> No data to display </p>
-      </div>
-    </td>
-    }
-  </tr>
-
 </table>
-<div class="flex w-fit"></div>
+
+<div class="flex w-full items-center justify-center h-full">
+  @if (data.rows.length === 0 && data.loading) {
+  <div id="loading"
+       class="flex flex-col items-center text-2xl w-full">
+    <i class="fa-regular fa-hourglass text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>
+    <p> Waiting for data ... </p>
+  </div>
+  }
+
+  @if (data.rows.length === 0 && !data.loading) {
+  <div id="no-rows"
+       class="flex flex-col items-center text-2xl">
+    <i class="fa-solid fa-ban text-7xl pb-10 text-red-800 opacity-80"></i>
+    <p> No data to display </p>
+  </div>
+  }
+</div>
 
 <ng-template #defaultColumnTemplate
              let-row="row"
