@@ -43,7 +43,7 @@ export const EMPTY_LIST: ListData = {
   templateUrl: './generic-list.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'flex flex-col h-full overflow-y-auto' }
+  host: { class: 'flex flex-col h-full overflow-y-auto pt-3' }
 })
 export class GenericListComponent {
   listDefinition = input.required<ListDefinition>();

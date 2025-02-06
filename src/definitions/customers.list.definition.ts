@@ -14,7 +14,8 @@ export const CUSTOMERS_LIST: ListDefinition = {
         name: 'code',
         label: 'Code',
         type: 'string',
-        isSortable: true
+        isSortable: true,
+        sticky: 'start'
       },
       {
         name: 'fullName',

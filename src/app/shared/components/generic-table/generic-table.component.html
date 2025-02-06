@@ -9,10 +9,13 @@
        (matSortChange)="onSortChanged($event)"
        [dataSource]="data.rows"
        [ngClass]="{'min-h-[400px]': !data.rows.length}"
+       [style.width]="tableWidth()"
        class="border-separate">
 
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
-  <ng-container matColumnDef="{{columnDef.name}}">
+  <ng-container matColumnDef="{{columnDef.name}}"
+                [sticky]="columnDef.sticky === 'start'"
+                [stickyEnd]="columnDef.sticky === 'end'">
     <th mat-header-cell
         mat-sort-header
         [disabled]="!(columnDef.isSortable ?? false)"
@@ -42,14 +45,15 @@
   }
 
   @if (tableDefinition().rowActions) {
-  <ng-container matColumnDef="__actions">
+  <ng-container matColumnDef="__actions"
+                stickyEnd>
     <th mat-header-cell
         *matHeaderCellDef
         class="text-right w-12">Actions
     </th>
     <td mat-cell
         *matCellDef="let row"
-        class="text-center text-lg cursor-pointer"
+        class="text-center text-lg cursor-pointer w-12"
         [matMenuTriggerFor]="actionsMenu"
         [matMenuTriggerData]="{row: row}">
       <i class="fa-solid fa-ellipsis font-bold"></i>
@@ -79,6 +83,7 @@
   <ng-container matColumnDef="__select"
                 sticky>
     <th mat-header-cell
+        class="w-12"
         *matHeaderCellDef>
       <mat-checkbox class="table-checkbox"
                     (change)="$event ? toggleAllRows() : null"
@@ -87,6 +92,7 @@
       </mat-checkbox>
     </th>
     <td mat-cell
+        class="w-12"
         *matCellDef="let row">
       <mat-checkbox class="table-checkbox"
                     (click)="$event.stopPropagation()"
@@ -133,7 +139,7 @@
   </tr>
 
 </table>
-<div class="flex"></div>
+<div class="flex w-fit"></div>
 
 <ng-template #defaultColumnTemplate
              let-row="row"

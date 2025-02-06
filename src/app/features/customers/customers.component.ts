@@ -7,7 +7,11 @@ import { CustomerEditorComponent } from '@poc/features/customers/components/cust
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import { ListData, ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
-import { TableActionEvent, TableCellClickedEvent } from '@poc/shared/components/generic-table/generic-table.component';
+import {
+  ColumnDefinition,
+  TableActionEvent,
+  TableCellClickedEvent
+} from '@poc/shared/components/generic-table/generic-table.component';
 import { PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
@@ -35,7 +39,22 @@ export class CustomersComponent implements OnInit {
     return pagingInfo;
   });
 
+  protected manyColumns = Array.from({ length: 20 }, (_, index) => index).map(
+    i =>
+      ({
+        name: `row${i + 1}`,
+        label: `Row ${i + 1}`,
+        style: 'width: 240px'
+      }) as ColumnDefinition
+  );
   protected listDefinition: ListDefinition = CUSTOMERS_LIST;
+  // protected listDefinition: ListDefinition = {
+  //   ...this.listDefinition1,
+  //   tableDefinition: {
+  //     ...this.listDefinition1.tableDefinition,
+  //     columns: [...this.listDefinition1.tableDefinition.columns, ...this.manyColumns]
+  //   }
+  // };
   protected selectedCustomer = this.#store.selected;
   protected drawerOpen = computed(() => this.selectedCustomer() !== null);
 

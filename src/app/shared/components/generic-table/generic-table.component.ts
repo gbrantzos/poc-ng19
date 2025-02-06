@@ -39,6 +39,7 @@ export type ColumnDefinition = {
   type: 'string' | 'number' | 'date' | 'boolean';
   format?: string;
   hidden?: boolean;
+  sticky?: 'start' | 'end';
   style?: string;
   class?: string | string[];
   isLink?: boolean;
@@ -92,6 +93,9 @@ export class GenericTableComponent {
     sorting: this.sorting()
   }));
   templates = input<readonly TemplateNameDirective[]>([]);
+
+  // TODO Add width calculation
+  tableWidth = computed(() => '100%');
 
   selection = new SelectionModel<unknown>(true, []);
 
