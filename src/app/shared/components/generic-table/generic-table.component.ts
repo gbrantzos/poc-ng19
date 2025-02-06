@@ -51,8 +51,9 @@ export type TableCellClickedEvent = {
 };
 
 export type TableActionEvent = {
-  row: unknown | unknown[];
   action: string;
+  row?: unknown | unknown[];
+  selection?: unknown[];
 };
 
 const ACTIONS_COLUMN = '__actions';
@@ -92,7 +93,7 @@ export class GenericTableComponent {
   }));
   templates = input<readonly TemplateNameDirective[]>([]);
 
-  protected selection = new SelectionModel<unknown>(true, []);
+  selection = new SelectionModel<unknown>(true, []);
 
   cellClicked = output<TableCellClickedEvent>();
   cellDoubleClicked = output<TableCellClickedEvent>();

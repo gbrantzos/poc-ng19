@@ -22,6 +22,7 @@ export type ListDefinition = {
   title: string;
   tableDefinition: TableDefinition;
   toolbarActions: Action[];
+  tableActions: Action[];
   defaultSort: Sorting;
 };
 
@@ -57,6 +58,7 @@ export class GenericListComponent {
   tableCellClicked = output<TableCellClickedEvent>();
   tableCellDoubleClicked = output<TableCellClickedEvent>();
   tableRowAction = output<TableActionEvent>();
+  tableSelectionAction = output<TableActionEvent>();
 
   pagingChanged = output<PagingEvent>();
 

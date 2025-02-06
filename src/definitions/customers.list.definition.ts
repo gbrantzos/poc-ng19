@@ -72,17 +72,21 @@ export const CUSTOMERS_LIST: ListDefinition = {
       icon: ['fa-solid', 'fa-plus']
     },
     {
-      name: 'toolbar.import',
-      label: 'Import to ERP'
-    },
-    {
-      name: 'table.download',
-      label: 'Download'
-    },
-    {
       name: 'toolbar.refresh',
       icon: ['fa-solid', 'fa-rotate'],
       tooltip: 'Refresh List'
+    }
+  ],
+  tableActions: [
+    {
+      name: 'table.import',
+      label: 'Import to ERP',
+      icon: ['fa-solid', 'fa-share-from-square']
+    },
+    {
+      name: 'table.download',
+      label: 'Download',
+      icon: ['fa-solid', 'fa-cloud-arrow-down']
     }
   ],
   defaultSort: { field: 'fullName', direction: 'asc' }

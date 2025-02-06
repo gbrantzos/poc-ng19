@@ -32,6 +32,7 @@ export class CustomerListComponent {
   tableCellClicked = output<TableCellClickedEvent>();
   tableCellDoubleClicked = output<TableCellClickedEvent>();
   tableRowAction = output<TableActionEvent>();
+  tableSelectionAction = output<TableActionEvent>();
 
   pagingChanged = output<PagingEvent>();
 }

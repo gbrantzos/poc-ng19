@@ -102,4 +102,8 @@ export class CustomersComponent implements OnInit {
   onTableRowAction(_event: TableActionEvent) {
     // console.log(event?.action, event?.row);
   }
+
+  onTableSelectionAction(_event: TableActionEvent) {
+    // console.log(event?.action, event?.selection);
+  }
 }

@@ -7,7 +7,7 @@
 
   @let actions = toolbarActions() ?? [];
   @for (action of actions; track action.name; let isFirst = $first; let isLast = $last) {
-  <button class="text-gray-600 hover:bg-gray-300 px-3 py-1 border inline-flex flex-row items-center justify-center gap-1"
+  <button class="text-gray-600 hover:bg-gray-300 active:bg-gray-400 px-3 py-1 border inline-flex flex-row items-center justify-center gap-1"
           [attr.data-test-id]="'toolbar-button-' + action.name"
           [ngClass]="{
                 'min-w-12': action.icon,

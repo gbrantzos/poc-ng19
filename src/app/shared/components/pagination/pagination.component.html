@@ -3,28 +3,43 @@
 <!-- Total row -->
 <p id="summary">{{ summary() }}</p>
 @if (selectionSummary()) {
-<p class="text-blue-700">
+<p class="text-blue-700 flex items-center gap-4">
   {{ selectionSummary() }}
-  <i class="fa-solid fa-xmark text-[0.8em] pl-1 cursor-pointer"
+  <i class="fa-regular fa-circle-xmark text-[1.15em] cursor-pointer"
      (click)="clearSelection.emit()"
      (keydown)="clearSelection.emit()"
      role="button"
      tabindex="0">
   </i>
 
-  <i class="fa-solid fa-ellipsis pl-3 cursor-pointer text-black text-[0.9em] scale-150"></i>
+  <i class="fa-solid fa-ellipsis cursor-pointer text-black text-[0.9em] scale-150"
+     [matMenuTriggerFor]="actionMenu">
+  </i>
 </p>
-
 }
+<mat-menu #actionMenu="matMenu"
+          xPosition="before">
+  @for (action of tableActions(); track action) {
+  <button mat-menu-item
+          (click)="tableAction.emit(action)">
+    @if (action.icon) {
+    <i [ngClass]="action.icon"
+       class="pr-4 leading-4 align-middle text-lg"></i>
+    }
+    <span>{{ action.label }}</span>
+  </button>
+  }
+</mat-menu>
+
 <div class="flex-auto"></div>
 
 <!-- Rows per page -->
 <p>
   <span id="pageSize"
         class="cursor-pointer pr-0.5"
-        [matMenuTriggerFor]="menu">{{ pageSize() }}</span>
+        [matMenuTriggerFor]="sizeMenu">{{ pageSize() }}</span>
   rows per page
-  <mat-menu #menu="matMenu"
+  <mat-menu #sizeMenu="matMenu"
             xPosition="before">
     @for (size of menuSizes(); track size) {
     <button mat-menu-item

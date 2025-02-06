@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { Action } from '@poc/shared/components/toolbar/toolbar.component';
+import { NgClass } from '@angular/common';
 
 export type PagingInfo = {
   current: number;
@@ -25,7 +27,7 @@ const DEFAULT_SIZE = 25;
 
 @Component({
   selector: 'poc-pagination',
-  imports: [MatMenu, MatMenuItem, MatMenuTrigger],
+  imports: [MatMenu, MatMenuItem, MatMenuTrigger, NgClass],
   templateUrl: './pagination.component.html',
   styles: `
     i.fa-solid {
@@ -44,9 +46,11 @@ const DEFAULT_SIZE = 25;
 export class PaginationComponent {
   pagingInfo = input.required<PagingInfo>();
   tableSelection = input<readonly unknown[]>([]);
+  tableActions = input<Action[]>([]);
 
   pagingChanged = output<PagingEvent>();
   clearSelection = output();
+  tableAction = output<Action>();
 
   pageSize = computed(() => (this.pagingInfo().pageSize == 0 ? DEFAULT_SIZE : this.pagingInfo().pageSize));
   menuSizes = input<number[]>(DEFAULT_SIZES);
