@@ -15,14 +15,16 @@ export const CUSTOMERS_LIST: ListDefinition = {
         label: 'Code',
         type: 'string',
         isSortable: true,
-        sticky: 'start'
+        sticky: 'start',
+        width: 150
       },
       {
         name: 'fullName',
         label: 'Full Name',
         type: 'string',
         isLink: false,
-        isSortable: true
+        isSortable: true,
+        width: 300
       },
       {
         name: 'tin',
@@ -35,20 +37,20 @@ export const CUSTOMERS_LIST: ListDefinition = {
         label: 'Due At',
         type: 'date',
         format: 'dd/MM/yyyy',
-        style: 'width:120px'
+        width: 120
       },
       {
         name: 'balance',
         type: 'number',
         label: 'Balance',
         format: '0.2-2',
-        style: 'width:120px'
+        width: 120
       },
       {
         name: 'overdue',
         type: 'boolean',
         label: 'Overdue',
-        style: 'width:120px'
+        width: 120
       }
     ],
     rowActions: [

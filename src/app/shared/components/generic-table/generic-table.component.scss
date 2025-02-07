@@ -35,10 +35,11 @@ td:first-child {
 }
 
 td {
-  border-left: var(--border-gray) 1px dotted;
+  border-right: var(--border-gray) 1px dotted;
 }
 
 td:last-child {
+  border-left: var(--border-gray) 1px dotted;
   border-right: var(--border-gray) 1px solid;
 }
 

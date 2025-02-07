@@ -1,6 +1,8 @@
 @let data = tableData();
+@let columnInfo = columnsWidth();
 
-<table mat-table
+<table #table
+       mat-table
        matSort
        matSortDisableClear
        multiTemplateDataRows
@@ -8,7 +10,7 @@
        [matSortActive]="data.sorting?.field ?? ''"
        [matSortDirection]="data.sorting?.direction ?? ''"
        (matSortChange)="onSortChanged($event)"
-       [style.width]="tableWidth()"
+       [style.width]="columnInfo.columnsWidth"
        class="border-separate">
 
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
@@ -21,8 +23,9 @@
         [arrowPosition]="columnDef.type === 'number' ? 'before' : 'after'"
         [class.text-right]="columnDef.type === 'number'"
         [class.text-center]="columnDef.type === 'boolean'"
-        [style]="columnDef.style"
-        [class]="columnDef.class"
+        [style]="columnDef.headerStyle"
+        [class]="columnDef.headerStyle"
+        [style.width]="columnDef.width ? columnDef.width + 'px' : '200px'"
         *matHeaderCellDef> {{ columnDef.label }}
     </th>
     <td mat-cell
@@ -31,6 +34,7 @@
         [class.link]="columnDef.isLink"
         [style]="columnDef.style"
         [class]="columnDef.class"
+        [style.width]="columnDef.width ? columnDef.width + 'px' : '200px'"
         *matCellDef="let row"
         (dblclick)="cellDoubleClicked.emit({row: row, columnDef:columnDef})"
         (click)="cellClicked.emit({row: row, columnDef:columnDef});">
@@ -43,16 +47,27 @@
   </ng-container>
   }
 
+  <ng-container matColumnDef="__empty">
+    <th mat-header-cell
+        *matHeaderCellDef>
+    </th>
+    <td mat-cell
+        *matCellDef="let row">
+    </td>
+  </ng-container>
+
   @if (tableDefinition().rowActions) {
   <ng-container matColumnDef="__actions"
                 stickyEnd>
     <th mat-header-cell
+        style="width: 60px"
         *matHeaderCellDef
-        class="text-right w-12">Actions
+        class="text-right max-w-[60px]">Actions
     </th>
     <td mat-cell
+        style="width: 60px"
         *matCellDef="let row"
-        class="text-center text-lg cursor-pointer w-12"
+        class="text-center text-lg cursor-pointer w-[60px]"
         [matMenuTriggerFor]="actionsMenu"
         [matMenuTriggerData]="{row: row}">
       <i class="fa-solid fa-ellipsis font-bold"></i>
@@ -82,7 +97,7 @@
   <ng-container matColumnDef="__select"
                 sticky>
     <th mat-header-cell
-        class="w-12"
+        style="width: 42px"
         *matHeaderCellDef>
       <mat-checkbox class="table-checkbox"
                     (change)="$event ? toggleAllRows() : null"
@@ -91,7 +106,7 @@
       </mat-checkbox>
     </th>
     <td mat-cell
-        class="w-12"
+        style="width: 42px"
         *matCellDef="let row">
       <mat-checkbox class="table-checkbox"
                     (click)="$event.stopPropagation()"
@@ -103,10 +118,10 @@
   }
 
   <tr mat-header-row
-      *matHeaderRowDef="displayedColumns(); sticky: true"></tr>
+      *matHeaderRowDef="columnInfo.displayedColumns; sticky: true"></tr>
 
   <tr mat-row
-      *matRowDef="let row; let isOdd = odd; let index = dataIndex; let column = column; columns: displayedColumns();"
+      *matRowDef="let row; let isOdd = odd; let index = dataIndex; let column = column; columns: columnInfo.displayedColumns;"
       class="bg-gray-100 hover:bg-gray-500 hover:text-white"
       (click)="currentRowNum = index; $event.stopImmediatePropagation()"
       [class.bg-gray-200]="isOdd"
