@@ -1,9 +1,10 @@
 /* eslint-disable no-magic-numbers */
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { busyIndicatorInterceptor } from '@poc/core/interceptors/busy-indicator.interceptor';
+import { routes } from './app.routes';
 
 export function initializeApp() {
   return (): Promise<void> => {
@@ -21,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideHttpClient()
+    provideHttpClient(withInterceptors([busyIndicatorInterceptor]))
     //provideAppInitializer(initializeApp())
   ]
 };
