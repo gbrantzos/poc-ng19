@@ -107,7 +107,7 @@ export class GenericTableComponent {
   templates = input<readonly TemplateNameDirective[]>([]);
   table = viewChild(MatTable, { read: ElementRef });
 
-  protected selection = new SelectionModel<unknown>(true, []);
+  selection = new SelectionModel<unknown>(true, []);
 
   cellClicked = output<TableCellClickedEvent>();
   cellDoubleClicked = output<TableCellClickedEvent>();
