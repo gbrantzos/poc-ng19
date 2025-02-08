@@ -1,10 +1,8 @@
 ### TODOs
 
-- [ ] Dynamic table tests
-- [ ] Dynamic table row actions
-
 Data table
 - Multiple row templates - expandable
+- Add table tests
 
 Forms
 - Three concepts

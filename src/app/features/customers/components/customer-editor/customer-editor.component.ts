@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, output } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { TitleComponent } from '@poc/shared/components/title/title.component';
 
 @Component({
   selector: 'poc-customer-editor',
-  imports: [TitleComponent],
+  imports: [TitleComponent, MatButton, MatIcon],
   templateUrl: './customer-editor.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,

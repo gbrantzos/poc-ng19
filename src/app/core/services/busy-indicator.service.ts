@@ -44,6 +44,7 @@ export class BusyIndicatorService {
 
   public cancel() {
     this.cancelPending$.next();
+    this.shownCounter = 0;
     this.hide();
   }
 }
