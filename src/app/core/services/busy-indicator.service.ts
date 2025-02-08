@@ -8,26 +8,28 @@ export class BusyIndicatorService {
   // Ideas from
   // https://ckjaersig.dk/2020/05/showing-a-loading-spinner-delayed-with-rxjs/
 
-  private readonly delayTimeMs: number = 450;
-  private loading$ = new Subject();
+  private readonly delayTimeMs: number = 2000;
+  private loading$ = new Subject<number>();
   private shownCounter = 0;
+  private cancelPending$ = new Subject<void>();
 
   public indicatorState: Observable<boolean>;
+  public cancelPending = this.cancelPending$.asObservable();
 
   constructor() {
     this.indicatorState = this.loading$.pipe(
-      switchMap(loading => {
-        if (loading) {
-          return of(true).pipe(delay(this.delayTimeMs));
+      switchMap(loadingDelay => {
+        if (loadingDelay > 0) {
+          return of(true).pipe(delay(loadingDelay));
         }
         return of(false);
       })
     );
   }
 
-  public show() {
+  public show(delay = this.delayTimeMs) {
     this.shownCounter++;
-    this.loading$.next(true);
+    this.loading$.next(delay);
   }
 
   public hide() {
@@ -36,7 +38,12 @@ export class BusyIndicatorService {
       this.shownCounter = 0;
     }
     if (this.shownCounter == 0) {
-      this.loading$.next(false);
+      this.loading$.next(0);
     }
+  }
+
+  public cancel() {
+    this.cancelPending$.next();
+    this.hide();
   }
 }

@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { BusyIndicatorService } from '@poc/core/services/busy-indicator.service';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, takeUntil } from 'rxjs';
 
 export const busyIndicatorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -10,5 +10,8 @@ export const busyIndicatorInterceptor: HttpInterceptorFn = (
   const service = inject(BusyIndicatorService);
 
   service.show();
-  return next(req).pipe(finalize(() => service.hide()));
+  return next(req).pipe(
+    takeUntil(service.cancelPending),
+    finalize(() => service.hide())
+  );
 };
