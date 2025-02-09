@@ -124,6 +124,7 @@ input::-ms-reveal {
   @apply text-blue-600 dark:text-blue-500 hover:underline cursor-pointer;
 }
 
+/* Remove snackbar paddings */
 .panel {
   background: transparent;
 
