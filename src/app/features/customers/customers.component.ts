@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit } 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Sorting } from '@poc/core/base/search-criteria';
 import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
+import { NotificationService } from '@poc/core/services/notification.service';
 import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
 import { CustomerEditorComponent } from '@poc/features/customers/components/customer-editor/customer-editor.component';
 import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
@@ -58,11 +59,13 @@ export class CustomersComponent implements OnInit {
   protected selectedCustomer = this.#store.selected;
   protected drawerOpen = computed(() => this.selectedCustomer() !== null);
 
+  #notificationService = inject(NotificationService);
+
   constructor() {
     effect(() => {
       const error = this.#store.error();
       if (error) {
-        alert(error);
+        this.#notificationService.error('Error retrieving customers', error);
       }
     });
   }

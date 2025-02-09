@@ -25,6 +25,13 @@
       container-shape: 2px
     )
   );
+
+  @include mat.snack-bar-overrides(
+    (
+      container-color: white,
+      supporting-text-color: black
+    )
+  );
 }
 
 html,
@@ -115,4 +122,20 @@ input::-ms-reveal {
 /* Links */
 .link {
   @apply text-blue-600 dark:text-blue-500 hover:underline cursor-pointer;
+}
+
+.panel {
+  background: transparent;
+
+  .mdc-snackbar__label {
+    padding: 0 !important;
+    min-width: 400px;
+    max-width: 560px;
+  }
+
+  .mat-mdc-snackbar-surface {
+    padding-right: 0 !important;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
 }
