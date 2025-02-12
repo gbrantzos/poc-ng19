@@ -19,6 +19,7 @@ describe('CustomerListComponent', async () => {
         columns: []
       },
       toolbarActions: [],
+      tableActions: [],
       defaultSort: { field: '', direction: 'asc' }
     };
     fixture.componentRef.setInput('listDefinition', empty);

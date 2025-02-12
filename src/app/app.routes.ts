@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from '@poc/core/layout/default-layout/default-layout.component';
 import { FooterOnlyComponent } from '@poc/core/layout/footer-only/footer-only.component';
 import { provideCustomerServices } from '@poc/features/customers/customers.providers';
+import { provideHomeServices } from '@poc/features/home/home.providers';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,9 +13,7 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: async () => (await import('@poc/features/home/home.component')).HomeComponent,
-        data: {
-          title: 'Αρχική'
-        }
+        providers: [provideHomeServices()]
       },
       {
         path: 'customers',

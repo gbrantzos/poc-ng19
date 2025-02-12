@@ -74,6 +74,37 @@
       "responseMode": null,
       "streamingMode": null,
       "streamingInterval": 0
+    },
+    {
+      "uuid": "a2fe2eb2-308b-472c-8fe2-557f839fd909",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/customers/categories",
+      "responses": [
+        {
+          "uuid": "e92605eb-c09e-4b5e-a5c9-452dcabc9bcc",
+          "body": "{\n  \"rows\": [\n    {{#repeat 8}}\n    {\n      \"key\": \"{{ uuid }}\",\n      \"value\": \"{{faker 'commerce.department'}}\"\n    },\n    {{/repeat}}\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
     }
   ],
   "rootChildren": [
@@ -84,6 +115,10 @@
     {
       "type": "route",
       "uuid": "32f78a82-5d54-4f65-8af0-ae6cdba01498"
+    },
+    {
+      "type": "route",
+      "uuid": "a2fe2eb2-308b-472c-8fe2-557f839fd909"
     }
   ],
   "proxyMode": false,

@@ -17,13 +17,13 @@ export interface ListClient {
 }
 
 export abstract class BaseListClient implements ListClient {
-  #http = inject(HttpClient);
+  protected httpClient = inject(HttpClient);
 
   protected constructor(private url: string) {}
 
   find(criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<ListItem>>> {
     const params = this.prepareParams(criteria);
-    const call$ = this.#http.get<QueryResult<ListItem>>(this.url, { params }).pipe(
+    const call$ = this.httpClient.get<QueryResult<ListItem>>(this.url, { params }).pipe(
       map(res => {
         return {
           result: ApiResponseResult.SUCCESS,

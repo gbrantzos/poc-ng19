@@ -4,7 +4,17 @@
              [icon]="['fa-regular','fa-pen-to-square']"
              (close)="editorClick.emit('cancel')"></poc-title>
   <p cdkFocusInitial>customer-editor works!</p>
-  <div class="flex-auto"></div>
+  <div class="flex-auto">
+    @let categories = customerCategories();
+    <select>
+      @for (item of categories; track item.key) {
+      <option value="{{item.key}}"> {{ item.value }}</option>
+      }
+    </select>
+    <button mat-flat-button
+            class="core"
+            (click)="onRefresh()">Refresh</button>
+  </div>
   <div class="buttons pt-1.5 border-t-2 flex flex-row justify-end gap-2">
     <button mat-button
             class="core danger"

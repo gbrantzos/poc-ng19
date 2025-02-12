@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { LookupService } from '@poc/core/services/lookup.service';
 
 @Component({
   selector: 'poc-home',
@@ -7,4 +9,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class HomeComponent {
   title = 'Home - POC Project';
+  lookupItems = toSignal(inject(LookupService).getLookup('Home'));
 }
