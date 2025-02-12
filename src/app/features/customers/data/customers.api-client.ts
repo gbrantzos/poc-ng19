@@ -7,11 +7,15 @@ import { map, Observable } from 'rxjs';
 @Injectable()
 export class CustomersApiClient extends BaseListClient implements ListClient {
   constructor() {
-    super('http://localhost:3200/api/customers-full');
+    super('http://localhost:3200/api/customers');
+  }
+
+  protected override prepareFindUrl(): string {
+    return `${super.prepareFindUrl()}-full`;
   }
 
   public categories(): Observable<readonly LookupItem[]> {
-    const url = 'http://localhost:3200/api/customers/categories';
+    const url = `${this.baseUrl}/categories`;
     return this.httpClient.get<QueryResult<LookupItem>>(url).pipe(map(res => res.rows));
   }
 }

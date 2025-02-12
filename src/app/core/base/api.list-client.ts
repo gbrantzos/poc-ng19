@@ -19,11 +19,16 @@ export interface ListClient {
 export abstract class BaseListClient implements ListClient {
   protected httpClient = inject(HttpClient);
 
-  protected constructor(private url: string) {}
+  protected constructor(protected baseUrl: string) {}
+
+  protected prepareFindUrl(): string {
+    return this.baseUrl;
+  }
 
   find(criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<ListItem>>> {
     const params = this.prepareParams(criteria);
-    const call$ = this.httpClient.get<QueryResult<ListItem>>(this.url, { params }).pipe(
+    const url = this.prepareFindUrl();
+    const call$ = this.httpClient.get<QueryResult<ListItem>>(url, { params }).pipe(
       map(res => {
         return {
           result: ApiResponseResult.SUCCESS,
