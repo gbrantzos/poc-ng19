@@ -5,9 +5,12 @@ import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
 import { NotificationService } from '@poc/core/services/notification.service';
 import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
 import { CustomerEditorComponent } from '@poc/features/customers/components/customer-editor/customer-editor.component';
-import { CustomerListComponent } from '@poc/features/customers/components/customer-list/customer-list.component';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
-import { ListData, ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
+import {
+  GenericListComponent,
+  ListData,
+  ListDefinition
+} from '@poc/shared/components/generic-list/generic-list.component';
 import {
   ColumnDefinition,
   TableActionEvent,
@@ -15,10 +18,11 @@ import {
 } from '@poc/shared/components/generic-table/generic-table.component';
 import { PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
+import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
 
 @Component({
   selector: 'poc-customers',
-  imports: [CustomerListComponent, CustomerEditorComponent, MatSidenavModule],
+  imports: [CustomerEditorComponent, MatSidenavModule, GenericListComponent, TemplateNameDirective],
   templateUrl: './customers.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -119,6 +123,10 @@ export class CustomersComponent implements OnInit {
   onTableDoubleClick(_event: TableCellClickedEvent) {
     // console.log(event.row);
     this.#store.load();
+  }
+
+  onTableCellClicked(_event: TableCellClickedEvent) {
+    // console.log(event?.action, event?.row);
   }
 
   onTableRowAction(_event: TableActionEvent) {

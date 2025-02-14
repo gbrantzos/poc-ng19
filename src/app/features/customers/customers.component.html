@@ -8,17 +8,33 @@
   </mat-drawer>
 
   <mat-drawer-container class="h-full overflow-y-auto">
-    <poc-customer-list [listDefinition]="listDefinition"
-                       [listData]="listData()"
-                       [pagingInfo]="pagingInfo()"
-                       [selectedCustomer]="selectedCustomer()"
-                       (toolbarClick)="onToolbarAction($event)"
-                       (toolbarSearch)="onSearch($event)"
-                       (tableSortChanged)="onSortChanged($event)"
-                       (tableCellDoubleClicked)="onTableDoubleClick($event)"
-                       (tableRowAction)="onTableRowAction($event)"
-                       (tableSelectionAction)="onTableSelectionAction($event)"
-                       (pagingChanged)="onPagingChanged($event)" />
+
+    <poc-generic-list class="py-2 px-3"
+                      [listDefinition]="listDefinition"
+                      [listData]="listData()"
+                      [pagingInfo]="pagingInfo()"
+                      (toolbarClick)="onToolbarAction($event)"
+                      (toolbarSearch)="onSearch($event)"
+                      (tableSortChanged)="onSortChanged($event)"
+                      (tableCellClicked)="onTableCellClicked($event)"
+                      (tableCellDoubleClicked)="onTableDoubleClick($event)"
+                      (tableRowAction)="onTableRowAction($event)"
+                      (tableSelectionAction)="onTableSelectionAction($event)"
+                      (pagingChanged)="onPagingChanged($event)">
+
+      <ng-template columnName="tin"
+                   let-element>
+        {{ element }} is a TIN
+      </ng-template>
+
+      <ng-template columnName="fullName"
+                   let-row="row"
+                   let-columnDef="columnDef">
+        {{ row[columnDef.name] }}
+      </ng-template>
+
+    </poc-generic-list>
+
   </mat-drawer-container>
 
 </mat-drawer-container>
