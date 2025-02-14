@@ -32,6 +32,12 @@
       supporting-text-color: black
     )
   );
+
+  @include mat.dialog-overrides(
+    (
+      container-shape: 4px
+    )
+  );
 }
 
 html,
@@ -138,5 +144,25 @@ input::-ms-reveal {
     padding-right: 0 !important;
     margin-right: 8px;
     margin-bottom: 8px;
+  }
+}
+
+.borderless {
+  .mat-mdc-dialog-title {
+    padding: 10px 16px 6px !important;
+    border-bottom: 1px solid lightgray;
+    line-height: 36px !important;
+  }
+
+  .mat-mdc-dialog-content {
+    padding: 10px 16px !important;
+  }
+
+  .mat-mdc-dialog-actions {
+    padding: 10px !important;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 4px !important;
   }
 }

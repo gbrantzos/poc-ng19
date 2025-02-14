@@ -7,7 +7,7 @@ import { NotificationData, NotificationKind } from '@poc/core/services/notificat
   selector: 'poc-notification',
   template: `
     <div class="flex items-center border border-gray-300 pr-4 w-full h-20 shadow-lg">
-      <div class="flex items-center justify-center w-20 h-full" [ngClass]="colorPerClass[data.kind]">
+      <div class="flex items-center justify-center w-20 h-full" [ngClass]="colorPerKind[data.kind]">
         @switch (data.kind) {
           @case ('success') {
             <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@ export class NotificationComponent {
   #sbRef = inject(MatSnackBarRef<NotificationComponent>);
   protected data = inject<NotificationData>(MAT_SNACK_BAR_DATA);
 
-  protected colorPerClass: Record<NotificationKind, string> = {
+  protected colorPerKind: Record<NotificationKind, string> = {
     error: 'bg-rose-300',
     warning: 'bg-orange-300',
     info: 'bg-blue-300',
