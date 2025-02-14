@@ -13,12 +13,13 @@ import {
 } from '@poc/shared/components/generic-list/generic-list.component';
 import {
   ColumnDefinition,
-  TableActionEvent,
-  TableCellClickedEvent
+  TableRowActionEvent,
+  TableCellActionEvent
 } from '@poc/shared/components/generic-table/generic-table.component';
 import { PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
+import { ListItem } from '@poc/core/base/api.list-client';
 
 @Component({
   selector: 'poc-customers',
@@ -85,7 +86,7 @@ export class CustomersComponent implements OnInit {
         break;
       }
       case 'toolbar.new': {
-        this.#store.load();
+        this.#store.new();
         break;
       }
       default:
@@ -96,7 +97,7 @@ export class CustomersComponent implements OnInit {
   onEditorAction(type: string) {
     switch (type) {
       case 'cancel': {
-        this.#store.clear();
+        this.#store.clearSelected();
         break;
       }
     }
@@ -120,20 +121,30 @@ export class CustomersComponent implements OnInit {
   onPagingChanged = async (event: PagingEvent) =>
     await this.#store.find({ paging: { number: event.pageNumber, size: event.pageSize } });
 
-  onTableDoubleClick(_event: TableCellClickedEvent) {
-    // console.log(event.row);
-    this.#store.load();
+  onTableCellAction(event: TableCellActionEvent) {
+    if (event.kind == 'dblClick') {
+      const id = (event.row as ListItem).id as string;
+      if (!id) {
+        this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
+      }
+      this.#store.load(id);
+    }
   }
 
-  onTableCellClicked(_event: TableCellClickedEvent) {
-    // console.log(event?.action, event?.row);
+  onTableRowAction(_event: TableRowActionEvent) {
+    switch (_event.action) {
+      case 'row.edit': {
+        const id = (_event.row as ListItem).id as string;
+        if (!id) {
+          this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
+        }
+        this.#store.load(id);
+        break;
+      }
+    }
   }
 
-  onTableRowAction(_event: TableActionEvent) {
-    // console.log(event?.action, event?.row);
-  }
-
-  onTableSelectionAction(_event: TableActionEvent) {
+  onTableSelectionAction(_event: TableRowActionEvent) {
     // console.log(event?.action, event?.selection);
   }
 }

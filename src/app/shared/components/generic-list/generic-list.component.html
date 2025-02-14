@@ -8,8 +8,7 @@
 <poc-generic-table #table
                    class="flex-auto h-full overflow-auto bg-[#FAF9FD]"
                    (sortChanged)="tableSortChanged.emit($event)"
-                   (cellClicked)="tableCellClicked.emit($event)"
-                   (cellDoubleClicked)="tableCellDoubleClicked.emit($event)"
+                   (tableCellAction)="tableCellAction.emit($event)"
                    (rowAction)="tableRowAction.emit($event)"
                    (selectionChanged)="onSelectionChanged($event)"
                    [templates]="templates()"
@@ -22,7 +21,7 @@
                 [tableActions]="definition.tableActions"
                 (tableAction)="tableSelectionAction.emit({
                   action: $event.name,
-                  selection: table.selection.selected
+                  selection: table.selectedRows
                  })"
                 (clearSelection)="table.clearSelection()"
                 (pagingChanged)="pagingChanged.emit($event)" />

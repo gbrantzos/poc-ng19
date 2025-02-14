@@ -36,8 +36,8 @@
         [class]="columnDef.class"
         [style.width]="columnDef.width ? columnDef.width + 'px' : '200px'"
         *matCellDef="let row"
-        (dblclick)="cellDoubleClicked.emit({row: row, columnDef:columnDef})"
-        (click)="cellClicked.emit({row: row, columnDef:columnDef});">
+        (click)="tableCellAction.emit({kind: 'click', row: row, columnDef:columnDef});"
+        (dblclick)="tableCellAction.emit({kind: 'dblClick', row: row, columnDef:columnDef})">
       <ng-container *ngTemplateOutlet="getColumnTemplate(columnDef.name) ?? defaultColumnTemplate; context: {
           $implicit: row[columnDef.name],
           row,
@@ -152,20 +152,20 @@
 <ng-template #defaultColumnTemplate
              let-row="row"
              let-columnDef="columnDef">
-  <ng-container [ngSwitch]="columnDef.type">
-    <ng-container *ngSwitchCase="'number'">
-      {{ row[columnDef.name] | number:columnDef.format }}
-    </ng-container>
-    <ng-container *ngSwitchCase="'date'">
-      {{ row[columnDef.name] | date:columnDef.format }}
-    </ng-container>
-    <ng-container *ngSwitchCase="'boolean'">
-      <i class="fa-regular"
-         [class.fa-square]="!row[columnDef.name]"
-         [class.fa-square-check]="row[columnDef.name]"></i>
-    </ng-container>
-    <ng-container *ngSwitchDefault>
-      {{ row[columnDef.name] }}
-    </ng-container>
-  </ng-container>
+  @switch (columnDef.type) {
+  @case ('number') {
+  {{ row[columnDef.name] | number:columnDef.format }}
+  }
+  @case ('date') {
+  {{ row[columnDef.name] | date:columnDef.format }}
+  }
+  @case ('boolean') {
+  <i class="fa-regular"
+     [class.fa-square]="!row[columnDef.name]"
+     [class.fa-square-check]="row[columnDef.name]"></i>
+  }
+  @default {
+  {{ row[columnDef.name] }}
+  }
+  }
 </ng-template>

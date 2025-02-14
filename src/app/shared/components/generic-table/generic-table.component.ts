@@ -1,13 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  DatePipe,
-  DecimalPipe,
-  NgClass,
-  NgSwitch,
-  NgSwitchCase,
-  NgSwitchDefault,
-  NgTemplateOutlet
-} from '@angular/common';
+import { DatePipe, DecimalPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,7 +8,6 @@ import {
   ElementRef,
   input,
   output,
-  signal,
   TemplateRef,
   viewChild
 } from '@angular/core';
@@ -52,12 +43,13 @@ export type ColumnDefinition = {
   isSortable?: boolean;
 };
 
-export type TableCellClickedEvent = {
+export type TableCellActionEvent = {
+  kind: 'click' | 'dblClick';
   row: unknown;
   columnDef: ColumnDefinition;
 };
 
-export type TableActionEvent = {
+export type TableRowActionEvent = {
   action: string;
   row?: unknown | unknown[];
   selection?: unknown[];
@@ -76,11 +68,8 @@ const EMPTY_COLUMN = '__empty';
   selector: 'poc-generic-table',
   imports: [
     MatTableModule,
-    NgSwitch,
-    NgSwitchCase,
     DecimalPipe,
     DatePipe,
-    NgSwitchDefault,
     MatSortHeader,
     MatSort,
     NgClass,
@@ -107,11 +96,10 @@ export class GenericTableComponent {
   templates = input<readonly TemplateNameDirective[]>([]);
   table = viewChild(MatTable, { read: ElementRef });
 
-  selection = new SelectionModel<unknown>(true, []);
+  protected selection = new SelectionModel<unknown>(true, []);
 
-  cellClicked = output<TableCellClickedEvent>();
-  cellDoubleClicked = output<TableCellClickedEvent>();
-  rowAction = output<TableActionEvent>();
+  tableCellAction = output<TableCellActionEvent>();
+  rowAction = output<TableRowActionEvent>();
   sortChanged = output<Sorting>();
   selectionChanged = outputFromObservable(this.selection.changed);
 
@@ -130,6 +118,7 @@ export class GenericTableComponent {
     const toDisplay = columns.filter(c => !c.hidden).map(c => c.name);
     const tableWidth = this.elRef.nativeElement.clientWidth;
     let columnsWidth = columns.reduce((acc, col) => acc + (col.width || DEFAULT_WIDTH), 0);
+
     if (this.tableDefinition().rowActions) {
       toDisplay.push(ACTIONS_COLUMN);
       columnsWidth += ACTIONS_WIDTH;
@@ -152,17 +141,18 @@ export class GenericTableComponent {
     };
   });
 
-  protected selectionSummary = signal<string>('');
-
   protected currentRowNum = 0;
+
+  public get selectedRows() {
+    return this.selection.selected;
+  }
 
   constructor(private elRef: ElementRef) {
     effect(() => {
       const _ = this.rows();
       this.currentRowNum = 0;
-      this.selection.clear();
+      this.clearSelection();
     });
-    this.selection.changed.subscribe(_ => this.selectionSummary.set(`${this.selection.selected.length} rows selected`));
   }
 
   protected onSortChanged(sort: Sort) {

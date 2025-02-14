@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, Component, contentChildren, input, output, sig
 import { Sorting } from '@poc/core/base/search-criteria';
 import {
   GenericTableComponent,
-  TableActionEvent,
-  TableCellClickedEvent,
+  TableRowActionEvent,
+  TableCellActionEvent,
   TableDefinition
 } from '@poc/shared/components/generic-table/generic-table.component';
 import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
@@ -55,10 +55,9 @@ export class GenericListComponent {
   toolbarSearch = output<SearchEvent>();
 
   tableSortChanged = output<Sorting>();
-  tableCellClicked = output<TableCellClickedEvent>();
-  tableCellDoubleClicked = output<TableCellClickedEvent>();
-  tableRowAction = output<TableActionEvent>();
-  tableSelectionAction = output<TableActionEvent>();
+  tableCellAction = output<TableCellActionEvent>();
+  tableRowAction = output<TableRowActionEvent>();
+  tableSelectionAction = output<TableRowActionEvent>();
 
   pagingChanged = output<PagingEvent>();
 
