@@ -1,4 +1,4 @@
-import { FormDefinition } from '@poc/shared/components/generic-form/generic-form.component';
+import { FormDefinition } from '@poc/shared/components/dynamic-form/dynamic-form.component';
 
 export const CUSTOMER_FORM: FormDefinition = {
   name: 'customers_form',

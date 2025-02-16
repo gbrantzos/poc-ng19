@@ -10,7 +10,7 @@ import { CUSTOMER_FORM } from '@poc/definitions/customers.form.definition';
 import { createCustomerForm } from '@poc/features/customers/components/customer-editor/customer-form';
 import { Lookups } from '@poc/features/customers/customers.providers';
 import { Customer } from '@poc/features/customers/domain/customer';
-import { GenericFormComponent } from '@poc/shared/components/generic-form/generic-form.component';
+import { DynamicFormComponent } from '@poc/shared/components/dynamic-form/dynamic-form.component';
 import { TitleComponent } from '@poc/shared/components/title/title.component';
 
 @Component({
@@ -22,7 +22,7 @@ import { TitleComponent } from '@poc/shared/components/title/title.component';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    GenericFormComponent
+    DynamicFormComponent
   ],
   templateUrl: './customer-editor.component.html',
   styles: `

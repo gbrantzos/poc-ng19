@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { GenericListComponent, ListDefinition } from './generic-list.component';
+import { DynamicListComponent, ListDefinition } from './dynamic-list.component';
 
 describe('BasicListComponent', () => {
   async function setup() {
     await TestBed.configureTestingModule({
-      imports: [GenericListComponent],
+      imports: [DynamicListComponent],
       providers: [provideRouter([])]
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(GenericListComponent);
+    const fixture = TestBed.createComponent(DynamicListComponent);
     const component = fixture.componentInstance;
 
     const empty: ListDefinition = {

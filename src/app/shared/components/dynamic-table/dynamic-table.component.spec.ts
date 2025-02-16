@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { GenericTableComponent, TableDefinition } from './generic-table.component';
+import { DynamicTableComponent, TableDefinition } from './dynamic-table.component';
 
 describe('GenericTableComponent', () => {
   async function setup() {
     await TestBed.configureTestingModule({
-      imports: [GenericTableComponent],
+      imports: [DynamicTableComponent],
       providers: [provideRouter([])]
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(GenericTableComponent);
+    const fixture = TestBed.createComponent(DynamicTableComponent);
     const component = fixture.componentInstance;
 
     const empty: TableDefinition = {

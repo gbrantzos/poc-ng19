@@ -1,4 +1,4 @@
-import { ListDefinition } from '@poc/shared/components/generic-list/generic-list.component';
+import { ListDefinition } from '@poc/shared/components/dynamic-list/dynamic-list.component';
 
 export const CUSTOMERS_LIST: ListDefinition = {
   title: 'Customers List',

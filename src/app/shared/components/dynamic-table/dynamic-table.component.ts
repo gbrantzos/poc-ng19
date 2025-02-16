@@ -17,7 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { Sorting } from '@poc/core/base/search-criteria';
-import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
+import { TemplateNameDirective } from '@poc/shared/components/dynamic-table/template-name.directive';
 import { Action } from '@poc/shared/components/toolbar/toolbar.component';
 import { debounceTime, distinctUntilChanged, fromEvent, map, startWith } from 'rxjs';
 
@@ -65,7 +65,7 @@ const SELECT_COLUMN = '__select';
 const EMPTY_COLUMN = '__empty';
 
 @Component({
-  selector: 'poc-generic-table',
+  selector: 'poc-dynamic-table',
   imports: [
     MatTableModule,
     DecimalPipe,
@@ -77,12 +77,12 @@ const EMPTY_COLUMN = '__empty';
     MatMenuModule,
     MatCheckbox
   ],
-  templateUrl: './generic-table.component.html',
-  styleUrl: './generic-table.component.scss',
+  templateUrl: './dynamic-table.component.html',
+  styleUrl: './dynamic-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col h-full overflow-auto' }
 })
-export class GenericTableComponent {
+export class DynamicTableComponent {
   rows = input<readonly unknown[]>([]);
   loading = input<boolean>(false);
   sorting = input<Sorting>();
@@ -156,7 +156,7 @@ export class GenericTableComponent {
   }
 
   protected onSortChanged(sort: Sort) {
-    const sorting = GenericTableComponent.matSortToSorting(sort);
+    const sorting = DynamicTableComponent.matSortToSorting(sort);
     if (sorting) {
       this.sortChanged.emit(sorting);
     }

@@ -10,7 +10,7 @@
 
   <mat-drawer-container class="h-full overflow-y-auto">
 
-    <poc-generic-list class="py-2 px-3"
+    <poc-dynamic-list class="py-2 px-3"
                       [listDefinition]="listDefinition"
                       [listData]="listData()"
                       [pagingInfo]="pagingInfo()"
@@ -33,7 +33,7 @@
         {{ row[columnDef.name] }}
       </ng-template>
 
-    </poc-generic-list>
+    </poc-dynamic-list>
 
   </mat-drawer-container>
 

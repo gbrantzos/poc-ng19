@@ -38,7 +38,7 @@ export type FieldValidator = {
 };
 
 @Component({
-  selector: 'poc-generic-form',
+  selector: 'poc-dynamic-form',
   imports: [
     CdkTextareaAutosize,
     JsonPipe,
@@ -50,11 +50,11 @@ export type FieldValidator = {
     NgClass,
     ReactiveFormsModule
   ],
-  templateUrl: './generic-form.component.html',
+  templateUrl: './dynamic-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col h-full overflow-y-auto' }
 })
-export class GenericFormComponent {
+export class DynamicFormComponent {
   formDefinition = input<FormDefinition | null>(null);
   formGroup = input.required<FormGroup>();
 

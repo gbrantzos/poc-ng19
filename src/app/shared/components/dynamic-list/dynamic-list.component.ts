@@ -2,12 +2,12 @@ import { SelectionChange } from '@angular/cdk/collections';
 import { ChangeDetectionStrategy, Component, contentChildren, input, output, signal } from '@angular/core';
 import { Sorting } from '@poc/core/base/search-criteria';
 import {
-  GenericTableComponent,
-  TableRowActionEvent,
+  DynamicTableComponent,
   TableCellActionEvent,
-  TableDefinition
-} from '@poc/shared/components/generic-table/generic-table.component';
-import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
+  TableDefinition,
+  TableRowActionEvent
+} from '@poc/shared/components/dynamic-table/dynamic-table.component';
+import { TemplateNameDirective } from '@poc/shared/components/dynamic-table/template-name.directive';
 import {
   EMPTY_PAGING,
   PaginationComponent,
@@ -38,14 +38,14 @@ export const EMPTY_LIST: ListData = {
 };
 
 @Component({
-  selector: 'poc-generic-list',
-  imports: [TitleComponent, ToolbarComponent, GenericTableComponent, PaginationComponent],
-  templateUrl: './generic-list.component.html',
+  selector: 'poc-dynamic-list',
+  imports: [TitleComponent, ToolbarComponent, DynamicTableComponent, PaginationComponent],
+  templateUrl: './dynamic-list.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col h-full overflow-y-auto pt-3' }
 })
-export class GenericListComponent {
+export class DynamicListComponent {
   listDefinition = input.required<ListDefinition>();
   listData = input<ListData>(EMPTY_LIST);
   pagingInfo = input<PagingInfo>(EMPTY_PAGING);

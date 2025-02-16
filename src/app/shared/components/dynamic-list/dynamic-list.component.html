@@ -5,7 +5,7 @@
 <poc-toolbar [toolbarActions]="definition.toolbarActions"
              (toolbarClick)="toolbarClick.emit($event)"
              (toolbarSearch)="toolbarSearch.emit($event)" />
-<poc-generic-table #table
+<poc-dynamic-table #table
                    class="flex-auto h-full overflow-auto bg-[#FAF9FD]"
                    (sortChanged)="tableSortChanged.emit($event)"
                    (tableCellAction)="tableCellAction.emit($event)"

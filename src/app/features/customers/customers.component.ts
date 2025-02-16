@@ -8,22 +8,22 @@ import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
 import { CustomerEditorComponent } from '@poc/features/customers/components/customer-editor/customer-editor.component';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import {
-  GenericListComponent,
+  DynamicListComponent,
   ListData,
   ListDefinition
-} from '@poc/shared/components/generic-list/generic-list.component';
+} from '@poc/shared/components/dynamic-list/dynamic-list.component';
 import {
   ColumnDefinition,
   TableCellActionEvent,
   TableRowActionEvent
-} from '@poc/shared/components/generic-table/generic-table.component';
-import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
+} from '@poc/shared/components/dynamic-table/dynamic-table.component';
+import { TemplateNameDirective } from '@poc/shared/components/dynamic-table/template-name.directive';
 import { PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
 
 @Component({
   selector: 'poc-customers',
-  imports: [CustomerEditorComponent, MatSidenavModule, GenericListComponent, TemplateNameDirective],
+  imports: [CustomerEditorComponent, MatSidenavModule, DynamicListComponent, TemplateNameDirective],
   templateUrl: './customers.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
