@@ -3,28 +3,11 @@
              [showClose]="true"
              [icon]="['fa-regular','fa-pen-to-square']"
              (close)="editorClick.emit('cancel')"></poc-title>
-  <p cdkFocusInitial>customer-editor works!</p>
-  <div class="flex-auto">
-    @let categories = customerCategories();
 
-    <mat-form-field class="w-full">
-      <mat-label>Category</mat-label>
-      <mat-select>
-        @for (item of categories; track item.key) {
-        <mat-option [value]="item.key">{{ item.value }}</mat-option>
-        }
-      </mat-select>
+  <poc-generic-form class="mt-2"
+                    [formGroup]="form"
+                    [formDefinition]="formDefinition" />
 
-      <button mat-icon-button
-              matSuffix
-              (click)="onRefresh()">
-        <mat-icon fontSet="fa-solid"
-                  fontIcon="fa-arrow-rotate-right"
-                  class="text-lg" />
-      </button>
-    </mat-form-field>
-
-  </div>
   <div class="buttons pt-1.5 border-t-2 flex flex-row justify-end gap-2">
     <button mat-button
             class="core danger"

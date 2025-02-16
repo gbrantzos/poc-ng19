@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { ListItem } from '@poc/core/base/api.list-client';
 import { Sorting } from '@poc/core/base/search-criteria';
 import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
 import { NotificationService } from '@poc/core/services/notification.service';
@@ -13,13 +14,12 @@ import {
 } from '@poc/shared/components/generic-list/generic-list.component';
 import {
   ColumnDefinition,
-  TableRowActionEvent,
-  TableCellActionEvent
+  TableCellActionEvent,
+  TableRowActionEvent
 } from '@poc/shared/components/generic-table/generic-table.component';
+import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
 import { PagingEvent, PagingInfo } from '@poc/shared/components/pagination/pagination.component';
 import { SearchEvent } from '@poc/shared/components/search-box/search-box.component';
-import { TemplateNameDirective } from '@poc/shared/components/generic-table/template-name.directive';
-import { ListItem } from '@poc/core/base/api.list-client';
 
 @Component({
   selector: 'poc-customers',
@@ -131,10 +131,10 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  onTableRowAction(_event: TableRowActionEvent) {
-    switch (_event.action) {
+  onTableRowAction(event: TableRowActionEvent) {
+    switch (event.action) {
       case 'row.edit': {
-        const id = (_event.row as ListItem).id as string;
+        const id = (event.row as ListItem).id as string;
         if (!id) {
           this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
         }

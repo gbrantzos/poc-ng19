@@ -4,7 +4,8 @@
               position="end"
               disableClose="true"
               class="min-w-[450px] w-2/5">
-    <poc-customer-editor (editorClick)="onEditorAction($event)" />
+    <poc-customer-editor [model]="selectedCustomer()"
+                         (editorClick)="onEditorAction($event)" />
   </mat-drawer>
 
   <mat-drawer-container class="h-full overflow-y-auto">

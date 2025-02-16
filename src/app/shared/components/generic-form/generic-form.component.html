@@ -1,0 +1,70 @@
+@let definition = formDefinition();
+
+@if (!definition) {
+<div class="flex flex-col items-center h-full justify-center">
+  <i class="fa-solid fa-hourglass-half fa-fw fa-6x fa-fade"></i>
+  <p class="text-l pt-3">Preparing view...</p>
+</div>
+} @else {
+<form [formGroup]="formGroup()"
+      class="w-full flex flex-wrap">
+  @for (field of definition.fields; track field.name) {
+  @switch (field.kind) {
+  @case ('text') {
+  <mat-form-field class="px-1"
+                  [style]="field.style"
+                  [ngClass]="field.class ?? 'basis-full'"
+                  [class.pb-3]="hasErrors(field.name)"
+                  [hidden]="field.hidden">
+    <mat-label>{{ field.label }}</mat-label>
+    <input matInput
+           [attr.pocAutoFocus]="field.name === firstVisible()"
+           [placeholder]="field.placeholder ?? field.label"
+           [formControlName]="field.name" />
+    @if (hasErrors(field.name)) {
+    <mat-error class="">{{ getErrorMessage(field.name, field.label) }}</mat-error>
+    }
+  </mat-form-field>
+  }
+  @case ('textarea') {
+  <mat-form-field class="px-1"
+                  [style]="field.style"
+                  [ngClass]="field.class ?? 'basis-full'"
+                  [class.pb-3]="hasErrors(field.name)"
+                  [hidden]="field.hidden">
+    <mat-label>{{ field.label }}</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              [attr.pocAutoFocus]="field.name === firstVisible()"
+              [placeholder]="field.placeholder ?? ''"
+              [formControlName]="field.name"
+              [rows]="field.textAreaOptions?.rows || 8"
+              [cdkAutosizeMaxRows]="field.textAreaOptions?.maxRows || field.textAreaOptions?.rows || 8">
+            </textarea>
+    @if (hasErrors(field.name)) {
+    <mat-error class="">{{ getErrorMessage(field.name, field.label) }}</mat-error>
+    }
+  </mat-form-field>
+  }
+  @case ('checkbox') {
+  <div class="px-1 pl-2"
+       [style]="field.style"
+       [ngClass]="field.class ?? 'basis-full'"
+       [class.pb-3]="hasErrors(field.name)"
+       [hidden]="field.hidden">
+    <mat-checkbox [formControlName]="field.name">
+      {{ field.label }}
+    </mat-checkbox>
+    @if (hasErrors(field.name)) {
+    <mat-error class="text-[0.75rem] pl-3">{{ getErrorMessage(field.name, field.label) }}</mat-error>
+    }
+  </div>
+  }
+  @default {
+  <p class="basis-full px-2 mt-1 text-sm font-bold">Unsupported field</p>
+  <pre class="basis-full p-2 m-1 bg-red-50 border">{{ field | json }}</pre>
+  }
+  }
+  }
+</form>
+}

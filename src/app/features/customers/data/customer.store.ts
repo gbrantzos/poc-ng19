@@ -17,19 +17,27 @@ export const CustomerStore = signalStore(
       patchState(store, {
         selected: {
           id: '',
-          code: '',
+          code: '<NEW CUSTOMER>',
           fullName: '',
           tin: ''
         } as Customer
       });
     },
     load(id: CustomerID) {
+      const customer = store.listItems().find(c => c.id === id);
+      if (!customer) {
+        throw new Error(`Customer not found! ID: ${id}`);
+      }
+
       patchState(store, {
         selected: {
           id,
-          code: '',
-          fullName: '',
-          tin: ''
+          code: customer['code'],
+          fullName: customer['fullName'],
+          tin: customer['tin'],
+          dueAt: customer['dueAt'],
+          balance: customer['balance'],
+          overdue: customer['overdue']
         } as Customer
       });
     },
