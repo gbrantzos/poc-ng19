@@ -1,3 +1,4 @@
+import { Lookups } from '@poc/features/customers/customers.providers';
 import { FormDefinition } from '@poc/shared/components/dynamic-form/dynamic-form.component';
 
 export const CUSTOMER_FORM: FormDefinition = {
@@ -36,6 +37,12 @@ export const CUSTOMER_FORM: FormDefinition = {
       name: 'overdue',
       kind: 'checkbox',
       label: 'Overdue'
+    },
+    {
+      name: 'category',
+      kind: 'select',
+      label: 'Category',
+      lookupName: Lookups.Categories
     },
     {
       name: 'comments',

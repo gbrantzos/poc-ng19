@@ -1,11 +1,12 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateTime } from 'luxon';
 
 export type CustomerForm = {
   id: FormControl<string>;
   code: FormControl<string>;
   fullName: FormControl<string>;
   tin: FormControl<string>;
-  dueAt: FormControl<Date>;
+  dueAt: FormControl<DateTime>;
   balance: FormControl<number>;
   overdue: FormControl<boolean>;
   comments?: FormControl<string | null>;
@@ -22,7 +23,7 @@ export const createCustomerForm = (): FormGroup<CustomerForm> => {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(TIN_MIN_LENGTH)]
     }),
-    dueAt: new FormControl(new Date(), { nonNullable: true, validators: [Validators.required] }),
+    dueAt: new FormControl(DateTime.now(), { nonNullable: true, validators: [Validators.required] }),
     balance: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
     overdue: new FormControl(false, { nonNullable: true, validators: [Validators.requiredTrue] }),
     comments: new FormControl<string | null>(null)

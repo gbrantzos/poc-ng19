@@ -1,17 +1,20 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { LookupService } from '@poc/core/services/lookup.service';
+import { LookupItem } from '@poc/core/services/lookup.service';
 import { CUSTOMER_FORM } from '@poc/definitions/customers.form.definition';
 import { createCustomerForm } from '@poc/features/customers/components/customer-editor/customer-form';
-import { Lookups } from '@poc/features/customers/customers.providers';
 import { Customer } from '@poc/features/customers/domain/customer';
 import { DynamicFormComponent } from '@poc/shared/components/dynamic-form/dynamic-form.component';
 import { TitleComponent } from '@poc/shared/components/title/title.component';
+
+export type CustomerEditorAction = {
+  type: 'save' | 'cancel' | 'delete';
+  model?: Customer;
+};
 
 @Component({
   selector: 'poc-customer-editor',
@@ -34,11 +37,9 @@ import { TitleComponent } from '@poc/shared/components/title/title.component';
   host: { class: 'flex flex-col h-full overflow-y-auto' }
 })
 export class CustomerEditorComponent {
-  #lookups = inject(LookupService);
-
-  editorClick = output<'save' | 'cancel' | 'delete'>();
-
-  customerCategories = toSignal(this.#lookups.getLookup(Lookups.Categories));
+  lookups = input<Record<string, readonly LookupItem[]>>({});
+  editorAction = output<CustomerEditorAction>();
+  lookupRefresh = output<string>();
 
   protected formDefinition = CUSTOMER_FORM;
   protected form = createCustomerForm();
@@ -52,6 +53,4 @@ export class CustomerEditorComponent {
       }
     });
   }
-
-  onRefresh = () => this.#lookups.refresh(Lookups.Categories);
 }

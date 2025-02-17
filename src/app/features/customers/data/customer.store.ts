@@ -2,6 +2,7 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { withDataTableState } from '@poc/core/base/store.data-table-state';
 import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
 import { Customer, CustomerID } from '@poc/features/customers/domain/customer';
+import { DateTime } from 'luxon';
 
 export type CustomerState = {
   selected: Customer | null;
@@ -19,7 +20,8 @@ export const CustomerStore = signalStore(
           id: '',
           code: '<NEW CUSTOMER>',
           fullName: '',
-          tin: ''
+          tin: '',
+          dueAt: DateTime.local()
         } as Customer
       });
     },
@@ -28,7 +30,6 @@ export const CustomerStore = signalStore(
       if (!customer) {
         throw new Error(`Customer not found! ID: ${id}`);
       }
-
       patchState(store, {
         selected: {
           id,

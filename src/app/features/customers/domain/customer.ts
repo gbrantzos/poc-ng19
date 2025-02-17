@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export type CustomerID = string;
 
 export type Customer = {
@@ -5,7 +7,7 @@ export type Customer = {
   code: string;
   fullName: string;
   tin: string;
-  dueAt: Date;
+  dueAt: DateTime;
   balance: number;
   overdue: boolean;
 };

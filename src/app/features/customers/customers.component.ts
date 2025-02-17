@@ -1,11 +1,17 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ListItem } from '@poc/core/base/api.list-client';
 import { Sorting } from '@poc/core/base/search-criteria';
 import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
+import { LookupItem, LookupService } from '@poc/core/services/lookup.service';
 import { NotificationService } from '@poc/core/services/notification.service';
 import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
-import { CustomerEditorComponent } from '@poc/features/customers/components/customer-editor/customer-editor.component';
+import {
+  CustomerEditorAction,
+  CustomerEditorComponent
+} from '@poc/features/customers/components/customer-editor/customer-editor.component';
+import { Lookups } from '@poc/features/customers/customers.providers';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
 import {
   DynamicListComponent,
@@ -29,6 +35,16 @@ import { SearchEvent } from '@poc/shared/components/search-box/search-box.compon
 })
 export class CustomersComponent implements OnInit {
   #store = inject(CustomerStore);
+  #lookups = inject(LookupService);
+
+  #categoryLookup = toSignal(this.#lookups.getLookup(Lookups.Categories), { initialValue: [] });
+
+  protected lookups = computed<Record<string, readonly LookupItem[]>>(() => {
+    const categoryLookup = this.#categoryLookup();
+    return {
+      category: categoryLookup
+    };
+  });
 
   protected listData = computed<ListData>(() => ({
     rows: this.#store.listItems(),
@@ -94,10 +110,14 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  onEditorAction(type: string) {
-    switch (type) {
+  onEditorAction(event: CustomerEditorAction) {
+    switch (event.type) {
       case 'cancel': {
         this.#store.clearSelected();
+        break;
+      }
+      case 'save': {
+        // console.log(event.model);
         break;
       }
     }
@@ -147,4 +167,6 @@ export class CustomersComponent implements OnInit {
   onTableSelectionAction(_event: TableRowActionEvent) {
     // console.log(event?.action, event?.selection);
   }
+
+  onLookupRefresh = (name: string) => this.#lookups.refresh(name);
 }

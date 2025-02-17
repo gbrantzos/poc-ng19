@@ -67,15 +67,15 @@ const EMPTY_COLUMN = '__empty';
 @Component({
   selector: 'poc-dynamic-table',
   imports: [
-    MatTableModule,
-    DecimalPipe,
     DatePipe,
-    MatSortHeader,
-    MatSort,
-    NgClass,
-    NgTemplateOutlet,
+    DecimalPipe,
+    MatCheckbox,
+    MatTableModule,
     MatMenuModule,
-    MatCheckbox
+    MatSort,
+    MatSortHeader,
+    NgClass,
+    NgTemplateOutlet
   ],
   templateUrl: './dynamic-table.component.html',
   styleUrl: './dynamic-table.component.scss',

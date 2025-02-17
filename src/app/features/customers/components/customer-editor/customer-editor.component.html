@@ -2,16 +2,19 @@
   <poc-title title="Edit Customer"
              [showClose]="true"
              [icon]="['fa-regular','fa-pen-to-square']"
-             (close)="editorClick.emit('cancel')"></poc-title>
+             (close)="editorAction.emit({type: 'cancel'})"></poc-title>
 
-  <poc-dynamic-form class="mt-2"
+  <poc-dynamic-form #editor
+                    class="mt-2"
                     [formGroup]="form"
-                    [formDefinition]="formDefinition" />
+                    [formDefinition]="formDefinition"
+                    [lookups]="lookups()"
+                    (lookupRefresh)="lookupRefresh.emit($event)" />
 
   <div class="buttons pt-1.5 border-t-2 flex flex-row justify-end gap-2">
     <button mat-button
             class="core danger"
-            (click)="editorClick.emit('delete')">
+            (click)="editorAction.emit({ type: 'delete', model: editor.model} )">
       <mat-icon fontSet="fa-regular"
                 fontIcon="fa-trash-can" />
       Delete
@@ -19,12 +22,12 @@
     <div class="flex-auto"></div>
     <button mat-button
             class="core"
-            (click)="editorClick.emit('cancel')">
+            (click)="editorAction.emit({ type: 'cancel'} )">
       Cancel
     </button>
     <button mat-flat-button
             class="core"
-            (click)="editorClick.emit('save')">
+            (click)="editorAction.emit({ type: 'save', model: editor.model} )">
       <mat-icon fontSet="fa-regular"
                 fontIcon="fa-floppy-disk" />
       Save

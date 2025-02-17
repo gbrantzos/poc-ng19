@@ -1,10 +1,15 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { JsonPipe, NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Injectable, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { DateAdapter, MAT_DATE_FORMATS, MatOption } from '@angular/material/core';
+import { MatDatepicker, MatDatepickerInput } from '@angular/material/datepicker';
+import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { LookupItem } from '@poc/core/services/lookup.service';
 
 export type FieldKind = 'text' | 'date' | 'checkbox' | 'select' | 'textarea';
 
@@ -17,6 +22,8 @@ export type FieldDefinition = {
   hint?: string;
   class?: string | string[];
   style?: string;
+  lookupName?: string;
+  multiSelect?: boolean;
   textAreaOptions?: TextAreaOptions;
   validators?: Validators[];
 };
@@ -37,6 +44,25 @@ export type FieldValidator = {
   args?: string | number;
 };
 
+@Injectable()
+class CustomDataAdapter extends LuxonDateAdapter {
+  override getFirstDayOfWeek(): number {
+    return 1;
+  }
+}
+
+const CALENDAR_FORMATS = {
+  parse: {
+    dateInput: 'd/M/yyyy'
+  },
+  display: {
+    dateInput: 'dd/MM/yyyy',
+    monthYearLabel: 'MMM yyyy',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMM yyyy'
+  }
+};
+
 @Component({
   selector: 'poc-dynamic-form',
   imports: [
@@ -48,21 +74,37 @@ export type FieldValidator = {
     MatInput,
     MatLabel,
     NgClass,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatSuffix,
+    MatSelect,
+    MatOption
   ],
   templateUrl: './dynamic-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: CALENDAR_FORMATS },
+    { provide: DateAdapter, useClass: CustomDataAdapter }
+  ],
   host: { class: 'flex flex-col h-full overflow-y-auto' }
 })
 export class DynamicFormComponent {
   formDefinition = input<FormDefinition | null>(null);
   formGroup = input.required<FormGroup>();
+  lookups = input<Record<string, readonly LookupItem[]>>({});
+
+  lookupRefresh = output<string>();
 
   firstVisible = computed(() => {
     const definition = this.formDefinition();
     const fields = definition?.fields ?? [];
     return (fields.find(f => !f.hidden) ?? fields[0]).name;
   });
+
+  public get model() {
+    return this.formGroup().getRawValue();
+  }
 
   protected hasErrors(key: string): boolean {
     const control = this.formGroup().controls[key];

@@ -41,7 +41,8 @@
 
   @include mat.form-field-overrides(
     (
-      filled-container-shape: 2px
+      filled-container-shape: 2px,
+      filled-container-color: rgba(229, 231, 235, 1)
     )
   );
 }
@@ -155,6 +156,11 @@ input::-ms-reveal {
     margin-right: 8px;
     margin-bottom: 8px;
   }
+}
+
+/* Form fixes */
+.single-line .mat-mdc-text-field-wrapper {
+  max-height: 56px !important;
 }
 
 .borderless {
