@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { LookupService } from '@poc/core/services/lookup.service';
 import { of } from 'rxjs';
 
@@ -16,6 +17,7 @@ describe('CustomerEditorComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CustomerEditorComponent],
       providers: [
+        provideNoopAnimations(),
         {
           provide: LookupService,
           useValue: fakeLookupService
