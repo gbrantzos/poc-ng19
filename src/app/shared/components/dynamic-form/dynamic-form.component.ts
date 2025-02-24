@@ -93,6 +93,7 @@ export class DynamicFormComponent {
   formDefinition = input<FormDefinition | null>(null);
   formGroup = input.required<FormGroup>();
   lookups = input<Record<string, readonly LookupItem[]>>({});
+  isLoading = input<boolean>(false);
 
   lookupRefresh = output<string>();
 

@@ -6,11 +6,11 @@
       class="text-xl pb-0.5">{{ title() }}</h1>
   <div class="flex-1"></div>
   @if (showClose()) {
-  <i class="fa-solid fa-xmark text-xl pt-1 cursor-pointer"
-     (click)="close.emit()"
-     (keydown)="close.emit()"
-     role="button"
-     tabindex="-1">
-  </i>
+    <i class="fa-solid fa-xmark text-xl cursor-pointer"
+       (click)="close.emit()"
+       (keydown)="close.emit()"
+       role="button"
+       tabindex="-1">
+    </i>
   }
 </div>

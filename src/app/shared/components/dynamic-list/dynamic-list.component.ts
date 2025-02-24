@@ -43,7 +43,7 @@ export const EMPTY_LIST: ListData = {
   templateUrl: './dynamic-list.component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'flex flex-col h-full overflow-y-auto pt-3' }
+  host: { class: 'flex flex-col h-full overflow-y-auto' }
 })
 export class DynamicListComponent {
   listDefinition = input.required<ListDefinition>();

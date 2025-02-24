@@ -12,7 +12,7 @@
        (matSortChange)="onSortChanged($event)"
        [style.width]="columnInfo.columnsWidth"
        class="border-separate">
-
+  
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
   <ng-container matColumnDef="{{columnDef.name}}"
                 [sticky]="columnDef.sticky === 'start'"
@@ -36,8 +36,8 @@
         [class]="columnDef.class"
         [style.width]="columnDef.width ? columnDef.width + 'px' : '200px'"
         *matCellDef="let row"
-        (click)="tableCellAction.emit({kind: 'click', row: row, columnDef:columnDef});"
-        (dblclick)="tableCellAction.emit({kind: 'dblClick', row: row, columnDef:columnDef})">
+        (click)="$event.preventDefault(); tableCellAction.emit({kind: 'click', row: row, columnDef:columnDef});"
+        (dblclick)="$event.preventDefault(); tableCellAction.emit({kind: 'dblClick', row: row, columnDef:columnDef})">
       <ng-container *ngTemplateOutlet="getColumnTemplate(columnDef.name) ?? defaultColumnTemplate; context: {
           $implicit: row[columnDef.name],
           row,
@@ -45,18 +45,18 @@
         }" />
     </td>
   </ng-container>
-  }
+}
 
-  <ng-container matColumnDef="__empty">
-    <th mat-header-cell
-        *matHeaderCellDef>
-    </th>
-    <td mat-cell
-        *matCellDef="let row">
-    </td>
-  </ng-container>
+<ng-container matColumnDef="__empty">
+  <th mat-header-cell
+      *matHeaderCellDef>
+  </th>
+  <td mat-cell
+      *matCellDef="let row">
+  </td>
+</ng-container>
 
-  @if (tableDefinition().rowActions) {
+@if (tableDefinition().rowActions) {
   <ng-container matColumnDef="__actions"
                 stickyEnd>
     <th mat-header-cell
@@ -80,19 +80,19 @@
     <ng-template matMenuContent
                  let-row="row">
       @let actions = tableDefinition().rowActions ?? [];
-      @for (action of actions; track action) {
-      <button mat-menu-item
-              (click)="rowAction.emit({row: row, action: action.name});">
-        <i [ngClass]="action.icon"
-           class="pr-4 pt-[2px] leading-4 align-middle text-lg"></i>
-        <span class="pr-3 leading-4 align-middle">{{ action.label }}</span>
-      </button>
+        @for (action of actions; track action) {
+        <button mat-menu-item
+                (click)="rowAction.emit({row: row, action: action.name});">
+          <i [ngClass]="action.icon"
+             class="pr-4 pt-[2px] leading-4 align-middle text-lg"></i>
+          <span class="pr-3 leading-4 align-middle">{{ action.label }}</span>
+        </button>
       }
     </ng-template>
   </mat-menu>
-  }
+}
 
-  @if (tableDefinition().enableSelection) {
+@if (tableDefinition().enableSelection) {
   <!-- Checkbox Column -->
   <ng-container matColumnDef="__select"
                 sticky>
@@ -115,37 +115,37 @@
       </mat-checkbox>
     </td>
   </ng-container>
-  }
+}
 
-  <tr mat-header-row
-      *matHeaderRowDef="columnInfo.displayedColumns; sticky: true"></tr>
+<tr mat-header-row
+    *matHeaderRowDef="columnInfo.displayedColumns; sticky: true"></tr>
 
-  <tr mat-row
-      *matRowDef="let row; let isOdd = odd; let index = dataIndex; let column = column; columns: columnInfo.displayedColumns;"
-      class="bg-gray-100 hover:bg-gray-500 hover:text-white"
-      (click)="currentRowNum = index; $event.stopImmediatePropagation()"
-      [class.bg-gray-200]="isOdd"
-      [class.bg-gray-400]="index === currentRowNum"
-      [class.text-gray-50]="index === currentRowNum">
-  </tr>
+<tr mat-row
+    *matRowDef="let row; let isOdd = odd; let index = dataIndex; let column = column; columns: columnInfo.displayedColumns;"
+    class="bg-gray-100 hover:bg-gray-500 hover:text-white"
+    (click)="$event.preventDefault(); currentRowNum = index"
+    [class.bg-gray-200]="isOdd"
+    [class.bg-gray-400]="index === currentRowNum"
+    [class.text-gray-50]="index === currentRowNum">
+</tr>
 
 </table>
 
 <div class="flex w-full items-center justify-center h-full">
   @if (data.rows.length === 0 && data.loading) {
-  <div id="loading"
-       class="flex flex-col items-center text-2xl w-full">
-    <i class="fa-regular fa-hourglass text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>
-    <p> Waiting for data ... </p>
-  </div>
+    <div id="loading"
+         class="flex flex-col items-center text-2xl w-full">
+      <i class="fa-regular fa-hourglass text-7xl pb-10 animate-bounce text-orange-500 opacity-80"></i>
+      <p> Waiting for data ... </p>
+    </div>
   }
 
   @if (data.rows.length === 0 && !data.loading) {
-  <div id="no-rows"
-       class="flex flex-col items-center text-2xl">
-    <i class="fa-solid fa-ban text-7xl pb-10 text-red-800 opacity-80"></i>
-    <p> No data to display </p>
-  </div>
+    <div id="no-rows"
+         class="flex flex-col items-center text-2xl">
+      <i class="fa-solid fa-ban text-7xl pb-10 text-red-800 opacity-80"></i>
+      <p> No data to display </p>
+    </div>
   }
 </div>
 
@@ -153,19 +153,19 @@
              let-row="row"
              let-columnDef="columnDef">
   @switch (columnDef.type) {
-  @case ('number') {
-  {{ row[columnDef.name] | number:columnDef.format }}
-  }
-  @case ('date') {
-  {{ row[columnDef.name] | date:columnDef.format }}
-  }
-  @case ('boolean') {
-  <i class="fa-regular"
-     [class.fa-square]="!row[columnDef.name]"
-     [class.fa-square-check]="row[columnDef.name]"></i>
-  }
-  @default {
-  {{ row[columnDef.name] }}
-  }
+    @case ('number') {
+      {{ row[columnDef.name] | number:columnDef.format }}
+    }
+    @case ('date') {
+      {{ row[columnDef.name] | date:columnDef.format }}
+    }
+    @case ('boolean') {
+      <i class="fa-regular"
+         [class.fa-square]="!row[columnDef.name]"
+         [class.fa-square-check]="row[columnDef.name]"></i>
+    }
+    @default {
+      {{ row[columnDef.name] }}
+    }
   }
 </ng-template>

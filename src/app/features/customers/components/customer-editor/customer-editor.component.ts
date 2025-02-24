@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,22 +28,23 @@ export type CustomerEditorAction = {
     DynamicFormComponent
   ],
   templateUrl: './customer-editor.component.html',
-  styles: `
-    .mat-icon:hover {
-      color: var(--mat-select-focused-arrow-color, var(--mat-sys-primary));
-    }
-  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'flex flex-col h-full overflow-y-auto' }
+  host: { class: 'flex flex-col h-full overflow-y-auto px-3 py-2' }
 })
 export class CustomerEditorComponent {
   lookups = input<Record<string, readonly LookupItem[]>>({});
   editorAction = output<CustomerEditorAction>();
   lookupRefresh = output<string>();
 
+  model = input<Customer | null>(null);
+
   protected formDefinition = CUSTOMER_FORM;
   protected form = createCustomerForm();
-  model = input<Customer | null>(null);
+  protected isLoading = computed(() => {
+    const model = this.model();
+
+    return !model;
+  });
 
   constructor() {
     effect(() => {

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ListItem } from '@poc/core/base/api.list-client';
 import { Sorting } from '@poc/core/base/search-criteria';
 import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
@@ -39,6 +39,7 @@ export class CustomersComponent implements OnInit {
 
   #categoryLookup = toSignal(this.#lookups.getLookup(Lookups.Categories), { initialValue: [] });
 
+  protected drawer = viewChild.required(MatDrawer);
   protected lookups = computed<Record<string, readonly LookupItem[]>>(() => {
     const categoryLookup = this.#categoryLookup();
     return {
@@ -78,7 +79,6 @@ export class CustomersComponent implements OnInit {
   //   }
   // };
   protected selectedCustomer = this.#store.selected;
-  protected drawerOpen = computed(() => this.selectedCustomer() !== null);
 
   #notificationService = inject(NotificationService);
 
@@ -103,6 +103,7 @@ export class CustomersComponent implements OnInit {
       }
       case 'toolbar.new': {
         this.#store.new();
+        await this.drawer().open();
         break;
       }
       default:
@@ -110,9 +111,10 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  onEditorAction(event: CustomerEditorAction) {
+  async onEditorAction(event: CustomerEditorAction) {
     switch (event.type) {
       case 'cancel': {
+        await this.drawer().close();
         this.#store.clearSelected();
         break;
       }
@@ -141,23 +143,25 @@ export class CustomersComponent implements OnInit {
   onPagingChanged = async (event: PagingEvent) =>
     await this.#store.find({ paging: { number: event.pageNumber, size: event.pageSize } });
 
-  onTableCellAction(event: TableCellActionEvent) {
+  async onTableCellAction(event: TableCellActionEvent) {
     if (event.kind == 'dblClick') {
       const id = (event.row as ListItem).id as string;
       if (!id) {
         this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
       }
+      await this.drawer().open();
       this.#store.load(id);
     }
   }
 
-  onTableRowAction(event: TableRowActionEvent) {
+  async onTableRowAction(event: TableRowActionEvent) {
     switch (event.action) {
       case 'row.edit': {
         const id = (event.row as ListItem).id as string;
         if (!id) {
           this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
         }
+        await this.drawer().open();
         this.#store.load(id);
         break;
       }
