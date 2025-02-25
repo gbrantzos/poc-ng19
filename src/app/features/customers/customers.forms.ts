@@ -1,7 +1,7 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateTime } from 'luxon';
 
-export type CustomerForm = {
+export type CustomersForms = {
   id: FormControl<string>;
   code: FormControl<string>;
   fullName: FormControl<string>;
@@ -14,8 +14,8 @@ export type CustomerForm = {
 
 const TIN_MIN_LENGTH = 3;
 
-export const createCustomerForm = (): FormGroup<CustomerForm> => {
-  return new FormGroup<CustomerForm>({
+export const createCustomerForm = (): FormGroup<CustomersForms> => {
+  return new FormGroup<CustomersForms>({
     id: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     code: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     fullName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),

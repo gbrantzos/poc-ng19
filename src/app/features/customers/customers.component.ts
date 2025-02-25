@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ListItem } from '@poc/core/base/api.list-client';
@@ -6,13 +6,12 @@ import { Sorting } from '@poc/core/base/search-criteria';
 import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
 import { LookupItem, LookupService } from '@poc/core/services/lookup.service';
 import { NotificationService } from '@poc/core/services/notification.service';
+import { CUSTOMER_FORM } from '@poc/definitions/customers.form.definition';
 import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
-import {
-  CustomerEditorAction,
-  CustomerEditorComponent
-} from '@poc/features/customers/components/customer-editor/customer-editor.component';
+import { createCustomerForm } from '@poc/features/customers/customers.forms';
 import { Lookups } from '@poc/features/customers/customers.providers';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
+import { DynamicEditorComponent, EditorAction } from '@poc/shared/components/dynamic-editor/dynamic-editor.component';
 import {
   DynamicListComponent,
   ListData,
@@ -29,17 +28,19 @@ import { SearchEvent } from '@poc/shared/components/search-box/search-box.compon
 
 @Component({
   selector: 'poc-customers',
-  imports: [CustomerEditorComponent, MatSidenavModule, DynamicListComponent, TemplateNameDirective],
+  imports: [MatSidenavModule, DynamicListComponent, TemplateNameDirective, DynamicEditorComponent],
   templateUrl: './customers.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomersComponent implements OnInit {
   #store = inject(CustomerStore);
-  #lookups = inject(LookupService);
+  #lookupService = inject(LookupService);
+  #notificationService = inject(NotificationService);
 
-  #categoryLookup = toSignal(this.#lookups.getLookup(Lookups.Categories), { initialValue: [] });
+  #categoryLookup = toSignal(this.#lookupService.getLookup(Lookups.Categories), { initialValue: [] });
 
   protected drawer = viewChild.required(MatDrawer);
+  protected isNew = signal(false);
   protected lookups = computed<Record<string, readonly LookupItem[]>>(() => {
     const categoryLookup = this.#categoryLookup();
     return {
@@ -52,6 +53,15 @@ export class CustomersComponent implements OnInit {
     loading: this.#store.loading(),
     sorting: this.#store.searchCriteria.sorting()
   }));
+
+  protected editorDefinition = {
+    title: {
+      new: 'New Customer',
+      edit: 'Edit Customer'
+    },
+    formDefinition: CUSTOMER_FORM
+  };
+  protected editorForm = createCustomerForm();
 
   protected pagingInfo = computed<PagingInfo>(() => {
     const pagingInfo: PagingInfo = {
@@ -80,8 +90,6 @@ export class CustomersComponent implements OnInit {
   // };
   protected selectedCustomer = this.#store.selected;
 
-  #notificationService = inject(NotificationService);
-
   constructor() {
     effect(() => {
       const error = this.#store.error();
@@ -102,6 +110,7 @@ export class CustomersComponent implements OnInit {
         break;
       }
       case 'toolbar.new': {
+        this.isNew.set(true);
         this.#store.new();
         await this.drawer().open();
         break;
@@ -111,7 +120,7 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  async onEditorAction(event: CustomerEditorAction) {
+  async onEditorAction(event: EditorAction) {
     switch (event.type) {
       case 'cancel': {
         await this.drawer().close();
@@ -146,11 +155,7 @@ export class CustomersComponent implements OnInit {
   async onTableCellAction(event: TableCellActionEvent) {
     if (event.kind == 'dblClick') {
       const id = (event.row as ListItem).id as string;
-      if (!id) {
-        this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
-      }
-      await this.drawer().open();
-      this.#store.load(id);
+      await this.load(id);
     }
   }
 
@@ -158,11 +163,7 @@ export class CustomersComponent implements OnInit {
     switch (event.action) {
       case 'row.edit': {
         const id = (event.row as ListItem).id as string;
-        if (!id) {
-          this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
-        }
-        await this.drawer().open();
-        this.#store.load(id);
+        await this.load(id);
         break;
       }
     }
@@ -172,5 +173,14 @@ export class CustomersComponent implements OnInit {
     // console.log(event?.action, event?.selection);
   }
 
-  onLookupRefresh = (name: string) => this.#lookups.refresh(name);
+  onLookupRefresh = (name: string) => this.#lookupService.refresh(name);
+
+  private async load(id: string) {
+    if (!id) {
+      this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
+    }
+    this.isNew.set(false);
+    await this.drawer().open();
+    this.#store.load(id);
+  }
 }

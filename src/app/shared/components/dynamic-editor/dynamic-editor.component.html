@@ -1,0 +1,40 @@
+<poc-title [title]="title()"
+           [showClose]="true"
+           [icon]="icon"
+           (close)="editorAction.emit({type: 'cancel'})"
+           tabindex="-1" />
+
+<poc-dynamic-form #editorForm
+                  class="mt-2"
+                  [formGroup]="form()"
+                  [formDefinition]="editorDefinition().formDefinition"
+                  [lookups]="lookups()"
+                  [isLoading]="model() === null"
+                  (lookupRefresh)="lookupRefresh.emit($event)" />
+
+@if (model() !== null) {
+  <div class="buttons pt-1.5 border-t-2 flex flex-row justify-end gap-2">
+    @if (!isNew()) {
+      <button mat-button
+              class="core danger"
+              (click)="editorAction.emit({ type: 'delete', model: editorForm.model} )">
+        <mat-icon fontSet="fa-regular"
+                  fontIcon="fa-trash-can" />
+        Delete
+      </button>
+    }
+    <div class="flex-auto"></div>
+    <button mat-button
+            class="core"
+            (click)="editorAction.emit({ type: 'cancel'} )">
+      Cancel
+    </button>
+    <button mat-flat-button
+            class="core"
+            (click)="editorAction.emit({ type: 'save', model: editorForm.model} )">
+      <mat-icon fontSet="fa-regular"
+                fontIcon="fa-floppy-disk" />
+      Save
+    </button>
+  </div>
+}

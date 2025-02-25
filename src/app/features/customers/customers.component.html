@@ -3,10 +3,13 @@
   <mat-drawer position="end"
               disableClose="true"
               class="min-w-[450px] w-2/5">
-    <poc-customer-editor [model]="selectedCustomer()"
-                         [lookups]="lookups()"
-                         (editorAction)="onEditorAction($event)"
-                         (lookupRefresh)="onLookupRefresh($event)" />
+    <poc-dynamic-editor [model]="selectedCustomer()"
+                        [editorDefinition]="editorDefinition"
+                        [lookups]="lookups()"
+                        [form]="editorForm"
+                        [isNew]="isNew()"
+                        (editorAction)="onEditorAction($event)"
+                        (lookupRefresh)="onLookupRefresh($event)" />
   </mat-drawer>
 
   <mat-drawer-container class="h-full overflow-y-auto">

@@ -107,6 +107,10 @@ export class DynamicFormComponent {
     return this.formGroup().getRawValue();
   }
 
+  public focus() {
+    //console.log('focus', this.fields());
+  }
+
   protected hasErrors(key: string): boolean {
     const control = this.formGroup().controls[key];
     return control && control.invalid && (control.dirty || control.touched);
