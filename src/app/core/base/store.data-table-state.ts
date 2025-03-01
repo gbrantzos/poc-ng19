@@ -1,6 +1,6 @@
 import { inject, ProviderToken } from '@angular/core';
 import { patchState, signalStoreFeature, withMethods, withProps, withState } from '@ngrx/signals';
-import { BaseListClient, ListItem } from '@poc/core/base/api.list-client';
+import { ListClient, ListItem } from '@poc/core/base/api.list-client';
 import { ApiResponseResult } from '@poc/core/base/api.response';
 import { DEFAULT_PAGE_SIZE, SearchCriteria } from '@poc/core/base/search-criteria';
 import { withRequestState } from '@poc/core/base/store.request-state';
@@ -11,7 +11,7 @@ export const INITIAL_SEARCH_CRITERIA: SearchCriteria = {
   paging: { number: 1, size: DEFAULT_PAGE_SIZE }
 };
 
-export function withDataTableState(client: ProviderToken<BaseListClient>) {
+export function withDataTableState(client: ProviderToken<ListClient>) {
   return signalStoreFeature(
     // Data table state, list items and totalItems count
     withState<{

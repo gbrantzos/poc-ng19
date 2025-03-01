@@ -1,5 +1,4 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject } from '@angular/core';
 import { ApiResponse, ApiResponseResult, ApiSuccess } from '@poc/core/base/api.response';
 import { handleHttpError } from '@poc/core/base/handle-errors';
 import { QueryResult } from '@poc/core/base/query-result';
@@ -13,22 +12,15 @@ export type ListItem = {
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export interface ListClient {
-  find: (criteria: Partial<SearchCriteria>) => Promise<ApiResponse<QueryResult<ListItem>>>;
+  find: FindFn;
 }
 
-export abstract class BaseListClient implements ListClient {
-  protected httpClient = inject(HttpClient);
+export type FindFn = (criteria: Partial<SearchCriteria>) => Promise<ApiResponse<QueryResult<ListItem>>>;
 
-  protected constructor(protected baseUrl: string) {}
-
-  protected prepareFindUrl(): string {
-    return this.baseUrl;
-  }
-
-  find(criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<ListItem>>> {
-    const params = this.prepareParams(criteria);
-    const url = this.prepareFindUrl();
-    const call$ = this.httpClient.get<QueryResult<ListItem>>(url, { params }).pipe(
+export const createFindFn = (httpClient: HttpClient, url: string): FindFn => {
+  return (criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<ListItem>>> => {
+    const params = prepareParams(criteria);
+    const call$ = httpClient.get<QueryResult<ListItem>>(url, { params }).pipe(
       map(res => {
         return {
           result: ApiResponseResult.SUCCESS,
@@ -39,26 +31,26 @@ export abstract class BaseListClient implements ListClient {
     );
 
     return firstValueFrom(call$);
+  };
+};
+
+const prepareParams = (criteria: Partial<SearchCriteria>): HttpParams => {
+  let params: HttpParams = new HttpParams();
+
+  if (criteria.paging) {
+    params = params
+      .append('pageNumber', criteria.paging?.number ?? 1)
+      .append('pageSize', criteria.paging?.size ?? DEFAULT_PAGE_SIZE);
   }
 
-  private prepareParams(criteria: Partial<SearchCriteria>): HttpParams {
-    let params: HttpParams = new HttpParams();
-
-    if (criteria.paging) {
-      params = params
-        .append('pageNumber', criteria.paging?.number ?? 1)
-        .append('pageSize', criteria.paging?.size ?? DEFAULT_PAGE_SIZE);
-    }
-
-    if (criteria.sorting) {
-      const term = criteria.sorting.direction == 'desc' ? `-${criteria.sorting.field}` : criteria.sorting.field;
-      params = params.append('sortBy', term);
-    }
-
-    if (criteria.quickSearch) {
-      params = params.append('q', `*:${criteria.quickSearch.term}`);
-    }
-
-    return params;
+  if (criteria.sorting) {
+    const term = criteria.sorting.direction == 'desc' ? `-${criteria.sorting.field}` : criteria.sorting.field;
+    params = params.append('sortBy', term);
   }
-}
+
+  if (criteria.quickSearch) {
+    params = params.append('q', `*:${criteria.quickSearch.term}`);
+  }
+
+  return params;
+};

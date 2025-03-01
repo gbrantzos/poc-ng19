@@ -176,8 +176,8 @@ export class CustomersComponent implements OnInit {
 
   private async newCustomer() {
     this.isNew.set(true);
-    this.#store.new();
     await this.drawer().open();
+    this.#store.new();
   }
 
   private async loadCustomer(id: string) {
