@@ -10,7 +10,7 @@ import {
   output,
   viewChildren
 } from '@angular/core';
-import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { DateAdapter, MAT_DATE_FORMATS, MatOption } from '@angular/material/core';
@@ -25,6 +25,7 @@ export type FieldKind = 'text' | 'date' | 'checkbox' | 'select' | 'textarea';
 export type FieldDefinition = {
   name: string;
   kind: FieldKind;
+  nullable?: boolean;
   label: string;
   hidden?: boolean;
   placeholder?: string;
@@ -34,7 +35,7 @@ export type FieldDefinition = {
   lookupName?: string;
   multiSelect?: boolean;
   textAreaOptions?: TextAreaOptions;
-  validators?: Validators[];
+  validators?: FieldValidator[];
 };
 
 export type FormDefinition = {
@@ -166,38 +167,5 @@ export class DynamicFormComponent {
   }
 
   private toCapitalFirst = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
-
-  private static mapValidators(validators: FieldValidator[]) {
-    const formValidators = [];
-
-    for (const validation of validators ?? []) {
-      switch (validation.name) {
-        case 'required':
-          formValidators.push(Validators.required);
-          break;
-        case 'requiredTrue':
-          formValidators.push(Validators.requiredTrue);
-          break;
-        case 'min':
-          formValidators.push(Validators.min(validation.args as number));
-          break;
-        case 'max':
-          formValidators.push(Validators.max(validation.args as number));
-          break;
-        case 'minLength':
-          formValidators.push(Validators.minLength(validation.args as number));
-          break;
-        case 'maxLength':
-          formValidators.push(Validators.maxLength(validation.args as number));
-          break;
-        case 'pattern':
-          formValidators.push(Validators.pattern(validation.args as string));
-          break;
-        case 'email':
-          formValidators.push(Validators.email);
-          break;
-      }
-    }
-    return formValidators;
-  }
+  protected readonly console = console;
 }

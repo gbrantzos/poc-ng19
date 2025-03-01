@@ -6,16 +6,16 @@ import { Sorting } from '@poc/core/base/search-criteria';
 import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
 import { LookupItem, LookupService } from '@poc/core/services/lookup.service';
 import { NotificationService } from '@poc/core/services/notification.service';
-import { CUSTOMER_FORM } from '@poc/features/customers/definitions/customers.form.definition';
-import { CUSTOMERS_LIST } from '@poc/features/customers/definitions/customers.list.definition';
-import { createCustomerForm } from '@poc/features/customers/customers.forms';
 import { Lookups } from '@poc/features/customers/customers.providers';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
+import { CUSTOMER_FORM } from '@poc/features/customers/definitions/customers.form.definition';
+import { CUSTOMERS_LIST } from '@poc/features/customers/definitions/customers.list.definition';
 import {
   DynamicEditorComponent,
   EditorAction,
   EditorData
 } from '@poc/shared/components/dynamic-editor/dynamic-editor.component';
+import { createDynamicForm } from '@poc/shared/components/dynamic-form/dynamic-form.create';
 import {
   DynamicListComponent,
   ListData,
@@ -73,7 +73,8 @@ export class CustomersComponent implements OnInit {
     },
     formDefinition: CUSTOMER_FORM
   };
-  protected editorForm = createCustomerForm();
+  // protected editorForm = createCustomerForm();
+  protected editorForm = createDynamicForm(CUSTOMER_FORM.fields);
   protected editorData = computed<EditorData>(() => ({
     model: this.#store.selected(),
     lookups: this.lookups(),

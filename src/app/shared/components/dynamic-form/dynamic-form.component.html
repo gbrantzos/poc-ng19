@@ -95,6 +95,10 @@
                           [hidden]="field.hidden">
             <mat-label>{{ field.label }}</mat-label>
             <mat-select #fld
+                        (keydown.control.backspace)="fld.ngControl.reset()"
+                        (keydown.control.delete)="fld.ngControl.reset()"
+                        [attr.pocAutoFocus]="field.name === firstVisible()"
+                        [formControlName]="field.name"
                         [multiple]="field.multiSelect">
               @for (item of lookupPerField[field.name]; track item.key) {
                 <mat-option [value]="item.key">{{ item.value }}</mat-option>
@@ -106,6 +110,9 @@
                (keydown)="lookupRefresh.emit(field.lookupName ?? '');$event.stopPropagation()"
                tabindex="-1">
             </i>
+            @if (hasErrors(field.name)) {
+              <mat-error class="">{{ getErrorMessage(field.name, field.label) }}</mat-error>
+            }
           </mat-form-field>
         }
         @default {

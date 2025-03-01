@@ -14,34 +14,46 @@ export const CUSTOMER_FORM: FormDefinition = {
     {
       name: 'code',
       label: 'Code',
-      kind: 'text'
+      kind: 'text',
+      validators: [{ name: 'required' }]
     },
     {
       name: 'fullName',
       label: 'Full Name',
-      kind: 'text'
+      kind: 'text',
+      validators: [{ name: 'required' }]
     },
     {
       name: 'tin',
       label: 'TAX Number',
       kind: 'text',
-      class: 'basis-2/5'
+      class: 'basis-2/5',
+      validators: [
+        { name: 'required' },
+        {
+          name: 'minLength',
+          args: 3
+        }
+      ]
     },
     {
       name: 'dueAt',
       label: 'Due At',
       kind: 'date',
+      validators: [{ name: 'required' }],
       class: 'basis-3/5'
     },
     {
       name: 'overdue',
       kind: 'checkbox',
-      label: 'Overdue'
+      label: 'Overdue',
+      validators: [{ name: 'requiredTrue' }]
     },
     {
       name: 'category',
       kind: 'select',
       label: 'Category',
+      validators: [{ name: 'required' }],
       lookupName: Lookups.Categories
     },
     {
