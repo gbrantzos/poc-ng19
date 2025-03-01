@@ -18,7 +18,8 @@
                           [class.pb-3]="hasErrors(field.name)"
                           [hidden]="field.hidden">
             <mat-label>{{ field.label }}</mat-label>
-            <input matInput
+            <input #fld
+                   matInput
                    [attr.pocAutoFocus]="field.name === firstVisible()"
                    [placeholder]="field.placeholder ?? field.label"
                    [formControlName]="field.name" />
@@ -34,7 +35,8 @@
                           [class.pb-3]="hasErrors(field.name)"
                           [hidden]="field.hidden">
             <mat-label>{{ field.label }}</mat-label>
-            <textarea matInput
+            <textarea #fld
+                      matInput
                       cdkTextareaAutosize
                       [attr.pocAutoFocus]="field.name === firstVisible()"
                       [placeholder]="field.placeholder ?? ''"
@@ -68,7 +70,8 @@
                           [class.pb-3]="hasErrors(field.name)"
                           [hidden]="field.hidden">
             <mat-label>{{ field.label }}</mat-label>
-            <input matInput
+            <input #fld
+                   matInput
                    [matDatepicker]="picker"
                    [attr.pocAutoFocus]="field.name === firstVisible()"
                    [formControlName]="field.name" />
@@ -91,7 +94,8 @@
                           [class.pb-3]="hasErrors(field.name)"
                           [hidden]="field.hidden">
             <mat-label>{{ field.label }}</mat-label>
-            <mat-select [multiple]="field.multiSelect">
+            <mat-select #fld
+                        [multiple]="field.multiSelect">
               @for (item of lookupPerField[field.name]; track item.key) {
                 <mat-option [value]="item.key">{{ item.value }}</mat-option>
               }

@@ -1,6 +1,15 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { JsonPipe, NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, Injectable, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  Injectable,
+  input,
+  output,
+  viewChildren
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -97,6 +106,10 @@ export class DynamicFormComponent {
 
   lookupRefresh = output<string>();
 
+  fields = viewChildren('fld', {
+    read: ElementRef
+  });
+
   firstVisible = computed(() => {
     const definition = this.formDefinition();
     const fields = definition?.fields ?? [];
@@ -108,7 +121,10 @@ export class DynamicFormComponent {
   }
 
   public focus() {
-    //console.log('focus', this.fields());
+    const firstVisible = this.fields().find(f => f.nativeElement.attributes['pocautofocus'].value == 'true');
+    if (firstVisible) {
+      firstVisible.nativeElement.focus();
+    }
   }
 
   protected hasErrors(key: string): boolean {
