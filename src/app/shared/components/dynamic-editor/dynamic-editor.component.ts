@@ -19,6 +19,13 @@ export type EditorDefinition = {
   formDefinition: FormDefinition;
 };
 
+export type EditorData = {
+  model: unknown | null;
+  lookups: Record<string, readonly LookupItem[]>;
+  form: FormGroup;
+  isNew: boolean;
+};
+
 @Component({
   selector: 'poc-dynamic-editor',
   imports: [DynamicFormComponent, TitleComponent, MatButton, MatIcon],
@@ -29,10 +36,7 @@ export type EditorDefinition = {
 })
 export class DynamicEditorComponent {
   editorDefinition = input.required<EditorDefinition>();
-  form = input.required<FormGroup>();
-  isNew = input<boolean>(true);
-  lookups = input<Record<string, readonly LookupItem[]>>({});
-  model = input<unknown | null>();
+  editorData = input.required<EditorData>();
 
   editorAction = output<EditorAction>();
   lookupRefresh = output<string>();
@@ -41,11 +45,12 @@ export class DynamicEditorComponent {
 
   constructor() {
     effect(() => {
-      const model = this.model();
+      const model = this.editorData().model;
+      const form = this.editorData().form;
       if (model) {
-        this.form().patchValue(model);
+        form.patchValue(model);
       } else {
-        this.form().reset();
+        form.reset();
       }
       this.editorForm().focus();
     });
@@ -53,7 +58,7 @@ export class DynamicEditorComponent {
 
   protected icon = ['fa-regular', 'fa-pen-to-square'];
   protected title = computed(() => {
-    const isNew = this.isNew();
+    const isNew = this.editorData().isNew;
     const definition = this.editorDefinition();
 
     return (isNew ? definition.title.new : definition.title.edit) ?? 'EDITOR TITLE NOT SET';

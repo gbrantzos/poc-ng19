@@ -6,19 +6,22 @@ import { Sorting } from '@poc/core/base/search-criteria';
 import { INITIAL_SEARCH_CRITERIA } from '@poc/core/base/store.data-table-state';
 import { LookupItem, LookupService } from '@poc/core/services/lookup.service';
 import { NotificationService } from '@poc/core/services/notification.service';
-import { CUSTOMER_FORM } from '@poc/definitions/customers.form.definition';
-import { CUSTOMERS_LIST } from '@poc/definitions/customers.list.definition';
+import { CUSTOMER_FORM } from '@poc/features/customers/definitions/customers.form.definition';
+import { CUSTOMERS_LIST } from '@poc/features/customers/definitions/customers.list.definition';
 import { createCustomerForm } from '@poc/features/customers/customers.forms';
 import { Lookups } from '@poc/features/customers/customers.providers';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
-import { DynamicEditorComponent, EditorAction } from '@poc/shared/components/dynamic-editor/dynamic-editor.component';
+import {
+  DynamicEditorComponent,
+  EditorAction,
+  EditorData
+} from '@poc/shared/components/dynamic-editor/dynamic-editor.component';
 import {
   DynamicListComponent,
   ListData,
   ListDefinition
 } from '@poc/shared/components/dynamic-list/dynamic-list.component';
 import {
-  ColumnDefinition,
   TableCellActionEvent,
   TableRowActionEvent
 } from '@poc/shared/components/dynamic-table/dynamic-table.component';
@@ -53,6 +56,15 @@ export class CustomersComponent implements OnInit {
     loading: this.#store.loading(),
     sorting: this.#store.searchCriteria.sorting()
   }));
+  protected listDefinition: ListDefinition = CUSTOMERS_LIST;
+
+  // protected listDefinition: ListDefinition = {
+  //   ...this.listDefinition1,
+  //   tableDefinition: {
+  //     ...this.listDefinition1.tableDefinition,
+  //     columns: [...this.listDefinition1.tableDefinition.columns, ...this.manyColumns]
+  //   }
+  // };
 
   protected editorDefinition = {
     title: {
@@ -62,6 +74,12 @@ export class CustomersComponent implements OnInit {
     formDefinition: CUSTOMER_FORM
   };
   protected editorForm = createCustomerForm();
+  protected editorData = computed<EditorData>(() => ({
+    model: this.#store.selected(),
+    lookups: this.lookups(),
+    form: this.editorForm,
+    isNew: this.isNew()
+  }));
 
   protected pagingInfo = computed<PagingInfo>(() => {
     const pagingInfo: PagingInfo = {
@@ -71,24 +89,6 @@ export class CustomersComponent implements OnInit {
     };
     return pagingInfo;
   });
-
-  protected manyColumns = Array.from({ length: 20 }, (_, index) => index).map(
-    i =>
-      ({
-        name: `row${i + 1}`,
-        label: `Row ${i + 1}`,
-        style: 'width: 240px'
-      }) as ColumnDefinition
-  );
-  protected listDefinition: ListDefinition = CUSTOMERS_LIST;
-  // protected listDefinition: ListDefinition = {
-  //   ...this.listDefinition1,
-  //   tableDefinition: {
-  //     ...this.listDefinition1.tableDefinition,
-  //     columns: [...this.listDefinition1.tableDefinition.columns, ...this.manyColumns]
-  //   }
-  // };
-  protected selectedCustomer = this.#store.selected;
 
   constructor() {
     effect(() => {
@@ -110,9 +110,7 @@ export class CustomersComponent implements OnInit {
         break;
       }
       case 'toolbar.new': {
-        this.isNew.set(true);
-        this.#store.new();
-        await this.drawer().open();
+        await this.newCustomer();
         break;
       }
       default:
@@ -155,7 +153,7 @@ export class CustomersComponent implements OnInit {
   async onTableCellAction(event: TableCellActionEvent) {
     if (event.kind == 'dblClick') {
       const id = (event.row as ListItem).id as string;
-      await this.load(id);
+      await this.loadCustomer(id);
     }
   }
 
@@ -163,7 +161,7 @@ export class CustomersComponent implements OnInit {
     switch (event.action) {
       case 'row.edit': {
         const id = (event.row as ListItem).id as string;
-        await this.load(id);
+        await this.loadCustomer(id);
         break;
       }
     }
@@ -175,7 +173,13 @@ export class CustomersComponent implements OnInit {
 
   onLookupRefresh = (name: string) => this.#lookupService.refresh(name);
 
-  private async load(id: string) {
+  private async newCustomer() {
+    this.isNew.set(true);
+    this.#store.new();
+    await this.drawer().open();
+  }
+
+  private async loadCustomer(id: string) {
     if (!id) {
       this.#notificationService.error(this.listDefinition.title, 'Could not get customer ID from list row');
     }
@@ -184,3 +188,13 @@ export class CustomersComponent implements OnInit {
     this.#store.load(id);
   }
 }
+
+//
+// protected manyColumns = Array.from({ length: 20 }, (_, index) => index).map(
+//   i =>
+//     ({
+//       name: `row${i + 1}`,
+//       label: `Row ${i + 1}`,
+//       style: 'width: 240px'
+//     }) as ColumnDefinition
+// );

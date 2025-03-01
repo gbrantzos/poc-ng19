@@ -1,3 +1,5 @@
+@let data = editorData();
+
 <poc-title [title]="title()"
            [showClose]="true"
            [icon]="icon"
@@ -6,15 +8,15 @@
 
 <poc-dynamic-form #editorForm
                   class="mt-2"
-                  [formGroup]="form()"
+                  [formGroup]="data.form"
                   [formDefinition]="editorDefinition().formDefinition"
-                  [lookups]="lookups()"
-                  [isLoading]="model() === null"
+                  [lookups]="data.lookups"
+                  [isLoading]="data.model === null"
                   (lookupRefresh)="lookupRefresh.emit($event)" />
 
-@if (model() !== null) {
+@if (data.model !== null) {
   <div class="buttons pt-1.5 border-t-2 flex flex-row justify-end gap-2">
-    @if (!isNew()) {
+    @if (!data.isNew) {
       <button mat-button
               class="core danger"
               (click)="editorAction.emit({ type: 'delete', model: editorForm.model} )">

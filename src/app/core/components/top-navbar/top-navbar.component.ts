@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { APP_MENU_ITEMS } from '@poc/definitions/app.menu-items.definition';
+import { APP_MENU_ITEMS } from '@poc/app.menu-items.definition';
 
 export type NavbarItem = {
   name: string;
