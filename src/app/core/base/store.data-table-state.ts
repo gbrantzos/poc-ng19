@@ -11,11 +11,11 @@ export const INITIAL_SEARCH_CRITERIA: SearchCriteria = {
   paging: { number: 1, size: DEFAULT_PAGE_SIZE }
 };
 
-export function withDataTableState(client: ProviderToken<ListClient>) {
+export function withDataTableState<T extends ListItem>(client: ProviderToken<ListClient<T>>) {
   return signalStoreFeature(
     // Data table state, list items and totalItems count
     withState<{
-      listItems: readonly ListItem[];
+      listItems: readonly T[];
       totalItems: number;
     }>({ listItems: [], totalItems: 0 }),
 

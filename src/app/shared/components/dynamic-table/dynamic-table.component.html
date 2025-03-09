@@ -12,7 +12,7 @@
        (matSortChange)="onSortChanged($event)"
        [style.width]="columnInfo.columnsWidth"
        class="border-separate">
-  
+
   @for (columnDef of tableDefinition().columns; track columnDef.name) {
   <ng-container matColumnDef="{{columnDef.name}}"
                 [sticky]="columnDef.sticky === 'start'"

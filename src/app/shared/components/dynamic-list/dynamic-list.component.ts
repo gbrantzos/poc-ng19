@@ -26,13 +26,13 @@ export type ListDefinition = {
   defaultSort: Sorting;
 };
 
-export type ListData = {
-  rows: readonly unknown[];
+export type ListData<T> = {
+  rows: readonly T[];
   loading: boolean;
   sorting?: Sorting;
 };
 
-export const EMPTY_LIST: ListData = {
+export const EMPTY_LIST: ListData<never> = {
   rows: [],
   loading: false
 };
@@ -45,9 +45,9 @@ export const EMPTY_LIST: ListData = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col h-full overflow-y-auto' }
 })
-export class DynamicListComponent {
+export class DynamicListComponent<T> {
   listDefinition = input.required<ListDefinition>();
-  listData = input<ListData>(EMPTY_LIST);
+  listData = input<ListData<T>>(EMPTY_LIST);
   pagingInfo = input<PagingInfo>(EMPTY_PAGING);
   templates = contentChildren(TemplateNameDirective);
 
@@ -55,9 +55,9 @@ export class DynamicListComponent {
   toolbarSearch = output<SearchEvent>();
 
   tableSortChanged = output<Sorting>();
-  tableCellAction = output<TableCellActionEvent>();
-  tableRowAction = output<TableRowActionEvent>();
-  tableSelectionAction = output<TableRowActionEvent>();
+  tableCellAction = output<TableCellActionEvent<T>>();
+  tableRowAction = output<TableRowActionEvent<T>>();
+  tableSelectionAction = output<TableRowActionEvent<T>>();
 
   pagingChanged = output<PagingEvent>();
 

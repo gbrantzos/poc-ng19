@@ -1,6 +1,6 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { withDataTableState } from '@poc/core/base/store.data-table-state';
-import { CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
+import { CustomerListItem, CustomersApiClient } from '@poc/features/customers/data/customers.api-client';
 import { Customer, CustomerID } from '@poc/features/customers/domain/customer';
 import { DateTime } from 'luxon';
 
@@ -12,7 +12,7 @@ const initialState = (): CustomerState => ({ selected: null });
 
 export const CustomerStore = signalStore(
   withState<CustomerState>(initialState()),
-  withDataTableState(CustomersApiClient),
+  withDataTableState<CustomerListItem>(CustomersApiClient),
   withMethods(store => ({
     new() {
       patchState(store, {

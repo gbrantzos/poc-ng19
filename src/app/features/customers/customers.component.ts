@@ -8,6 +8,7 @@ import { LookupItem, LookupService } from '@poc/core/services/lookup.service';
 import { NotificationService } from '@poc/core/services/notification.service';
 import { Lookups } from '@poc/features/customers/customers.providers';
 import { CustomerStore } from '@poc/features/customers/data/customer.store';
+import { CustomerListItem } from '@poc/features/customers/data/customers.api-client';
 import { CUSTOMER_FORM } from '@poc/features/customers/definitions/customers.form.definition';
 import { CUSTOMERS_LIST } from '@poc/features/customers/definitions/customers.list.definition';
 import {
@@ -51,7 +52,7 @@ export class CustomersComponent implements OnInit {
     };
   });
 
-  protected listData = computed<ListData>(() => ({
+  protected listData = computed<ListData<CustomerListItem>>(() => ({
     rows: this.#store.listItems(),
     loading: this.#store.loading(),
     sorting: this.#store.searchCriteria.sorting()
@@ -151,14 +152,14 @@ export class CustomersComponent implements OnInit {
   onPagingChanged = async (event: PagingEvent) =>
     await this.#store.find({ paging: { number: event.pageNumber, size: event.pageSize } });
 
-  async onTableCellAction(event: TableCellActionEvent) {
+  async onTableCellAction(event: TableCellActionEvent<CustomerListItem>) {
     if (event.kind == 'dblClick') {
       const id = (event.row as ListItem).id as string;
       await this.loadCustomer(id);
     }
   }
 
-  async onTableRowAction(event: TableRowActionEvent) {
+  async onTableRowAction(event: TableRowActionEvent<CustomerListItem>) {
     switch (event.action) {
       case 'row.edit': {
         const id = (event.row as ListItem).id as string;
@@ -168,7 +169,7 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  onTableSelectionAction(_event: TableRowActionEvent) {
+  onTableSelectionAction(_event: TableRowActionEvent<CustomerListItem>) {
     // console.log(event?.action, event?.selection);
   }
 

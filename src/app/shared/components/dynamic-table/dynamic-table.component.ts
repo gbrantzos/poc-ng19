@@ -43,15 +43,15 @@ export type ColumnDefinition = {
   isSortable?: boolean;
 };
 
-export type TableCellActionEvent = {
+export type TableCellActionEvent<T> = {
   kind: 'click' | 'dblClick';
-  row: unknown;
+  row: T;
   columnDef: ColumnDefinition;
 };
 
-export type TableRowActionEvent = {
+export type TableRowActionEvent<T> = {
   action: string;
-  row?: unknown | unknown[];
+  row?: T | T[];
   selection?: unknown[];
 };
 
@@ -82,8 +82,8 @@ const EMPTY_COLUMN = '__empty';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col h-full overflow-auto' }
 })
-export class DynamicTableComponent {
-  rows = input<readonly unknown[]>([]);
+export class DynamicTableComponent<T> {
+  rows = input<readonly T[]>([]);
   loading = input<boolean>(false);
   sorting = input<Sorting>();
 
@@ -98,8 +98,8 @@ export class DynamicTableComponent {
 
   protected selection = new SelectionModel<unknown>(true, []);
 
-  tableCellAction = output<TableCellActionEvent>();
-  rowAction = output<TableRowActionEvent>();
+  tableCellAction = output<TableCellActionEvent<T>>();
+  rowAction = output<TableRowActionEvent<T>>();
   sortChanged = output<Sorting>();
   selectionChanged = outputFromObservable(this.selection.changed);
 

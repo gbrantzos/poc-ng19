@@ -11,21 +11,21 @@ export type ListItem = {
 };
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export interface ListClient {
-  find: FindFn;
+export interface ListClient<T extends ListItem> {
+  find: FindFn<T>;
 }
 
-export type FindFn = (criteria: Partial<SearchCriteria>) => Promise<ApiResponse<QueryResult<ListItem>>>;
+export type FindFn<T extends ListItem> = (criteria: Partial<SearchCriteria>) => Promise<ApiResponse<QueryResult<T>>>;
 
-export const createFindFn = (httpClient: HttpClient, url: string): FindFn => {
-  return (criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<ListItem>>> => {
+export const createFindFn = <T extends ListItem>(httpClient: HttpClient, url: string): FindFn<T> => {
+  return (criteria: Partial<SearchCriteria>): Promise<ApiResponse<QueryResult<T>>> => {
     const params = prepareParams(criteria);
-    const call$ = httpClient.get<QueryResult<ListItem>>(url, { params }).pipe(
+    const call$ = httpClient.get<QueryResult<T>>(url, { params }).pipe(
       map(res => {
         return {
           result: ApiResponseResult.SUCCESS,
           data: res
-        } as ApiSuccess<QueryResult<ListItem>>;
+        } as ApiSuccess<QueryResult<T>>;
       }),
       catchError(err => of(handleHttpError(err)))
     );
