@@ -13,5 +13,5 @@ export class TitleComponent {
   showClose = input<boolean>(false);
   icon = input<string[] | undefined>(['fa-regular', 'fa-file']);
 
-  close = output<void>();
+  titleClose = output<void>();
 }

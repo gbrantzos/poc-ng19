@@ -7,8 +7,8 @@
   <div class="flex-1"></div>
   @if (showClose()) {
     <i class="fa-solid fa-xmark text-xl cursor-pointer"
-       (click)="close.emit()"
-       (keydown)="close.emit()"
+       (click)="titleClose.emit()"
+       (keydown)="titleClose.emit()"
        role="button"
        tabindex="-1">
     </i>

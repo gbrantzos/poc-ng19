@@ -3,7 +3,7 @@
 <poc-title [title]="title()"
            [showClose]="true"
            [icon]="icon"
-           (close)="editorAction.emit({type: 'cancel'})"
+           (titleClose)="editorAction.emit({type: 'cancel'})"
            tabindex="-1" />
 
 <poc-dynamic-form #editorForm
